@@ -1,25 +1,21 @@
-#+STARTUP: showall
-#+TAGS: DOCS(d) CODING(c) TESTING(t) PLANING(p)
-#+STARTUP: hidestars
+                                 fapi
+                                 ====
+
+Author: Vlad K.
+Date: 2012-01-12 12:54:20 EET
 
 
-* Open Source HeNB platform
-** Overview							       :DOCS:
+Table of Contents
+=================
+1 Interfaces
+    1.1 LTE MAC Scheduler Interface Specification v1.11
+        1.1.1 Interface definition for CSCHED SAP and SCHED SAP with Properties <2012-01-12 Thu>
+    1.2 LTE eNB L1 API Definition v1.11
+    1.3 LTE Network Monitor Mode Specification v1.01
 
-   [[http://femtoforum.org/femto/technical.php][Femto Forum]]
 
-   The Femto Application Platform Interface (FAPI) is an initiative
-   within the femto industry to encourage competition and innovation
-   between suppliers of platform hardware, platform software and
-   application software by providing a common API around which suppliers
-   of each component can compete. In doing this, we imitate a long and
-   distinguished engineering tradition of providing an
-   “interchangeability of parts” to ensure that the systems vendors can
-   take advantage of the latest innovations in silicon and software with
-   the minimum of entry barrier, and the least amount of custom
-   re-engineering.
-
-* Interfaces
+1 Interfaces
+~~~~~~~~~~~~~
   Several APIs are defined, as follows:
   P1 – the Security coprocessor interface
   P2 – the Service Discovery Interface
@@ -30,7 +26,8 @@
   P7 – the main datapath interface
   M1 – the scheduler interface
 
-** LTE MAC Scheduler Interface Specification v1.11		       :DOCS:
+1.1 LTE MAC Scheduler Interface Specification v1.11 :DOCS:
+==========================================================
    October 2010
 
    Index number: FF_Tech_001_v1.11
@@ -39,8 +36,12 @@
    interface specification is to allow the use of a wide range of
    schedulers which can be plugged into the eNodeB and to allow for
    standardized interference coordination interface to the scheduler.
-*** DONE Interface definition for CSCHED SAP and SCHED SAP with Properties <2012-01-12 Thu> :CODING:
-** LTE eNB L1 API Definition v1.11
+
+1.1.1 DONE Interface definition for CSCHED SAP and SCHED SAP with Properties <2012-01-12 Thu> :CODING:
+------------------------------------------------------------------------------------------------------
+
+1.2 LTE eNB L1 API Definition v1.11
+====================================
    October 2010
 
    Index number: FF_Tech_002_v1.11
@@ -50,7 +51,8 @@
    PHY. Specifically, this L1 API defines both P5 and P7 of the Femto
    Forum LTE FAPI.
 
-** LTE Network Monitor Mode Specification v1.01
+1.3 LTE Network Monitor Mode Specification v1.01
+=================================================
 
    October 2010
 

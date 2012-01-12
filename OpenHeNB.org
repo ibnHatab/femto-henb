@@ -1,23 +1,11 @@
-                               OpenHeNB
-                               ========
+#+STARTUP: showall
+#+TAGS: DOCS(d) CODING(c) TESTING(t) PLANING(p)
+#+STARTUP: hidestars
 
-Author: Vlad K.
-Date: 2012-01-12 12:52:34 EET
+* Open Source HeNB platform
+** Overview							       :DOCS:
 
-
-Table of Contents
-=================
-1 Open Source HeNB platform
-    1.1 Overview
-
-
-1 Open Source HeNB platform
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-1.1 Overview :DOCS:
-===================
-
-   [Femto Forum]
+   [[http://femtoforum.org/femto/technical.php][Femto Forum]]
 
    The Femto Application Platform Interface (FAPI) is an initiative
    within the femto industry to encourage competition and innovation
@@ -29,7 +17,4 @@ Table of Contents
    take advantage of the latest innovations in silicon and software with
    the minimum of entry barrier, and the least amount of custom
    re-engineering.
-
-
-   [Femto Forum]: http://femtoforum.org/femto/technical.php
 
