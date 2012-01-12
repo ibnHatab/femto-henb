@@ -22,8 +22,11 @@
    interface specification is to allow the use of a wide range of
    schedulers which can be plugged into the eNodeB and to allow for
    standardized interference coordination interface to the scheduler.
-*** DONE Interface definition for CSCHED SAP and SCHED SAP with Properties <2012-01-12 Thu> :CODING:
+
+*** DONE Interface definition for CSCHED/SCHED SAP <2012-01-12 Thu>  :CODING:
+
 ** LTE eNB L1 API Definition v1.11
+
    October 2010
 
    Index number: FF_Tech_002_v1.11
@@ -33,7 +36,11 @@
    PHY. Specifically, this L1 API defines both P5 and P7 of the Femto
    Forum LTE FAPI.
 
-** LTE Network Monitor Mode Specification v1.01
+*** TODO L1 API for both P5 and P7 of the FAPI.
+
+*** TODO Encoder/Decoder for configuration messages
+
+** LTE Network Monitor Mode Specification v1.01			    :PLANING:
 
    October 2010
 
@@ -47,3 +54,11 @@
    cell id selection; DL TX power setting; UE TX power setting and
    frequency reference.
 
+** TODO P4 – the Network Listen Results interface		     :CODING:
+   Used by Network Monitor Mode (NMM) module for LTE
+
+** a [1/2]
+   - [ ] unu
+   - [X] doi [2/2]
+     - [X] a
+     - [X] b

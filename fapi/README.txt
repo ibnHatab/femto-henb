@@ -2,16 +2,20 @@
                                  ====
 
 Author: Vlad K.
-Date: 2012-01-12 12:54:20 EET
+Date: 2012-01-12 13:12:23 EET
 
 
 Table of Contents
 =================
 1 Interfaces
     1.1 LTE MAC Scheduler Interface Specification v1.11
-        1.1.1 Interface definition for CSCHED SAP and SCHED SAP with Properties <2012-01-12 Thu>
+        1.1.1 Interface definition for CSCHED/SCHED SAP <2012-01-12 Thu>
     1.2 LTE eNB L1 API Definition v1.11
+        1.2.1 L1 API for both P5 and P7 of the FAPI.
+        1.2.2 Encoder/Decoder for configuration messages
     1.3 LTE Network Monitor Mode Specification v1.01
+    1.4 P4 – the Network Listen Results interface
+    1.5 a [1/2]
 
 
 1 Interfaces
@@ -37,11 +41,12 @@ Table of Contents
    schedulers which can be plugged into the eNodeB and to allow for
    standardized interference coordination interface to the scheduler.
 
-1.1.1 DONE Interface definition for CSCHED SAP and SCHED SAP with Properties <2012-01-12 Thu> :CODING:
-------------------------------------------------------------------------------------------------------
+1.1.1 DONE Interface definition for CSCHED/SCHED SAP <2012-01-12 Thu> :CODING:
+------------------------------------------------------------------------------
 
 1.2 LTE eNB L1 API Definition v1.11
 ====================================
+
    October 2010
 
    Index number: FF_Tech_002_v1.11
@@ -51,8 +56,14 @@ Table of Contents
    PHY. Specifically, this L1 API defines both P5 and P7 of the Femto
    Forum LTE FAPI.
 
-1.3 LTE Network Monitor Mode Specification v1.01
-=================================================
+1.2.1 TODO L1 API for both P5 and P7 of the FAPI.
+--------------------------------------------------
+
+1.2.2 TODO Encoder/Decoder for configuration messages
+------------------------------------------------------
+
+1.3 LTE Network Monitor Mode Specification v1.01 :PLANING:
+==========================================================
 
    October 2010
 
@@ -66,3 +77,13 @@ Table of Contents
    cell id selection; DL TX power setting; UE TX power setting and
    frequency reference.
 
+1.4 TODO P4 – the Network Listen Results interface :CODING:
+===========================================================
+   Used by Network Monitor Mode (NMM) module for LTE
+
+1.5 a [1/2]
+============
+   - [ ] unu
+   - [X] doi [2/2]
+     - [X] a
+     - [X] b

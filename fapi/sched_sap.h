@@ -1,5 +1,5 @@
-#ifndef _LTE_SCHED_IFACE_H_
-#define _LTE_SCHED_IFACE_H_
+#ifndef _SCHED_SAP_H_
+#define _SCHED_SAP_H_
 
 /***********************************************************************************/
 /* LTE MAC Scheduler Interface                                                     */
@@ -1098,4 +1098,4 @@ struct SCHED_UL_CONFIG_IND
     uint8_t vendorSpecificList [0];
 };
 
-#endif /* _LTE_SCHED_IFACE_H_ */
+#endif /* _SCHED_SAP_H_ */
