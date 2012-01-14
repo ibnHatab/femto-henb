@@ -2,7 +2,7 @@
                                  ====
 
 Author: Vlad K.
-Date: 2012-01-13 18:42:35 EET
+Date: 2012-01-14 19:04:04 EET
 
 
 Table of Contents
@@ -13,9 +13,10 @@ Table of Contents
     1.2 LTE eNB L1 API Definition v1.11
         1.2.1 L1 API for both P5 and P7 of the FAPI.
         1.2.2 Encoder/Decoder for configuration messages
-        1.2.3 Configuration Procedure
+        1.2.3 Mesage validator on PHY state and request type
+        1.2.4 Configuration Procedure
     1.3 LTE Network Monitor Mode Specification v1.01
-    1.4 P4 – the Network Listen Results interface
+    1.4 P4  the Network Listen Results interface
     1.5 a [0/2]
     1.6 bb
 
@@ -23,14 +24,14 @@ Table of Contents
 1 Interfaces
 ~~~~~~~~~~~~~
   Several APIs are defined, as follows:
-  P1 – the Security coprocessor interface
-  P2 – the Service Discovery Interface
-  P3 – the GPS interface
-  P4 – the Network Listen Results interface
-  P5 – the PHY mode control interface
-  P6 – the ciphering coprocessor interface
-  P7 – the main datapath interface
-  M1 – the scheduler interface
+  P1  the Security coprocessor interface
+  P2  the Service Discovery Interface
+  P3  the GPS interface
+  P4  the Network Listen Results interface
+  P5  the PHY mode control interface
+  P6  the ciphering coprocessor interface
+  P7  the main datapath interface
+  M1  the scheduler interface
 
 1.1 LTE MAC Scheduler Interface Specification v1.11 :DOCS:
 ==========================================================
@@ -61,11 +62,14 @@ Table of Contents
 1.2.1 TODO L1 API for both P5 and P7 of the FAPI. :CODING:
 ----------------------------------------------------------
 
-1.2.2 TODO Encoder/Decoder for configuration messages :CODING:
+1.2.2 DONE Encoder/Decoder for configuration messages :CODING:
 --------------------------------------------------------------
 
-1.2.3 Configuration Procedure :DOCS:
-------------------------------------
+1.2.3 DONE Mesage validator on PHY state and request type :CODING:
+------------------------------------------------------------------
+
+1.2.4 Configuration Procedure :DOCS:TESTING:
+--------------------------------------------
 
 +-------------------+------------+------------+------------+
 | INPUT \ STATE     | IDLE       | CONFIGURED | RUNNING    |
@@ -99,8 +103,8 @@ Table of Contents
    cell id selection; DL TX power setting; UE TX power setting and
    frequency reference.
 
-1.4 TODO P4 – the Network Listen Results interface :CODING:
-===========================================================
+1.4 TODO P4  the Network Listen Results interface :CODING:
+==========================================================
    Used by Network Monitor Mode (NMM) module for LTE
 
 1.5 a [0/2]

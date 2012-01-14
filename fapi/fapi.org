@@ -4,14 +4,14 @@
 
 * Interfaces
   Several APIs are defined, as follows:
-  P1 – the Security coprocessor interface
-  P2 – the Service Discovery Interface
-  P3 – the GPS interface
-  P4 – the Network Listen Results interface
-  P5 – the PHY mode control interface
-  P6 – the ciphering coprocessor interface
-  P7 – the main datapath interface
-  M1 – the scheduler interface
+  P1  the Security coprocessor interface
+  P2  the Service Discovery Interface
+  P3  the GPS interface
+  P4  the Network Listen Results interface
+  P5  the PHY mode control interface
+  P6  the ciphering coprocessor interface
+  P7  the main datapath interface
+  M1  the scheduler interface
 
 ** LTE MAC Scheduler Interface Specification v1.11		       :DOCS:
    October 2010
@@ -75,7 +75,7 @@
    cell id selection; DL TX power setting; UE TX power setting and
    frequency reference.
 
-** TODO P4 – the Network Listen Results interface		     :CODING:
+** TODO P4  the Network Listen Results interface		     :CODING:
    Used by Network Monitor Mode (NMM) module for LTE
 
 ** a [0/2]

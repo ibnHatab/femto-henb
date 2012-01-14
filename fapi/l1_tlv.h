@@ -130,7 +130,7 @@ enum FAPI_L1_Configuration_TLV_TAG_e {
     FAPI_L1_FrequencyOffset = 21,
     // The first physical resource block available for PRACH. see [8]
     // section 5.7.1
-    // Value: 0 - UL_channel_bandwidth – 6
+    // Value: 0 - UL_channel_bandwidth  6
 
     /******* PUSCH Config *******/
 

@@ -108,9 +108,9 @@ struct FAPI_L1_MessageValidator {
             }
 
 // Table 12: TLVs included in CONFIG.request for TDD for IDLE and CONFIGURED states
-// Mandatory TLVs – These must be included when the PHY is in IDLE state, they may
+// Mandatory TLVs  These must be included when the PHY is in IDLE state, they may
 // also be included when the PHY is in CONFIGURED state.
-// Optional TLVs – These may be included when the PHY is in either IDLE or CONFIGURED
+// Optional TLVs  These may be included when the PHY is in either IDLE or CONFIGURED
 // state. Currently there are no optional TLVs.
 #define CONFIG_REQUEST_TDD_IDLE_AND_CONFIGURED_STATE_LIST {             \
         FAPI_L1_DuplexingMode,                                          \
@@ -167,9 +167,9 @@ struct FAPI_L1_MessageValidator {
             }
 
 // Table 13: TLVs included in CONFIG.request for FDD for IDLE and CONFIGURED states
-// Mandatory TLVs – These must be included when the PHY is in IDLE state, they may
+// Mandatory TLVs  These must be included when the PHY is in IDLE state, they may
 // also be included when the PHY is in CONFIGURED state.
-// Optional TLVs – These may be included when the PHY is in either IDLE or CONFIGURED
+// Optional TLVs  These may be included when the PHY is in either IDLE or CONFIGURED
 // state. Currently there are no optional TLVs.
 #define CONFIG_REQUEST_FDD_IDLE_AND_CONFIGURED_STATE_LIST {             \
         FAPI_L1_DuplexingMode,                                          \
