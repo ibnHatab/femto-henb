@@ -67,41 +67,69 @@ enum FAPI_L1_MessageTypeID_e {
     // RESERVED  0x8c-0xff
 };
 
+enum FAPI_L1_MessageErrors_e {
+  MSG_OK = 0,
+  MSG_INVALID_STATE,
+  MSG_INVALID_CONFIG,
+};
 
 struct fapi_l1_param_request {
-    fapi_l1_message_t hdr;
+  fapi_l1_message_t hdr;
+  // pass
 };
 
 struct fapi_l1_param_response {
-    fapi_l1_message_t hdr;
+  fapi_l1_message_t hdr;
+  uint8_t errorCode;      // See Table 86.
+  uint8_t numberOfTLVs;   // Number of TLVs contained in the message body.
+  uint8_t TLVs[0];        // Variable  See Table 6 to Table 9.
 };
 
 struct fapi_l1_config_request {
-    fapi_l1_message_t hdr;
+  fapi_l1_message_t hdr;
+  uint8_t numberOfTLVs;   // Number of TLVs contained in the message body.
+  uint8_t TLVs[0];        // Variable  See Table 12 to Table 14.
 };
 
 struct fapi_l1_config_response {
-    fapi_l1_message_t hdr;
+  fapi_l1_message_t hdr;
+  uint8_t errorCode;      // See Table 86.
+  uint8_t numberOfInvalidOrUnsupportedTLVs;
+  uint8_t numberOfMissingTLVs;
+  uint8_t TLVs[0];
+  // A list of invalid or unsupported TLVs each TLV is presented in its entirety.
+  // A list of missing TLVs  each TLV is presented in its entirety.
 };
 
 struct fapi_l1_start_request {
-    fapi_l1_message_t hdr;
+  fapi_l1_message_t hdr;
+  // The message length in the generic header = 0.
 };
 
 struct fapi_l1_stop_request {
-    fapi_l1_message_t hdr;
+  fapi_l1_message_t hdr;
+  // The message length in the generic header = 0.
 };
 
 struct fapi_l1_stop_indication {
-    fapi_l1_message_t hdr;
+  fapi_l1_message_t hdr;
+  // The message length in the generic header = 0.
 };
 
 struct fapi_l1_ue_config_request {
-    fapi_l1_message_t hdr;
+  fapi_l1_message_t hdr;
+  uint8_t numberOfTLVs;   // Number of TLVs contained in the message body.
+  uint8_t TLVs[0];        // Variable  See Table 22.
 };
 
 struct fapi_l1_ue_config_response {
     fapi_l1_message_t hdr;
+  uint8_t errorCode;      // See Table 86.
+  uint8_t numberOfInvalidOrUnsupportedTLVs;
+  uint8_t numberOfMissingTLVs;
+  uint8_t TLVs[0];
+  // A list of invalid or unsupported TLVs each TLV is presented in its entirety.
+  // A list of missing TLVs  each TLV is presented in its entirety.
 };
 
 struct fapi_l1_error_indication {
@@ -109,7 +137,9 @@ struct fapi_l1_error_indication {
 };
 
 struct fapi_l1_ue_release_request {
-    fapi_l1_message_t hdr;
+  fapi_l1_message_t hdr;
+  uint8_t numberOfTLVs;   // Number of TLVs contained in the message body.
+  uint8_t TLVs[0];        // Variable  See Table 28.
 };
 
 struct fapi_l1_ue_release_response {

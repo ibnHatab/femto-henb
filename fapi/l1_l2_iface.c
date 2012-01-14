@@ -191,9 +191,49 @@ struct FAPI_L1_MessageValidator {
 
 // Table 14: TLVs permitted in CONFIG.request in the RUNNING state
 //  Other TLVs are FFS (For F**** Sake???)
-#define CONFIG_REQUEST_RUNNING_STATE_STATE_LIST {   \
+#define CONFIG_REQUEST_RUNNING_STATE_LIST {   \
         FAPI_L1_SFN_SF                              \
             }
+
+// Table 22: TLVs included in UE_CONFIG.request
+// CQI Config  All TLVs in this grouping
+// ACK/NACK Config  All TLVs in this grouping
+// SRS Config  All TLVs in this grouping
+// SR Config  All TLVs in this grouping
+// SPS Config  All TLVs in this grouping
+#define UE_CONFIG_REQUEST_RUNNING_STATE_LIST { \
+    FAPI_L1_Handle,                            \
+        FAPI_L1_RNTI,                          \
+                                               \
+        FAPI_L1_CQI_PUCCH_ResourceIndex,        \
+        FAPI_L1_CQI_PMI_ConfigIndex,            \
+        FAPI_L1_CQI_RI_ConfigIndex,                 \
+        FAPI_L1_CQI_SimultaneousAckNackAnd_CQI,     \
+                                                    \
+        FAPI_L1_AN_RepetitionFactor,                \
+        FAPI_L1_AN_n1PUCCH_ANRep,                   \
+        FAPI_L1_TDD_AckNackFeedbackMode,            \
+                                                    \
+        FAPI_L1_SRS_Bandwidth,                      \
+        FAPI_L1_SRS_Hopping_Bandwidth,              \
+        FAPI_L1_FrequencyDomainPosition,            \
+        FAPI_L1_SRS_Duration,                       \
+        FAPI_L1_ISRS_SRS_ConfigIndex,               \
+        FAPI_L1_TransmissionComb,                   \
+        FAPI_L1_SoundingReferenceCyclicShift,       \
+                                                    \
+        FAPI_L1_SR_PUCCH_ResourceIndex,             \
+        FAPI_L1_SR_ConfigIndex,                     \
+                                                    \
+        FAPI_L1_SPS_DL_ConfigSchedulingInterval,    \
+        FAPI_L1_SPS_DL_n1PUCCH_AN_Persistent,       \
+        }
+
+// Table 28: TLVs included in UE_RELEASE.request
+#defien UE_RELEASE_REQUEST_RUNNING_STATE_LIST { \
+    FAPI_L1_Handle,                            \
+    FAPI_L1_RNTI,                              \
+    }
 
   // Validation table for TDD
 struct FAPI_L1_MessageValidator FAPI_L1_MessageValidatorTable_TDD [] = {
@@ -212,7 +252,15 @@ struct FAPI_L1_MessageValidator FAPI_L1_MessageValidatorTable_TDD [] = {
     },
 
     { FAPI_L1_ST_Running, FAPI_L1_CONFIG_request,
-      CONFIG_REQUEST_RUNNING_STATE_STATE_LIST
+      CONFIG_REQUEST_RUNNING_STATE_LIST
+    },
+
+    { FAPI_L1_ST_Running, FAPI_L1_UE_CONFIG_request,
+      UE_CONFIG_REQUEST_RUNNING_STATE_LIST
+    },
+
+    { FAPI_L1_ST_Running, FAPI_L1_UE_RELEASE_request,
+      UE_RELEASE_REQUEST_RUNNING_STATE_LIST
     },
 };
 
@@ -233,7 +281,15 @@ struct FAPI_L1_MessageValidator FAPI_L1_MessageValidatorTable_FDD [] = {
     },
 
     { FAPI_L1_ST_Running, FAPI_L1_CONFIG_request,
-      CONFIG_REQUEST_RUNNING_STATE_STATE_LIST
+      CONFIG_REQUEST_RUNNING_STATE_LIST
+    },
+
+    { FAPI_L1_ST_Running, FAPI_L1_UE_CONFIG_request,
+      UE_CONFIG_REQUEST_RUNNING_STATE_LIST
+    },
+
+    { FAPI_L1_ST_Running, FAPI_L1_UE_RELEASE_request,
+      UE_RELEASE_REQUEST_RUNNING_STATE_LIST
     },
 };
 

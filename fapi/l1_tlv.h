@@ -1,3 +1,30 @@
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
+/*
+ * Copyright (c) 2011 Femto Forum Ltd
+ *
+ * LTE eNB L1 API Definition v1.1
+ * Femto Forum Technical Document
+ *
+ * Document number:  FF_Tech_002_v1.11
+ * Date issued:      12-10-2010
+ * Document status:  Document for public distribution
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation;
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * Author: Ibn Hatab <lib.aca55a@gmail.com>
+ */
+
 #ifndef _L1_TLV_H_
 #define _L1_TLV_H_
 
@@ -14,7 +41,7 @@
 enum FAPI_L1_Configuration_TLV_TAG_e {
     FAPI_L1_DuplexingMode = 1,
     // Type of duplexing mode
-    // Value : 0 : TDD, 1 : FDD, 2 : HD_FDD
+    // Value: 0 : TDD, 1 : FDD, 2 : HD_FDD
 
     FAPI_L1_PCFICH_PowerOffset = 2,
     // The power per antenna of the PCFICH with respect to the
@@ -87,7 +114,7 @@ enum FAPI_L1_Configuration_TLV_TAG_e {
     // reference signal.
     // Value: 0-> 10000, represents -6dB to 4dB in steps 0.001dB
 
-      /******* SCH Config *******/
+    /******* SCH Config *******/
 
     FAPI_L1_PrimarySynchronizationSignal_EPRE_EPRERS = 14,
     // The power of synchronization signal with respect to the reference signal,
@@ -103,7 +130,7 @@ enum FAPI_L1_Configuration_TLV_TAG_e {
     // See [8] section 6.11.
     // Value: 0 - 503
 
-      /******* PRACH Config *******/
+    /******* PRACH Config *******/
 
     FAPI_L1_ConfigurationIndex = 17,
     // Provides information about the location and format of the PRACH.
@@ -150,7 +177,7 @@ enum FAPI_L1_Configuration_TLV_TAG_e {
     // See [8] section 5.3.4.
     // Value: 1 - 4
 
-      /******* PUCCH Config *******/
+    /******* PUCCH Config *******/
 
     FAPI_L1_Delta_PUCCH_Shift = 25,
     // The cyclic shift difference.
@@ -294,22 +321,18 @@ enum FAPI_L1_Configuration_TLV_TAG_e {
     // 1 = CONFIGURED
     // 2 = RUNNING
 
-};
+    /** 3.2.6.4  UE Configuration TLVs
+        The configuration TLVs that are used in the UE_CONFIG message exchanges.
 
-/** 3.2.6.4  UE Configuration TLVs
-    The configuration TLVs that are used in the UE_CONFIG message exchanges.
+        Type      Description  Table 25: TLV format
+        -------------------------------------------
+        uint8_t   Tag
+        uint8_t   Length (in bytes)
+        variable  Value  (bytes % 4 == 0)
 
-    Type      Description  Table 25: TLV format
-    -------------------------------------------
-    uint8_t   Tag
-    uint8_t   Length (in bytes)
-    variable  Value
-
-    XXX: Note that Value is variable in UE message.
-    XXX: Threre is oportunity to optimize encoder using this destinction.
-*/
-
-enum L1_UE_Configuration_TLV_TAG_e {
+        XXX: Note that Value is variable in UE message.
+        XXX: Threre is oportunity to optimize encoder using this destinction.
+    */
 
     FAPI_L1_Handle = 100,
     // An opaque handling to associate the received information in RX.indication
@@ -421,9 +444,10 @@ enum L1_UE_Configuration_TLV_TAG_e {
     // Value: 0 - 2047.
 };
 
-/**
- *  \brief This enumeration serve as type_TAG or SIZE in bytes or BINARY FLAG used for messagege validation
- */
+/** \brief This enumeration serve as:
+    type_TAG or SIZE in bytes in encoder
+    or BINARY FLAG used for messagege validation
+*/
 enum L1_TLV_TAG_TYPE_e {
     TT_UINT8_T  = 0x1,
     TT_UINT16_T = 0x2,
@@ -439,7 +463,7 @@ enum L1_TLV_TAG_TYPE_e {
  * @param buffer - encoding buffer
  * @param offset - buffer offset
  *
- * @return consumed buffer in bytes
+ * @return consumed buffer in bytes or -1 on error
  */
 ssize_t tlv_encode_tag(uint8_t tag, uint8_t *value, uint8_t *buffer, size_t offset);
 
@@ -451,9 +475,19 @@ ssize_t tlv_encode_tag(uint8_t tag, uint8_t *value, uint8_t *buffer, size_t offs
  * @param buffer - encoding buffer
  * @param offset - buffer offset
  *
- * @return addvances bytes
+ * @return addvances bytes or -1 on error
  */
 ssize_t tlv_decode_tag(uint8_t *tag, uint8_t *value, uint8_t *buffer, size_t offset);
 
+/**
+ * Copy tag from one place to another
+ *
+ * @param tag - target tag
+ * @param src - source memory
+ * @param dst - destination memory
+ *
+ * @return addvances bytes or -1 on error
+ */
+ssize_t tlv_copy_tag(uint8_t tag, uint8_t *src, uint8_t *dst);
 
 #endif /*_L1_TLV_H_ */

@@ -129,18 +129,18 @@ struct L1_TLV_Size_t {
 };
 
 
-ssize_t tlv_encode_tag(uint8_t   tag,
-                       uint8_t  *value,
-                       uint8_t  *buffer,
-                       size_t    offset)
+ssize_t tlv_encode_tag(uint8_t tag, uint8_t *value, uint8_t *buffer, size_t offset)
 {
     return -1;
 }
 
-ssize_t tlv_decode_tag(uint8_t  *Tag,
-                       uint8_t  *Value,
-                       uint8_t  *buffer,
-                       size_t    offset)
+ssize_t tlv_decode_tag(uint8_t *tag, uint8_t *value, uint8_t *buffer, size_t offset)
 {
     return -1;
 }
+
+ssize_t tlv_copy_tag(uint8_t tag, uint8_t *src, uint8_t *dst)
+{
+    return -1;
+}
+
