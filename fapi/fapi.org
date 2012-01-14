@@ -36,9 +36,30 @@
    PHY. Specifically, this L1 API defines both P5 and P7 of the Femto
    Forum LTE FAPI.
 
-*** TODO L1 API for both P5 and P7 of the FAPI.
+*** TODO L1 API for both P5 and P7 of the FAPI.                      :CODING:
 
-*** TODO Encoder/Decoder for configuration messages
+*** DONE Encoder/Decoder for configuration messages                  :CODING:
+
+*** DONE Mesage validator on PHY state and request type              :CODING:
+
+*** Configuration Procedure                                    :DOCS:TESTING:
+
++-------------------+------------+------------+------------+
+| INPUT \ STATE     | IDLE       | CONFIGURED | RUNNING    |
++-------------------+------------+------------+------------+
+| PARAM.reques      | IDLE       | CONFIGURED | X          |
++-------------------+------------+------------+------------+
+| CONFIG.reques     | CONFIGURED | CONFIGURED |            |
++-------------------+------------+------------+------------+
+| START.reques      |            | RUNNING    |            |
++-------------------+------------+------------+------------+
+| STOP.reques       |            |            | CONFIGURED |
++-------------------+------------+------------+------------+
+| DL_CONFIG.request |            |            | RUNNING    |
++-------------------+------------+------------+------------+
+| UL_CONFIG.request |            |            | RUNNING    |
++-------------------+------------+------------+------------+
+
 
 ** LTE Network Monitor Mode Specification v1.01			    :PLANING:
 
@@ -57,8 +78,14 @@
 ** TODO P4 – the Network Listen Results interface		     :CODING:
    Used by Network Monitor Mode (NMM) module for LTE
 
-** a [1/2]
+** a [0/2]
    - [ ] unu
-   - [X] doi [2/2]
+   - [-] doi [2/3]
      - [X] a
      - [X] b
+     - [ ] c
+
+** TODO bb
+   - [-] one
+     - [ ] one.one
+     - [X] one.two

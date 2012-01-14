@@ -1,24 +1,34 @@
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
+
+/*
+ * Copyright (c) 2011 Femto Forum Ltd
+ *
+ * LTE MAC Scheduler Interface
+ * Specification v1.11
+ * Femto Forum Technical Document
+ *
+ * Document number:  FF_Tech_001_v1.11
+ * Date issued:      12-10-2010
+ * Document status:  Document for public distribution
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation;
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * Author: Ibn Hatab <lib.aca55a@gmail.com>
+ */
+
 #ifndef _SCHED_SAP_H_
 #define _SCHED_SAP_H_
-
-/***********************************************************************************/
-/* LTE MAC Scheduler Interface                                                     */
-/* Specification v1.11                                                             */
-/* Femto Forum Technical Document                                                  */
-/*                                                                                 */
-/* Document number:  FF_Tech_001_v1.11                                             */
-/* Date issued:      12-10-2010                                                    */
-/* Document status:  Document for public distribution                              */
-/*                                                                                 */
-/* Copyright                                                                       */
-/* This document is subject to copyright owned by the Femto Forum Ltd and/or       */
-/* licensed to the Femto Forum Ltd by its contributing members. You may use and    */
-/* distribute this document free of charge provided that you comply with the       */
-/* provisions set out in this notice. Other than this limited licence, you are not */
-/* granted any further right, interest or title in this document and the Femto     */
-/* Forum Ltd and/or its contributing members shall at all times remain the sole    */
-/* owner(s) of the copyright in this document.                                     */
-/***********************************************************************************/
 
 #ifndef __KERNEL__
 #ifndef bool
