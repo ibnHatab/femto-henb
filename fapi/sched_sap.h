@@ -111,7 +111,7 @@ struct dlDciListElement
     } vrb_format;
 
     bool tb_swap;                    // TRUE, FALSE
-    bool sps_release;                //  TRUE, FALSE
+    bool sps_release;                // TRUE, FALSE
     bool pdcch_order;                // TRUE, FALSE
 
     uint8_t preamble_index;          // 0..63
@@ -283,7 +283,7 @@ struct buildBroadcastListElement
 struct ulInfoListElement
 {
     uint16_t rnti;                        // 1..65535
-    uint16_t ulReception [MAX_LC_LIST+1]; //  0..65535
+    uint16_t ulReception [MAX_LC_LIST+1]; // 0..65535
 
     enum receptionStatus_e
     {
@@ -341,7 +341,7 @@ struct drxConfig
     uint16_t longDRX_CycleStartOffset;
     // 0..2559
     uint16_t shortDRX_Cycle;
-    // 2,5,8,10,16,10,21,40,64,80,128,160,256,320,512,640, OFF
+    // 2,5,8,10,16,10,21,40,64,80,128,160,256,320,512,640,OFF
     uint8_t drxShortCycleTimer; // 1..16
 };
 
@@ -477,7 +477,7 @@ struct cqiListElement
 
     enum cqiType_e
     {
-        P10,P11,P20,P21, A12, A22, A20, A30, A31
+        P10,P11,P20,P21,A12,A22,A20,A30,A31
     } cqiType;
 
 
@@ -619,10 +619,7 @@ struct CSCHED_CELL_CONFIG_REQ
 
     uint8_t antennaPortsCount;                                   // 1,2,4
 
-    enum duplexMode_e
-    {
-        DM_TDD, DM_FDD
-    } duplexMode;
+    FAPI_L1_DuplexingMode_e duplexMode;
 
     uint8_t subframeAssignment;                                  // 0..6
     uint8_t specialSubframePatterns;                             // 0..8
@@ -651,7 +648,7 @@ struct CSCHED_CELL_CONFIG_REQ
 
     enum enable64QAM_e
     {
-        MOD_16QAM, MOD_64QAM
+        EN_MOD_16QAM, EN_MOD_64QAM
     } enable64QAM;
 
     uint8_t nr_vendorSpecificList;                               // 0..MAX_SCHED_CFG_LIST
@@ -837,13 +834,13 @@ struct CSCHED_UE_CONFIG_UPDATE_IND
     uint8_t transmissionMode;      // 1..7
 
     bool spsRequestPresent;        // TRUE, FALSE
-    struct spsConfig spsRequest;         // see 4.3.17     The SPS configuration request
+    struct spsConfig spsRequest;   // see 4.3.17     The SPS configuration request
 
     bool srRequestPresent;         // TRUE, FALSE
-    struct srRequest srRequest;          // see 4.3.18     The SR configuration request
+    struct srRequest srRequest;    // see 4.3.18     The SR configuration request
 
     bool cqiRequestPresent;        // TRUE, FALSE
-    struct cqiRequest cqiRequest;         // see 4.3.19     The CQI configuration request
+    struct cqiRequest cqiRequest;  // see 4.3.19     The CQI configuration request
 
     uint8_t nr_vendorSpecificList; // 0..MAX_SCHED_CFG_LIST
     uint8_t vendorSpecificList[0];
@@ -1032,7 +1029,7 @@ struct SCHED_UL_TRIGGER_REQ
 
     uint8_t nr_ulInfoList;         // 0.. MAX_ULINFO_LIST
     struct ulInfoListElement
-    ulInfoList[MAX_ULINFO_LIST];   // See 4.3.12
+    ulInfoList [MAX_ULINFO_LIST];  // See 4.3.12
 
     uint8_t nr_vendorSpecificList; // 0..MAX_SCHED_CFG_LIST
     uint8_t vendorSpecificList [0];
@@ -1101,8 +1098,8 @@ struct SCHED_UL_CONFIG_IND
     uint8_t nr_dciList;                                // 0..MAX_DCI_LIST
     uint8_t nr_phichList;                              // 0..MAX_PHICH_LIST
 
-    struct ulDciListElement dciList [MAX_DCI_LIST];    // See 4.3.2
-    struct phichListElement phichList[MAX_PHICH_LIST]; // See 4.3.7
+    struct ulDciListElement dciList [MAX_DCI_LIST];     // See 4.3.2
+    struct phichListElement phichList [MAX_PHICH_LIST]; // See 4.3.7
 
     uint8_t nr_vendorSpecificList;                     // 0..MAX_SCHED_CFG_LIST
     uint8_t vendorSpecificList [0];

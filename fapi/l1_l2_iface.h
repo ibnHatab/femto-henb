@@ -30,8 +30,7 @@
 
 #include <fapi/l1_types.h>
 
-/** Table 3: General L1 API message format */
-
+// Table 3: General L1 API message format
 typedef struct fapi_l1_message {
     uint8_t  typeID;
     uint8_t  lengthVendorSspecific;
@@ -226,8 +225,8 @@ struct fapi_l1_dl_config_request {
 
     uint16_t SFN_SF;
     // A 16-bit value where,
-    //   [15:4] SFN, range 0  1023
-    //   [3:0] SF, range 0  9
+    // [15:4] SFN, range 0  1023
+    // [3:0] SF, range 0  9
 
     uint16_t Length;
     // The length of the downlink subframe configuration.
@@ -291,7 +290,9 @@ struct fapi_l1_dci_dl_pdu {
     // 4 = 1D
     // 5 = 2
     // 6 = 2A
-    // CCE Index  uint8_t  CCE index used to send the DCI.
+
+    uint8_t CCE_Index;
+    //CCE index used to send the DCI.
     // Value: 0  88
 
     uint8_t AggregationLevel;
@@ -306,11 +307,11 @@ struct fapi_l1_dci_dl_pdu {
     uint8_t ResourceAllocationType;
     // Resource allocation type/header
     // Valid for DCI formats: 1,2,2A
-    // 0=type 0
-    // 1=type 1
+    // 0 = type 0
+    // 1 = type 1
 
     uint8_t VirtualResourceBlockAssignmentFlag;
-    //   Type of virtual resource block used
+    // Type of virtual resource block used
     // Valid for DCI formats: 1A,1B,1D
     // 0 = localized
     // 1 = distributed
@@ -425,7 +426,7 @@ struct fapi_l1_dci_dl_pdu {
     // Indicates that PRACH procedure is initiated
     // Valid for DCI formats: 1A
     // 0 = false
-    // 1=true
+    // 1 = true
 
     uint8_t PreambleIndex ;
     // The preamble index to be used on the PRACH
@@ -440,8 +441,8 @@ struct fapi_l1_dci_dl_pdu {
     uint8_t RNTI_type;
     // RNTI type
     // Valid for DCI format 1, 1A,2,2A
-    // 1 =  C-RNTI
-    // 2 =  RA-RNTI, P-RNTI, or SI-RNTI.
+    // 1 = C-RNTI
+    // 2 = RA-RNTI, P-RNTI, or SI-RNTI.
     // 3 = SPS-CRNTI
 
     uint16_t TransmissionPower;
@@ -553,7 +554,8 @@ struct fapi_l1_dlsch_pdu {
     // 0 = type 0
     // 1 = type 1
     // 2 = type 2
-    // VirtualResourceBlockAssignmentFlag  uint8_t
+
+    uint8_t VirtualResourceBlockAssignmentFlag;
     // Type of virtual resource block used. This should match the
     // value sent in the DCI Format 1A, 1B, 1D PDU which allocated
     // this grant.
@@ -650,7 +652,7 @@ struct fapi_l1_dlsch_pdu {
     uint8_t N_GAP;
     // Used in virtual resource block distribution
     // 0= NGAP1
-    // 1=  NGAP2
+    // 1= NGAP2
 
     uint8_t N_PRB;
     // Used with DCI format 1A and RNTI=SI-RNTI or RA-RNTI. This
@@ -672,7 +674,7 @@ struct fapi_l1_dlsch_pdu {
 struct fapi_l1_pch_pdu {
 
     uint16_t Length;
-    //  The length (in bytes) of the associated MAC PDU, delivered in
+    // The length (in bytes) of the associated MAC PDU, delivered in
     // TX.request. This should be the actual length of the MAC
     // PDU, which may not be a multiple of 32-bits.
 
@@ -823,10 +825,10 @@ struct fapi_l1_ul_config_request {
         // 6: UCI_HARQ, see Section 3.3.1.3.8.
         // 7: UCI_SR_HARQ, see Section 3.3.1.3.9.
         // 8: UCI_CQI_HARQ, see Section 3.3.1.3.10.
-        // 9 : UCI_CQI_SR, see Section  3.3.1.3.11
-        // 10 : UCI_CQI_SR_HARQ, see Section  3.3.1.3.11
+        // 9: UCI_CQI_SR, see Section  3.3.1.3.11
+        // 10: UCI_CQI_SR_HARQ, see Section  3.3.1.3.11
         // 11: SRS, see Section 3.3.1.3.16.
-        // 12 : HARQ_BUFFER , see Section 3.3.1.3.17
+        // 12: HARQ_BUFFER , see Section 3.3.1.3.17
 
         uint8_t PDU_Size;
         // Size of the PDU control information (in bytes).
@@ -1398,6 +1400,9 @@ struct fapi_l1_hi_dci0_request {
         // Size of the PDU control information (in bytes).
         // This length value includes the 2 bytes required for the PDU
         // type and PDU size parameters.
+
+        uint_8 DCI_HI_PDU [0];
+
     } DCI_HI_PDU_Configuration [0];
     //  HI/DCI PDU  Struct  See Sections 3.3.1.4.1 to 3.3.1.4.2.
 };
@@ -1494,7 +1499,7 @@ struct fapi_l1_tdd_harq_data_mode_bundling {
     // 1 = ACK
     // 2 = NACK
     // 3 = ACK or NACK
-    // 4 =  DTX
+    // 4 = DTX
     // 5 = ACK or DTX
     // 6 = NACK or DTX
     // 7 = ACK or NACK or DTX
