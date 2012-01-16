@@ -36,7 +36,7 @@
    PHY. Specifically, this L1 API defines both P5 and P7 of the Femto
    Forum LTE FAPI.
 
-*** TODO L1 API for both P5 and P7 of the FAPI.                      :CODING:
+*** DONE L1 API for both P5 and P7 of the FAPI.                      :CODING:
 
 *** DONE Encoder/Decoder for configuration messages                  :CODING:
 
@@ -78,7 +78,7 @@
 ** TODO P4  the Network Listen Results interface		     :CODING:
    Used by Network Monitor Mode (NMM) module for LTE
 
-** a [0/2]
+** [#B] a [0/2]
    - [ ] unu
    - [-] doi [2/3]
      - [X] a
