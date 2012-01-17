@@ -75,6 +75,10 @@
    cell id selection; DL TX power setting; UE TX power setting and
    frequency reference.
 
+   Ref.
+   \[4\]  A.  Maida,  Femto  Network  Monitor  Mode    Receiver
+   performance  &  RF  Self  Configuration Algorithms, UbiquiSys Ltd, v5
+
 ** TODO P4  the Network Listen Results interface		     :CODING:
    Used by Network Monitor Mode (NMM) module for LTE
 
