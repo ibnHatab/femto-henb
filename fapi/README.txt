@@ -1,8 +1,8 @@
-                                 fapi
-                                 ====
+                   FAPI Interface Specification v1
+                   ===============================
 
-Author: Vlad K.
-Date: 2012-01-14 19:04:04 EET
+Author: Ibn Hatab <lib.aca55a@gmail.com>
+Date: 2012-01-17 12:35:58 EET
 
 
 Table of Contents
@@ -17,8 +17,6 @@ Table of Contents
         1.2.4 Configuration Procedure
     1.3 LTE Network Monitor Mode Specification v1.01
     1.4 P4  the Network Listen Results interface
-    1.5 a [0/2]
-    1.6 bb
 
 
 1 Interfaces
@@ -59,7 +57,7 @@ Table of Contents
    PHY. Specifically, this L1 API defines both P5 and P7 of the Femto
    Forum LTE FAPI.
 
-1.2.1 TODO L1 API for both P5 and P7 of the FAPI. :CODING:
+1.2.1 DONE L1 API for both P5 and P7 of the FAPI. :CODING:
 ----------------------------------------------------------
 
 1.2.2 DONE Encoder/Decoder for configuration messages :CODING:
@@ -103,20 +101,11 @@ Table of Contents
    cell id selection; DL TX power setting; UE TX power setting and
    frequency reference.
 
-1.4 TODO P4  the Network Listen Results interface :CODING:
+   Ref.
+   \[4\]  A.  Maida,  Femto  Network  Monitor  Mode    Receiver
+   performance  &  RF  Self  Configuration Algorithms, UbiquiSys Ltd, v5
+
+1.4 DONE P4  the Network Listen Results interface :CODING:
 ==========================================================
    Used by Network Monitor Mode (NMM) module for LTE
 
-1.5 a [0/2]
-============
-   - [ ] unu
-   - [-] doi [2/3]
-     - [X] a
-     - [X] b
-     - [ ] c
-
-1.6 TODO bb
-============
-   - [-] one
-     - [ ] one.one
-     - [X] one.two

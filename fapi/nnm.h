@@ -72,6 +72,7 @@ enum FAPI_NNM_MessageTypeID_e {
 //// 7  Parameters //// 7  Parameters ////
 // 7.1  CellFoundElement
 struct CellFoundElement {
+
   uint8_t rsrp; //  0..128(-144..-16)
   // The measured RSRP value in dBm. See [3].
 
@@ -81,14 +82,14 @@ struct CellFoundElement {
 // 7.2  BcchDataElement
 struct BcchDataElement {
 
-uint16_t len; // 0..MAX_BCCH_SIZE
-//   The length of the BCCH payload.
+  uint16_t len; // 0..MAX_BCCH_SIZE
+  // The length of the BCCH payload.
 
-uint16_t sfn; // 0..1023
-//   The radio frame the data was received on.
+  uint16_t sfn; // 0..1023
+  // The radio frame the data was received on.
 
-uint8_t sf; // 0..9
-//   The subframe the data was received on.
+  uint8_t sf; // 0..9
+  // The subframe the data was received on.
 
   uint8_t data[MAX_BCCH_SIZE];
   // The BCCH payload. The payload is mapped

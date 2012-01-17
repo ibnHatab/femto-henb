@@ -1,14 +1,16 @@
-                               OpenHeNB
-                               ========
+                     Open Source HeNB platform v1
+                     ============================
 
-Author: Vlad K.
-Date: 2012-01-12 12:52:34 EET
+Author: Ibn Hatab <lib.aca55a@gmail.com>
+Date: 2012-01-17 12:41:48 EET
 
 
 Table of Contents
 =================
 1 Open Source HeNB platform
     1.1 Overview
+    1.2 3GPP Evolved Universal Terrestrial Radio Access
+    1.3 FAPI Interface Specification v1
 
 
 1 Open Source HeNB platform
@@ -32,4 +34,25 @@ Table of Contents
 
 
    [Femto Forum]: http://femtoforum.org/femto/technical.php
+
+1.2 3GPP Evolved Universal Terrestrial Radio Access
+====================================================
+   Ref.  Title  Number  Version & Date
+   1.  (E- TS36.331  8.5.0 UTRA) Radio Resource Control
+   2.  (E- TS36.321  8.5.0 UTRA) Medium Access Control(MAC) protocol specification
+   3.  (E- TS36.300  8.8.0 UTRA) Radio Access and Evolved Universal Terrestrial Radio Access Network  (E-UTRAN) Overall Description; Stage 2
+   4.  (E- TS36.401  8.5.0 UTRA) Network (E-UTRAN); Architecture description
+   5.  (E- TS36.304  8.5.0 UTRA) User Equipment (UE) procedures in idle mode
+   6.  (E- TS36.213  8.6.0 UTRA) Physical Layer procedures
+   7.  3GPP Base Station(BS) Radio Transmission and  TS36.104  8.5.0 Reception
+   8.  (E- TS36.211  8.6.0 UTRA) Physical Channel and Modulation
+   9.  (E- TS36.212  8.6.0 UTRA) Multiplexing and channel coding
+   10. (E- TS36.306  8.3.0 UTRA) User Equipment(UE) radio access capabilities
+   11.  3GPP Home eNodeB (HeNB)  Operations,  TS32.592  0.4.0 Administration, Maintenance and Provisioning (OAM&P);
+        Information model for Type 1 interface HeNB to HeNB Management System (HeMS)
+
+1.3 DONE [FAPI Interface Specification v1]
+===========================================
+
+[FAPI Interface Specification v1]: file%2Bemacs:fapi/fapi.org
 

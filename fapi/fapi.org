@@ -1,6 +1,8 @@
 #+STARTUP: showall
 #+TAGS: DOCS(d) CODING(c) TESTING(t) PLANING(p)
 #+STARTUP: hidestars
+#+TITLE: FAPI Interface Specification v1
+#+AUTHOR: Ibn Hatab <lib.aca55a@gmail.com>
 
 * Interfaces
   Several APIs are defined, as follows:
@@ -13,7 +15,7 @@
   P7  the main datapath interface
   M1  the scheduler interface
 
-** LTE MAC Scheduler Interface Specification v1.11		       :DOCS:
+** LTE MAC Scheduler Interface Specification v1.11                     :DOCS:
    October 2010
 
    Index number: FF_Tech_001_v1.11
@@ -79,17 +81,6 @@
    \[4\]  A.  Maida,  Femto  Network  Monitor  Mode    Receiver
    performance  &  RF  Self  Configuration Algorithms, UbiquiSys Ltd, v5
 
-** TODO P4  the Network Listen Results interface		     :CODING:
+** DONE P4  the Network Listen Results interface                     :CODING:
    Used by Network Monitor Mode (NMM) module for LTE
 
-** [#B] a [0/2]
-   - [ ] unu
-   - [-] doi [2/3]
-     - [X] a
-     - [X] b
-     - [ ] c
-
-** TODO bb
-   - [-] one
-     - [ ] one.one
-     - [X] one.two
