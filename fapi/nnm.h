@@ -29,11 +29,6 @@
 #ifndef _NNM_H_
 #define _NNM_H_
 
-typedef struct fapi_nnm_message {
-  uint8_t  typeID;
-  uint16_t length;
-} fapi_nnm_message_t;
-
 enum FAPI_NNM_MessageTypeID_e {
   NMM_RSSI_MEAS_REQ        = 01,  // 6.1.1 Triggers RSSI measurements
   // in the requested band. Optionally a list of carriers can be configured.
@@ -104,7 +99,6 @@ struct VendorSpecificListElement {
 
 // 6.1.1  NMM_RSSI_MEAS_REQ Parameters
 struct NMM_RSSI_MEAS_REQ {
-  fapi_nnm_message_t hdr;
 
   uint8_t freqBandIndicator; // 1..64
   // The E-UTRA band for which the carrierList
@@ -132,7 +126,6 @@ struct NMM_RSSI_MEAS_REQ {
 
 // 6.1.2 NMM_RSSI_MEAS_IND parameters
 struct NMM_RSSI_MEAS_IND {
-  fapi_nnm_message_t hdr;
 
   uint8_t rssi; // 0..128
   // (-144..-16) The measured RSSI in dBm in steps of 1dB.
@@ -149,7 +142,6 @@ struct NMM_RSSI_MEAS_IND {
 
 // 6.1.3 NMM_RSSI_MEAS_CNF Parameters
 struct NMM_RSSI_MEAS_CNF {
-  fapi_nnm_message_t hdr;
 
   uint8_t nr_vendorSpecificList; // 0..MAX_VENDOR_LIST
   // The number of elements in the next array.
@@ -160,7 +152,6 @@ struct NMM_RSSI_MEAS_CNF {
 
 // 6.1.4 NMM_STOP_RSSI_MEAS_REQ Parameters
 struct NMM_STOP_RSSI_MEAS_REQ {
-  fapi_nnm_message_t hdr;
 
   uint8_t nr_vendorSpecificList; // 0..MAX_VENDOR_LIST
   // The number of elements in the next array.
@@ -171,7 +162,6 @@ struct NMM_STOP_RSSI_MEAS_REQ {
 
 // 6.1.5 NMM_CELL_SEARCH_REQ Parameters
 struct NMM_CELL_SEARCH_REQ {
-  fapi_nnm_message_t hdr;
 
   uint16_t earfcn; // 1..65535
   // The earfcn for which cells should be measured.
@@ -203,7 +193,6 @@ struct NMM_CELL_SEARCH_REQ {
 
 // 6.1.6 NMM_CELL_SEARCH_IND Parameters
 struct NMM_CELL_SEARCH_IND {
-  fapi_nnm_message_t hdr;
 
   uint8_t nr_cellFoundList; // 0..MAX_CELL_FOUND_LIST
   //   The number of cells indicated in this message.
@@ -221,7 +210,6 @@ struct NMM_CELL_SEARCH_IND {
 
 // 6.1.7 NMM_CELL_SEARCH_CNF Parameters
 struct NMM_CELL_SEARCH_CNF {
-  fapi_nnm_message_t hdr;
 
   uint8_t nr_vendorSpecificList; // 0..MAX_VENDOR_LIST
   // The number of elements in the next array.
@@ -232,7 +220,6 @@ struct NMM_CELL_SEARCH_CNF {
 
 // 6.1.8 NMM_STOP_CELL_SEARCH_REQ Parameters
 struct NMM_STOP_CELL_SEARCH_REQ {
-  fapi_nnm_message_t hdr;
 
   uint8_t nr_vendorSpecificList; // 0..MAX_VENDOR_LIST
   // The number of elements in the next array.
@@ -243,7 +230,6 @@ struct NMM_STOP_CELL_SEARCH_REQ {
 
 // 6.1.9 NMM_PBCH_CONFIG_REQ Parameters
 struct NMM_PBCH_CONFIG_REQ {
-  fapi_nnm_message_t hdr;
 
   uint16_t pci; // 0..503
   // The physical cell identity of the cell which the NMM should read the PBCH.
@@ -261,7 +247,6 @@ struct NMM_PBCH_CONFIG_REQ {
 
 // 6.1.10 NMM_PBCH_CONFIG_CNF Parameters
 struct NMM_PBCH_CONFIG_CNF {
-  fapi_nnm_message_t hdr;
 
   uint8_t nr_vendorSpecificList; // 0..MAX_VENDOR_LIST
   // The number of elements in the next array.
@@ -272,7 +257,6 @@ struct NMM_PBCH_CONFIG_CNF {
 
 // 6.1.11 NMM_PBCH_DATA_IND Parameters
 struct NMM_PBCH_DATA_IND {
-  fapi_nnm_message_t hdr;
 
   uint16_t pci; // 0..503
   // The physical cell identity of the cell
@@ -318,7 +302,6 @@ struct NMM_PBCH_DATA_IND {
 
 // 6.1.12 NMM_STOP_PBCH_REQ Parameters
 struct NMM_STOP_PBCH_REQ {
-  fapi_nnm_message_t hdr;
 
   uint8_t nr_vendorSpecificList; // 0..MAX_VENDOR_LIST
   // The number of elements in the next array.
@@ -329,7 +312,6 @@ struct NMM_STOP_PBCH_REQ {
 
 // 6.1.13 NMM_SIB1_CONFIG_REQ Parameters
 struct NMM_SIB1_CONFIG_REQ {
-  fapi_nnm_message_t hdr;
 
   uint8_t retryCount; // 1..8
   // The number of periods for which decoding of a SIB1 should be retried.
@@ -343,7 +325,6 @@ struct NMM_SIB1_CONFIG_REQ {
 
 // 6.1.14 NMM_SIB1_CONFIG_CNF Paramerers
 struct NMM_SIB1_CONFIG_CNF {
-  fapi_nnm_message_t hdr;
 
   uint8_t nr_vendorSpecificList; // 0..MAX_VENDOR_LIST
   // The number of elements in the next array.
@@ -354,7 +335,6 @@ struct NMM_SIB1_CONFIG_CNF {
 
 // 6.1.15 NMM_BCCH_CONFIG_REQ Parameters
 struct NMM_BCCH_CONFIG_REQ {
-  fapi_nnm_message_t hdr;
 
   uint8_t nr_siPeriodicityList; // 0..MAX_SI_LIST
   // The number of SIs to read.
@@ -378,7 +358,6 @@ struct NMM_BCCH_CONFIG_REQ {
 
 // 6.1.16 NMM_BCCH_CONFIG_CNF Parameters
 struct NMM_BCCH_CONFIG_CNF {
-  fapi_nnm_message_t hdr;
 
   uint8_t nr_vendorSpecificList; // 0..MAX_VENDOR_LIST
   // The number of elements in the next array.
@@ -389,7 +368,6 @@ struct NMM_BCCH_CONFIG_CNF {
 
 // 6.1.17 NMM_BCCH_DATA_IND Parameters
 struct NMM_BCCH_DATA_IND {
-  fapi_nnm_message_t hdr;
 
   uint8_t nr_bcchDataList; // 0..MAX_BCCH_DATA_LIST
   //   The number of BCCHs in this message .
@@ -406,7 +384,6 @@ struct NMM_BCCH_DATA_IND {
 
 // 6.1.18 NMM_STOP_BCCH_REQ Parameters
 struct NMM_STOP_BCCH_REQ {
-  fapi_nnm_message_t hdr;
 
   uint8_t nr_vendorSpecificList; // 0..MAX_VENDOR_LIST
   // The number of elements in the next array.
