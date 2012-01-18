@@ -25,8 +25,8 @@ cwmp:
 	@unzip cwmp.zip
 
 clean:
-	@rm $(OPEN_HENB_MDL) $(OPEN_HENB_DOC)
-	@rm cwmp/*
-	@rm cwmp.zip
+	@rm -f $(OPEN_HENB_MDL) $(OPEN_HENB_DOC)
+	@rm -f cwmp/*
+	@rm -f cwmp.zip
 
 

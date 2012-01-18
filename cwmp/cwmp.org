@@ -1,7 +1,7 @@
 #+STARTUP: showall
 #+TAGS: DOCS(d) CODING(c) TESTING(t) PLANING(p)
 #+STARTUP: hidestars
-#+TITLE: BBF Broadband Forum.
+#+TITLE: CWMP (BBF).
 #+AUTHOR: Ibn Hatab <lib.aca55a@gmail.com>
 
 
@@ -12,32 +12,14 @@
   Data Model - A hierarchical set of Objects and/or Parameters that define
   the managed objects accessible via TR-069 [2] for a particular CPE.
 
-  Supported Data Model - Refers to either Base Supported Data Model or Current
-  Supported Data Model, depending on the context.
-
-
-** WT-196 Issue 2, FAPService:2.1 Femto Access Point Service Data Model
-   This is temporarelly replacement for forthcomming TR-196 (Issue 2).
-   This Working Text defines Issue 2 of TR-196 Femtocell Access Point Data Model.
-   It supersedes Issue 1 Amendment 1 which is an update of Issue 1. Issue 2 is
-   an evolution of previous versions by incorporating two new radio technology
-   specific objects and parameters, LTE HeNB and -CDMA2000 FAP-, in addition to the
-   original content of UMTS HNB. In other words, this version covers all 3rd Generation
-   radio technologies defined by 3GPP and 3GPP2.
-
-
-** FEMTO-LTE Device:1.0.0 Data Model
-   This is Data Model supported by the FEMTO-LTE Device version 1.0.0. It includes
-   general purpose component objects from Device:2 (TR-181i2), FAP independent part
-   of FAPService:1 (TR-196i1) and also LTE FAP component from FAPService:2.1 (WT-196i2).
 
 * Tools:
 
-* report.pl - generate report on TR-069 DM instances (data model definitions)
-  Dependencies:
-  sudo apt-get install perl-doc
-  sudo apt-get install libxml-libxml-perl
-  sudo apt-get install libdata-compare-perl
-  sudo apt-get install libclone-perl
-  sudo apt-get install libalgorithm-diff-perl
+** report.pl - generate report on TR-069 DM instances (data model definitions)
+   Dependencies:
+   sudo apt-get install perl-doc
+   sudo apt-get install libxml-libxml-perl
+   sudo apt-get install libdata-compare-perl
+   sudo apt-get install libclone-perl
+   sudo apt-get install libalgorithm-diff-perl
 
