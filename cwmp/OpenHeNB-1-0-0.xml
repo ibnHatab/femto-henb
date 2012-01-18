@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+OpenHeNB Device:1.0.0 Data Model
+
+Summary:
+
+-->
+<dm:document xmlns:dm="urn:broadband-forum-org:cwmp:datamodel-1-3"
+	     xmlns:dmr="urn:broadband-forum-org:cwmp:datamodel-report-0-1"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xsi:schemaLocation="urn:broadband-forum-org:cwmp:datamodel-1-3 cwmp-datamodel-1-3.xsd
+				 urn:broadband-forum-org:cwmp:datamodel-report-0-1 cwmp-datamodel-report.xsd"
+	     deviceType="urn:x-open-henb:open-henb-1-0-0">
+
+  <description>OpenHeNB:1.0.0 Device Data Model.</description>
+
+  <import file="tr-181-2-3.xml" spec="urn:broadband-forum-org:tr-181-2-3">
+    <model name="Device:2.2"/>
+  </import>
+
+  <import file="tr-196-1-1-0.xml" spec="urn:broadband-forum-org:tr-196-1-1-0">
+    <model name="FAPService:2.1"/>
+  </import>
+
+
+  <model ref="Device:2.2">
+    <object ref="Device." access="readOnly" minEntries="1" maxEntries="1">
+      <parameter ref="InterfaceStackNumberOfEntries" requirement="readOnly"/>
+    </object>
+
+    <object ref="Device.DeviceInfo." access="readOnly" minEntries="1" maxEntries="1">
+      <parameter ref="Manufacturer" requirement="readOnly"/>
+      <parameter ref="ManufacturerOUI" requirement="readOnly"/>
+      <parameter ref="ModelName" requirement="readOnly"/>
+      <parameter ref="Description" requirement="readOnly"/>
+      <parameter ref="ProductClass" requirement="readOnly"/>
+      <parameter ref="SerialNumber" requirement="readOnly"/>
+      <parameter ref="HardwareVersion" requirement="readOnly"/>
+      <parameter ref="SoftwareVersion" requirement="readOnly"/>
+      <parameter ref="AdditionalHardwareVersion" requirement="readOnly"/>
+      <parameter ref="AdditionalSoftwareVersion" requirement="readOnly"/>
+      <parameter ref="ProvisioningCode" requirement="readWrite"/>
+      <parameter ref="UpTime" requirement="readOnly"/>
+      <parameter ref="FirstUseDate" requirement="readOnly"/>
+      <parameter ref="VendorConfigFileNumberOfEntries" requirement="readOnly"/>
+      <parameter ref="SupportedDataModelNumberOfEntries" requirement="readOnly"/>
+      <parameter ref="ProcessorNumberOfEntries" requirement="readOnly"/>
+      <parameter ref="VendorLogFileNumberOfEntries" requirement="readOnly"/>
+    </object>
+
+    <object ref="Device.DeviceInfo.SupportedDataModel.{i}." access="readOnly" minEntries="0" maxEntries="unbounded">
+      <parameter ref="URL" requirement="readOnly"/>
+      <parameter ref="URN" requirement="readOnly"/>
+      <parameter ref="Features" requirement="readOnly"/>
+    </object>
+
+    <object ref="Device.DeviceInfo.VendorLogFile.{i}." access="readOnly" minEntries="0" maxEntries="unbounded">
+      <parameter ref="Alias" requirement="readWrite"/>
+      <parameter ref="Name" requirement="readOnly"/>
+      <parameter ref="MaximumSize" requirement="readOnly"/>
+      <parameter ref="Persistent" requirement="readOnly"/>
+    </object>
+
+    <object ref="Device.ManagementServer.ManageableDevice.{i}." access="readOnly" minEntries="0" maxEntries="unbounded">
+      <parameter ref="Alias" requirement="readWrite"/>
+      <parameter ref="ManufacturerOUI" requirement="readOnly"/>
+      <parameter ref="SerialNumber" requirement="readOnly"/>
+      <parameter ref="ProductClass" requirement="readOnly"/>
+      <parameter ref="Host" requirement="readOnly"/>
+    </object>
+
+    <object ref="Device.ManagementServer.AutonomousTransferCompletePolicy." access="readOnly" minEntries="1" maxEntries="1">
+      <parameter ref="Enable" requirement="readWrite"/>
+      <parameter ref="TransferTypeFilter" requirement="readWrite"/>
+      <parameter ref="ResultTypeFilter" requirement="readWrite"/>
+      <parameter ref="FileTypeFilter" requirement="readWrite"/>
+    </object>
+
+    <object ref="Device.Time." access="readOnly" minEntries="1" maxEntries="1">
+      <parameter ref="Enable" requirement="readWrite"/>
+      <parameter ref="Status" requirement="readOnly"/>
+      <parameter ref="NTPServer1" requirement="readWrite"/>
+      <parameter ref="NTPServer2" requirement="readWrite"/>
+      <parameter ref="NTPServer3" requirement="readWrite"/>
+      <parameter ref="NTPServer4" requirement="readWrite"/>
+      <parameter ref="NTPServer5" requirement="readWrite"/>
+      <parameter ref="CurrentLocalTime" requirement="readOnly"/>
+      <parameter ref="LocalTimeZone" requirement="readWrite"/>
+    </object>
+
+    <object ref="Device.InterfaceStack.{i}." access="readOnly" minEntries="0" maxEntries="unbounded">
+      <parameter ref="HigherLayer" requirement="readOnly"/>
+      <parameter ref="LowerLayer" requirement="readOnly"/>
+      <parameter ref="HigherAlias" requirement="readOnly"/>
+      <parameter ref="LowerAlias" requirement="readOnly"/>
+    </object>
+
+    <object ref="Device.Ethernet." access="readOnly" minEntries="1" maxEntries="1">
+      <parameter ref="InterfaceNumberOfEntries" requirement="readOnly"/>
+      <parameter ref="LinkNumberOfEntries" requirement="readOnly"/>
+      <parameter ref="VLANTerminationNumberOfEntries" requirement="readOnly"/>
+    </object>
+
+    <object ref="Device.Ethernet.Interface.{i}." access="readOnly" minEntries="0" maxEntries="unbounded">
+      <parameter ref="Enable" requirement="readWrite"/>
+      <parameter ref="Status" requirement="readOnly"/>
+      <parameter ref="Alias" requirement="readWrite"/>
+      <parameter ref="Name" requirement="readOnly"/>
+      <parameter ref="LastChange" requirement="readOnly"/>
+      <parameter ref="LowerLayers" requirement="readWrite"/>
+      <parameter ref="Upstream" requirement="readOnly"/>
+      <parameter ref="MACAddress" requirement="readOnly"/>
+      <parameter ref="MaxBitRate" requirement="readWrite"/>
+      <parameter ref="DuplexMode" requirement="readWrite"/>
+    </object>
+
+    <object ref="Device.Ethernet.Interface.{i}.Stats." access="readOnly" minEntries="1" maxEntries="1">
+      <parameter ref="BytesSent" requirement="readOnly"/>
+      <parameter ref="BytesReceived" requirement="readOnly"/>
+      <parameter ref="PacketsSent" requirement="readOnly"/>
+      <parameter ref="PacketsReceived" requirement="readOnly"/>
+      <parameter ref="ErrorsSent" requirement="readOnly"/>
+      <parameter ref="ErrorsReceived" requirement="readOnly"/>
+      <parameter ref="UnicastPacketsSent" requirement="readOnly"/>
+      <parameter ref="UnicastPacketsReceived" requirement="readOnly"/>
+      <parameter ref="DiscardPacketsSent" requirement="readOnly"/>
+      <parameter ref="DiscardPacketsReceived" requirement="readOnly"/>
+      <parameter ref="MulticastPacketsSent" requirement="readOnly"/>
+      <parameter ref="MulticastPacketsReceived" requirement="readOnly"/>
+      <parameter ref="BroadcastPacketsSent" requirement="readOnly"/>
+      <parameter ref="BroadcastPacketsReceived" requirement="readOnly"/>
+      <parameter ref="UnknownProtoPacketsReceived" requirement="readOnly"/>
+    </object>
+
+    <object ref="Device.Ethernet.Link.{i}." access="readOnly" minEntries="0" maxEntries="unbounded">
+      <parameter ref="Enable" requirement="readWrite"/>
+      <parameter ref="Status" requirement="readOnly"/>
+      <parameter ref="Alias" requirement="readWrite"/>
+      <parameter ref="Name" requirement="readOnly"/>
+      <parameter ref="LastChange" requirement="readOnly"/>
+      <parameter ref="LowerLayers" requirement="readWrite"/>
+      <parameter ref="MACAddress" requirement="readOnly"/>
+      <parameter ref="PriorityTagging" requirement="readWrite"/>
+    </object>
+
+    <object ref="Device.Ethernet.Link.{i}.Stats." access="readOnly" minEntries="1" maxEntries="1">
+      <parameter ref="BytesSent" requirement="readOnly"/>
+      <parameter ref="BytesReceived" requirement="readOnly"/>
+      <parameter ref="PacketsSent" requirement="readOnly"/>
+      <parameter ref="PacketsReceived" requirement="readOnly"/>
+      <parameter ref="ErrorsSent" requirement="readOnly"/>
+      <parameter ref="ErrorsReceived" requirement="readOnly"/>
+      <parameter ref="UnicastPacketsSent" requirement="readOnly"/>
+      <parameter ref="UnicastPacketsReceived" requirement="readOnly"/>
+      <parameter ref="DiscardPacketsSent" requirement="readOnly"/>
+      <parameter ref="DiscardPacketsReceived" requirement="readOnly"/>
+      <parameter ref="MulticastPacketsSent" requirement="readOnly"/>
+      <parameter ref="MulticastPacketsReceived" requirement="readOnly"/>
+      <parameter ref="BroadcastPacketsSent" requirement="readOnly"/>
+      <parameter ref="BroadcastPacketsReceived" requirement="readOnly"/>
+      <parameter ref="UnknownProtoPacketsReceived" requirement="readOnly"/>
+    </object>
+
+    <object ref="Device.Ethernet.VLANTermination.{i}." access="readOnly" minEntries="0" maxEntries="unbounded">
+      <parameter ref="Enable" requirement="readWrite"/>
+      <parameter ref="Status" requirement="readOnly"/>
+      <parameter ref="Alias" requirement="readWrite"/>
+      <parameter ref="Name" requirement="readOnly"/>
+      <parameter ref="LastChange" requirement="readOnly"/>
+      <parameter ref="LowerLayers" requirement="readWrite"/>
+      <parameter ref="VLANID" requirement="readWrite"/>
+    </object>
+
+    <object ref="Device.Ethernet.VLANTermination.{i}.Stats." access="readOnly" minEntries="1" maxEntries="1">
+      <parameter ref="BytesSent" requirement="readOnly"/>
+      <parameter ref="BytesReceived" requirement="readOnly"/>
+      <parameter ref="PacketsSent" requirement="readOnly"/>
+      <parameter ref="PacketsReceived" requirement="readOnly"/>
+      <parameter ref="ErrorsSent" requirement="readOnly"/>
+      <parameter ref="ErrorsReceived" requirement="readOnly"/>
+      <parameter ref="UnicastPacketsSent" requirement="readOnly"/>
+      <parameter ref="UnicastPacketsReceived" requirement="readOnly"/>
+      <parameter ref="DiscardPacketsSent" requirement="readOnly"/>
+      <parameter ref="DiscardPacketsReceived" requirement="readOnly"/>
+      <parameter ref="MulticastPacketsSent" requirement="readOnly"/>
+      <parameter ref="MulticastPacketsReceived" requirement="readOnly"/>
+      <parameter ref="BroadcastPacketsSent" requirement="readOnly"/>
+      <parameter ref="BroadcastPacketsReceived" requirement="readOnly"/>
+      <parameter ref="UnknownProtoPacketsReceived" requirement="readOnly"/>
+    </object>
+
+    <object ref="Device.IP." access="readOnly" minEntries="1" maxEntries="1">
+      <parameter ref="IPv4Capable" requirement="readOnly"/>
+      <parameter ref="IPv4Enable" requirement="readWrite"/>
+      <parameter ref="IPv4Status" requirement="readOnly"/>
+      <parameter ref="IPv6Capable" requirement="readOnly"/>
+      <parameter ref="IPv6Enable" requirement="readWrite"/>
+      <parameter ref="IPv6Status" requirement="readOnly"/>
+      <parameter ref="ULAPrefix" requirement="readWrite"/>
+      <parameter ref="InterfaceNumberOfEntries" requirement="readOnly"/>
+      <parameter ref="ActivePortNumberOfEntries" requirement="readOnly"/>
+    </object>
+
+    <object ref="Device.IP.Interface.{i}." access="readOnly" minEntries="0" maxEntries="unbounded">
+      <parameter ref="Enable" requirement="readWrite"/>
+      <parameter ref="IPv4Enable" requirement="readWrite"/>
+      <parameter ref="IPv6Enable" requirement="readWrite"/>
+      <parameter ref="ULAEnable" requirement="readWrite"/>
+      <parameter ref="Status" requirement="readOnly"/>
+      <parameter ref="Alias" requirement="readWrite"/>
+      <parameter ref="Name" requirement="readOnly"/>
+      <parameter ref="LastChange" requirement="readOnly"/>
+      <parameter ref="LowerLayers" requirement="readWrite"/>
+      <parameter ref="Router" requirement="readWrite"/>
+      <parameter ref="Reset" requirement="readWrite"/>
+      <parameter ref="MaxMTUSize" requirement="readWrite"/>
+      <parameter ref="Type" requirement="readOnly"/>
+      <parameter ref="Loopback" requirement="readWrite"/>
+      <parameter ref="IPv4AddressNumberOfEntries" requirement="readOnly"/>
+      <parameter ref="IPv6AddressNumberOfEntries" requirement="readOnly"/>
+      <parameter ref="IPv6PrefixNumberOfEntries" requirement="readOnly"/>
+      <parameter ref="AutoIPEnable" requirement="readWrite"/>
+    </object>
+
+    <object ref="Device.IP.Interface.{i}.IPv4Address.{i}." access="readOnly" minEntries="0" maxEntries="unbounded">
+      <parameter ref="Enable" requirement="readWrite"/>
+      <parameter ref="Status" requirement="readOnly"/>
+      <parameter ref="Alias" requirement="readWrite"/>
+      <parameter ref="IPAddress" requirement="readWrite"/>
+      <parameter ref="SubnetMask" requirement="readWrite"/>
+      <parameter ref="AddressingType" requirement="readOnly"/>
+    </object>
+
+    <object ref="Device.IP.Interface.{i}.IPv6Address.{i}." access="readOnly" minEntries="0" maxEntries="unbounded">
+      <parameter ref="Enable" requirement="readWrite"/>
+      <parameter ref="Status" requirement="readOnly"/>
+      <parameter ref="IPAddressStatus" requirement="readOnly"/>
+      <parameter ref="Alias" requirement="readWrite"/>
+      <parameter ref="IPAddress" requirement="readWrite"/>
+      <parameter ref="Origin" requirement="readOnly"/>
+      <parameter ref="Prefix" requirement="readWrite"/>
+      <parameter ref="PreferredLifetime" requirement="readWrite"/>
+      <parameter ref="ValidLifetime" requirement="readWrite"/>
+      <parameter ref="Anycast" requirement="readWrite"/>
+    </object>
+
+    <object ref="Device.IP.Interface.{i}.IPv6Prefix.{i}." access="readOnly" minEntries="0" maxEntries="unbounded">
+      <parameter ref="Enable" requirement="readWrite"/>
+      <parameter ref="Status" requirement="readOnly"/>
+      <parameter ref="PrefixStatus" requirement="readOnly"/>
+      <parameter ref="Alias" requirement="readWrite"/>
+      <parameter ref="Prefix" requirement="readWrite"/>
+      <parameter ref="Origin" requirement="readOnly"/>
+      <parameter ref="StaticType" requirement="readWrite"/>
+      <parameter ref="ParentPrefix" requirement="readWrite"/>
+      <parameter ref="ChildPrefixBits" requirement="readWrite"/>
+      <parameter ref="OnLink" requirement="readWrite"/>
+      <parameter ref="Autonomous" requirement="readWrite"/>
+      <parameter ref="PreferredLifetime" requirement="readWrite"/>
+      <parameter ref="ValidLifetime" requirement="readWrite"/>
+    </object>
+
+    <object ref="Device.IP.Interface.{i}.Stats." access="readOnly" minEntries="1" maxEntries="1">
+      <parameter ref="BytesSent" requirement="readOnly"/>
+      <parameter ref="BytesReceived" requirement="readOnly"/>
+      <parameter ref="PacketsSent" requirement="readOnly"/>
+      <parameter ref="PacketsReceived" requirement="readOnly"/>
+      <parameter ref="ErrorsSent" requirement="readOnly"/>
+      <parameter ref="ErrorsReceived" requirement="readOnly"/>
+      <parameter ref="UnicastPacketsSent" requirement="readOnly"/>
+      <parameter ref="UnicastPacketsReceived" requirement="readOnly"/>
+      <parameter ref="DiscardPacketsSent" requirement="readOnly"/>
+      <parameter ref="DiscardPacketsReceived" requirement="readOnly"/>
+      <parameter ref="MulticastPacketsSent" requirement="readOnly"/>
+      <parameter ref="MulticastPacketsReceived" requirement="readOnly"/>
+      <parameter ref="BroadcastPacketsSent" requirement="readOnly"/>
+      <parameter ref="BroadcastPacketsReceived" requirement="readOnly"/>
+      <parameter ref="UnknownProtoPacketsReceived" requirement="readOnly"/>
+    </object>
+
+    <object ref="Device.Routing." access="readOnly" minEntries="1" maxEntries="1">
+      <parameter ref="RouterNumberOfEntries" requirement="readOnly"/>
+    </object>
+
+    <object ref="Device.Routing.Router.{i}." access="readOnly" minEntries="0" maxEntries="unbounded">
+      <parameter ref="Enable" requirement="readWrite"/>
+      <parameter ref="Status" requirement="readOnly"/>
+      <parameter ref="Alias" requirement="readWrite"/>
+      <parameter ref="IPv4ForwardingNumberOfEntries" requirement="readOnly"/>
+      <parameter ref="IPv6ForwardingNumberOfEntries" requirement="readOnly"/>
+    </object>
+
+    <object ref="Device.Routing.Router.{i}.IPv4Forwarding.{i}." access="readOnly" minEntries="0" maxEntries="unbounded">
+      <parameter ref="Enable" requirement="readWrite"/>
+      <parameter ref="Status" requirement="readOnly"/>
+      <parameter ref="Alias" requirement="readWrite"/>
+      <parameter ref="StaticRoute" requirement="readOnly"/>
+      <parameter ref="DestIPAddress" requirement="readWrite"/>
+      <parameter ref="DestSubnetMask" requirement="readWrite"/>
+      <parameter ref="ForwardingPolicy" requirement="readWrite"/>
+      <parameter ref="GatewayIPAddress" requirement="readWrite"/>
+      <parameter ref="Interface" requirement="readWrite"/>
+      <parameter ref="Origin" requirement="readOnly"/>
+      <parameter ref="ForwardingMetric" requirement="readWrite"/>
+    </object>
+
+    <object ref="Device.Routing.Router.{i}.IPv6Forwarding.{i}." access="readOnly" minEntries="0" maxEntries="unbounded">
+      <parameter ref="Enable" requirement="readWrite"/>
+      <parameter ref="Status" requirement="readOnly"/>
+      <parameter ref="Alias" requirement="readWrite"/>
+      <parameter ref="DestIPPrefix" requirement="readWrite"/>
+      <parameter ref="ForwardingPolicy" requirement="readWrite"/>
+      <parameter ref="NextHop" requirement="readWrite"/>
+      <parameter ref="Interface" requirement="readWrite"/>
+      <parameter ref="Origin" requirement="readOnly"/>
+      <parameter ref="ForwardingMetric" requirement="readWrite"/>
+      <parameter ref="ExpirationTime" requirement="readOnly"/>
+    </object>
+  </model>
+
+  <!-- End of Device:2.2 definition  -->
+
+  <!-- <model ref="FAPService:2.1"> -->
+  <!--   <parameter ref="FAPServiceNumberOfEntries" access="readOnly"/> -->
+  <!--   <object ref="FAPService.{i}." access="readOnly" numEntriesParameter="FAPServiceNumberOfEntries" minEntries="0" maxEntries="unbounded" dmr:version="1.0"> -->
+  <!--     <parameter ref="DeviceType" access="readOnly" dmr:version="1.0"/> -->
+  <!--   </object> -->
+
+  <!-- </model> -->
+
+</dm:document>
