@@ -77,7 +77,7 @@ enum result_e
  */
 
 /**
- * \brief See section 4.3.1 dlDciListElement
+ * @brief See section 4.3.1 dlDciListElement
  */
 struct dlDciListElement
 {
@@ -128,7 +128,7 @@ struct dlDciListElement
 };
 
 /**
- * \brief See section 4.3.2 ulDciListElement
+ * @brief See section 4.3.2 ulDciListElement
  */
 struct ulDciListElement
 {
@@ -153,7 +153,7 @@ struct ulDciListElement
 
 #  if 0
 /**
- * \brief See section 4.3.3 vendorSpecificListElement
+ * @brief See section 4.3.3 vendorSpecificListElement
  */
 struct vendorSpecificListElement
 {
@@ -171,7 +171,7 @@ struct vendorSpecificListElement
 #  endif
 
 /**
- * \brief See section 4.3.4 logicalChannelConfigListElement
+ * @brief See section 4.3.4 logicalChannelConfigListElement
  */
 struct logicalChannelConfigListElement
 {
@@ -198,7 +198,7 @@ struct logicalChannelConfigListElement
 };
 
 /**
- * \brief See section 4.3.5 addBufferListElement
+ * @brief See section 4.3.5 addBufferListElement
  */
 struct addBufferListElement
 {
@@ -207,7 +207,7 @@ struct addBufferListElement
 };
 
 /**
- * \brief See section 4.3.6 rachListElement
+ * @brief See section 4.3.6 rachListElement
  */
 struct rachListElement
 {
@@ -216,7 +216,7 @@ struct rachListElement
 };
 
 /**
- * \brief See section 4.3.7 phichListElement
+ * @brief See section 4.3.7 phichListElement
  */
 struct phichListElement
 {
@@ -229,7 +229,7 @@ struct phichListElement
 };
 
 /**
- * \brief See section 4.3.9 rlcPDU_ListElement
+ * @brief See section 4.3.9 rlcPDU_ListElement
  */
 struct rlcPDU_ListElement
 {
@@ -238,7 +238,7 @@ struct rlcPDU_ListElement
 };
 
 /**
- * \brief See section 4.3.8 buildDataListElement
+ * @brief See section 4.3.8 buildDataListElement
  */
 struct buildDataListElement
 {
@@ -252,7 +252,7 @@ struct buildDataListElement
 };
 
 /**
- * \brief See section 4.3.10 buildRAR_ListElement
+ * @brief See section 4.3.10 buildRAR_ListElement
  */
 struct buildRAR_ListElement
 {
@@ -263,7 +263,7 @@ struct buildRAR_ListElement
 };
 
 /**
- * \brief See section 4.3.11 buildBroadcastListElement
+ * @brief See section 4.3.11 buildBroadcastListElement
  */
 struct buildBroadcastListElement
 {
@@ -278,7 +278,7 @@ struct buildBroadcastListElement
 };
 
 /**
- * \brief See section 4.3.12 ulInfoListElement
+ * @brief See section 4.3.12 ulInfoListElement
  */
 struct ulInfoListElement
 {
@@ -294,7 +294,7 @@ struct ulInfoListElement
 };
 
 /**
- * \brief See section 4.3.13 srListElement
+ * @brief See section 4.3.13 srListElement
  */
 struct srListElement
 {
@@ -302,7 +302,7 @@ struct srListElement
 };
 
 /**
- * \brief See section 4.3.14 macCE_ListElement
+ * @brief See section 4.3.14 macCE_ListElement
  */
 struct macCE_ListElement
 {
@@ -314,7 +314,7 @@ struct macCE_ListElement
     } maCE_Type;
 
       /**
-       * \brief See section 4.3.15 macCE_Value
+       * @brief See section 4.3.15 macCE_Value
        */
     union
     {
@@ -326,7 +326,7 @@ struct macCE_ListElement
 
 
 /**
- * \brief See section 4.3.16 drxConfig
+ * @brief See section 4.3.16 drxConfig
  */
 struct drxConfig
 {
@@ -346,7 +346,7 @@ struct drxConfig
 };
 
 /**
- * \brief See section 4.3.17 spsConfig
+ * @brief See section 4.3.17 spsConfig
  */
 struct spsConfig
 {
@@ -364,7 +364,7 @@ struct spsConfig
 };
 
 /**
- * \brief See section 4.3.18 srRequest
+ * @brief See section 4.3.18 srRequest
  */
 enum action_e
 {
@@ -380,7 +380,7 @@ struct srRequest
 };
 
 /**
- * \brief See section 4.3.19 cqiRequest
+ * @brief See section 4.3.19 cqiRequest
  */
 struct cqiRequest
 {
@@ -391,7 +391,7 @@ struct cqiRequest
 };
 
 /**
- * \brief See section 4.3.20 ue_Capabilities
+ * @brief See section 4.3.20 ue_Capabilities
  */
 struct ue_Capabilities
 {
@@ -403,7 +403,7 @@ struct ue_Capabilities
 };
 
 /**
- * \brief See section 4.3.22 siMessageListElement
+ * @brief See section 4.3.22 siMessageListElement
  */
 struct siMessageListElement
 {
@@ -412,7 +412,7 @@ struct siMessageListElement
 };
 
 /**
- * \brief See section 4.3.21 siConfiguration
+ * @brief See section 4.3.21 siConfiguration
  */
 struct siConfiguration
 {
@@ -425,7 +425,7 @@ struct siConfiguration
 };
 
 /**
- * \brief See section 4.3.23 dlInfoListElement
+ * @brief See section 4.3.23 dlInfoListElement
  */
 struct dlInfoListElement
 {
@@ -439,7 +439,7 @@ struct dlInfoListElement
 };
 
 /**
- * \brief See section 4.3.26 ueSelected
+ * @brief See section 4.3.26 ueSelected
  */
 struct ueSelected
 {
@@ -449,7 +449,7 @@ struct ueSelected
 };
 
 /**
- * \brief See section 4.3.27 higherLayerSelected
+ * @brief See section 4.3.27 higherLayerSelected
  */
 struct higherLayerSelected
 {
@@ -458,7 +458,7 @@ struct higherLayerSelected
 };
 
 /**
- * \brief See section 4.3.28 bwPart
+ * @brief See section 4.3.28 bwPart
  */
 struct bwPart
 {
@@ -468,7 +468,7 @@ struct bwPart
 };
 
 /**
- * \brief See section 4.3.24 cqiListElement
+ * @brief See section 4.3.24 cqiListElement
  */
 struct cqiListElement
 {
@@ -485,7 +485,7 @@ struct cqiListElement
     uint8_t wb_pmi;                                                 // 0..15
 
     /**
-     * \brief See section 4.3.25 sbMeasResult
+     * @brief See section 4.3.25 sbMeasResult
      */
     union
     {
@@ -496,7 +496,7 @@ struct cqiListElement
 };
 
 /**
- * \brief See section 4.3.29 ulCQI
+ * @brief See section 4.3.29 ulCQI
  */
 struct ulCQI
 {
@@ -515,7 +515,7 @@ struct ulCQI
 };
 
 /**
- * \brief See section 4.3.30 pagingInfoListElement
+ * @brief See section 4.3.30 pagingInfoListElement
  */
 struct pagingInfoListElement
 {
@@ -581,7 +581,7 @@ enum cyclicPrefixLength_e
 };
 
 /**
- * \brief See section 4.1.1 CSCHED_CELL_CONFIG_REQ
+ * @brief See section 4.1.1 CSCHED_CELL_CONFIG_REQ
  */
 struct CSCHED_CELL_CONFIG_REQ
 {
@@ -656,7 +656,7 @@ struct CSCHED_CELL_CONFIG_REQ
 };
 
 /**
- * \brief See section 4.1.2 CSCHED_CELL_CONFIG_CNF
+ * @brief See section 4.1.2 CSCHED_CELL_CONFIG_CNF
  */
 struct CSCHED_CELL_CONFIG_CNF
 {
@@ -667,7 +667,7 @@ struct CSCHED_CELL_CONFIG_CNF
 };
 
 /**
- * \brief See section 4.1.3 CSCHED_UE_CONFIG_REQ
+ * @brief See section 4.1.3 CSCHED_UE_CONFIG_REQ
  */
 struct CSCHED_UE_CONFIG_REQ
 {
@@ -728,7 +728,7 @@ struct CSCHED_UE_CONFIG_REQ
 };
 
 /**
- * \brief See section 4.1.4 CSCHED_UE_CONFIG_CNF
+ * @brief See section 4.1.4 CSCHED_UE_CONFIG_CNF
  */
 struct CSCHED_UE_CONFIG_CNF
 {
@@ -740,7 +740,7 @@ struct CSCHED_UE_CONFIG_CNF
 };
 
 /**
- * \brief See section 4.1.5 CSCHED_LC_CONFIG_REQ
+ * @brief See section 4.1.5 CSCHED_LC_CONFIG_REQ
  */
 struct CSCHED_LC_CONFIG_REQ
 {
@@ -757,7 +757,7 @@ struct CSCHED_LC_CONFIG_REQ
 };
 
 /**
- * \brief See section 4.1.6 CSCHED_LC_CONFIG_CNF
+ * @brief See section 4.1.6 CSCHED_LC_CONFIG_CNF
  */
 struct CSCHED_LC_CONFIG_CNF
 {
@@ -773,7 +773,7 @@ struct CSCHED_LC_CONFIG_CNF
 };
 
 /**
- * \brief See section 4.1.7 CSCHED_LC_RELEASE_REQ
+ * @brief See section 4.1.7 CSCHED_LC_RELEASE_REQ
  */
 struct CSCHED_LC_RELEASE_REQ
 {
@@ -786,7 +786,7 @@ struct CSCHED_LC_RELEASE_REQ
 };
 
 /**
- * \brief See section 4.1.8 CSCHED_LC_RELEASE_CNF
+ * @brief See section 4.1.8 CSCHED_LC_RELEASE_CNF
  */
 struct CSCHED_LC_RELEASE_CNF
 {
@@ -802,7 +802,7 @@ struct CSCHED_LC_RELEASE_CNF
 };
 
 /**
- * \brief See section 4.1.9 CSCHED_UE_RELEASE_REQ
+ * @brief See section 4.1.9 CSCHED_UE_RELEASE_REQ
  */
 struct CSCHED_UE_RELEASE_REQ
 {
@@ -813,7 +813,7 @@ struct CSCHED_UE_RELEASE_REQ
 };
 
 /**
- * \brief See section 4.1.10 CSCHED_UE_RELEASE_CNF
+ * @brief See section 4.1.10 CSCHED_UE_RELEASE_CNF
  */
 struct CSCHED_UE_RELEASE_CNF
 {
@@ -826,7 +826,7 @@ struct CSCHED_UE_RELEASE_CNF
 };
 
 /**
- * \brief See section 4.1.11 CSCHED_UE_CONFIG_UPDATE_IND
+ * @brief See section 4.1.11 CSCHED_UE_CONFIG_UPDATE_IND
  */
 struct CSCHED_UE_CONFIG_UPDATE_IND
 {
@@ -847,7 +847,7 @@ struct CSCHED_UE_CONFIG_UPDATE_IND
 };
 
 /**
- * \brief See section 4.1.12 CSCHED_CELL_CONFIG_UPDATE_IND
+ * @brief See section 4.1.12 CSCHED_CELL_CONFIG_UPDATE_IND
  */
 struct CSCHED_CELL_CONFIG_UPDATE_IND
 {
@@ -914,7 +914,7 @@ struct CSCHED_CELL_CONFIG_UPDATE_IND
 */
 
 /**
- * \brief See section 4.2.1 SCHED_DL_RLC_BUFFER_REQ
+ * @brief See section 4.2.1 SCHED_DL_RLC_BUFFER_REQ
  */
 struct SCHED_DL_RLC_BUFFER_REQ
 {
@@ -932,7 +932,7 @@ struct SCHED_DL_RLC_BUFFER_REQ
 };
 
 /**
- * \brief See section 4.2.2 SCHED_DL_PAGING_BUFFER_REQ
+ * @brief See section 4.2.2 SCHED_DL_PAGING_BUFFER_REQ
  */
 struct SCHED_DL_PAGING_BUFFER_REQ
 {
@@ -944,7 +944,7 @@ struct SCHED_DL_PAGING_BUFFER_REQ
 };
 
 /**
- * \brief See section 4.2.3 SCHED_DL_MAC_BUFFER_REQ
+ * @brief See section 4.2.3 SCHED_DL_MAC_BUFFER_REQ
  */
 struct SCHED_DL_MAC_BUFFER_REQ
 {
@@ -957,7 +957,7 @@ struct SCHED_DL_MAC_BUFFER_REQ
 };
 
 /**
- * \brief See section 4.2.4 SCHED_DL_TRIGGER_REQ
+ * @brief See section 4.2.4 SCHED_DL_TRIGGER_REQ
  */
 struct SCHED_DL_TRIGGER_REQ
 {
@@ -971,7 +971,7 @@ struct SCHED_DL_TRIGGER_REQ
 };
 
 /**
- * \brief See section 4.2.5 SCHED_DL_RACH_INFO_REQ
+ * @brief See section 4.2.5 SCHED_DL_RACH_INFO_REQ
  */
 struct SCHED_DL_RACH_INFO_REQ
 {
@@ -985,7 +985,7 @@ struct SCHED_DL_RACH_INFO_REQ
 };
 
 /**
- * \brief See section 4.2.6 SCHED_DL_CQI_INFO_REQ
+ * @brief See section 4.2.6 SCHED_DL_CQI_INFO_REQ
  */
 struct SCHED_DL_CQI_INFO_REQ
 {
@@ -999,7 +999,7 @@ struct SCHED_DL_CQI_INFO_REQ
 };
 
 /**
- * \brief See section 4.2.7 SCHED_DL_CONFIG_IND
+ * @brief See section 4.2.7 SCHED_DL_CONFIG_IND
  */
 struct SCHED_DL_CONFIG_IND
 {
@@ -1021,7 +1021,7 @@ struct SCHED_DL_CONFIG_IND
 };
 
 /**
- * \brief See section 4.2.8 SCHED_UL_TRIGGER_REQ
+ * @brief See section 4.2.8 SCHED_UL_TRIGGER_REQ
  */
 struct SCHED_UL_TRIGGER_REQ
 {
@@ -1036,7 +1036,7 @@ struct SCHED_UL_TRIGGER_REQ
 };
 
 /**
- * \brief See section 4.2.9 SCHED_UL_NOISE_INTERFERENCE_REQ
+ * @brief See section 4.2.9 SCHED_UL_NOISE_INTERFERENCE_REQ
  */
 struct SCHED_UL_NOISE_INTERFERENCE_REQ
 {
@@ -1050,7 +1050,7 @@ struct SCHED_UL_NOISE_INTERFERENCE_REQ
 };
 
 /**
- * \brief See section 4.2.10 SCHED_UL_SR_INFO_REQ
+ * @brief See section 4.2.10 SCHED_UL_SR_INFO_REQ
  */
 struct SCHED_UL_SR_INFO_REQ
 {
@@ -1064,7 +1064,7 @@ struct SCHED_UL_SR_INFO_REQ
 };
 
 /**
- * \brief See section 4.2.11 SCHED_UL_MAC_CTRL_INFO_REQ
+ * @brief See section 4.2.11 SCHED_UL_MAC_CTRL_INFO_REQ
  */
 struct SCHED_UL_MAC_CTRL_INFO_REQ
 {
@@ -1078,7 +1078,7 @@ struct SCHED_UL_MAC_CTRL_INFO_REQ
 };
 
 /**
- * \brief See section 4.2.12 SCHED_UL_CQI_INFO_REQ
+ * @brief See section 4.2.12 SCHED_UL_CQI_INFO_REQ
  */
 struct SCHED_UL_CQI_INFO_REQ
 {
@@ -1091,7 +1091,7 @@ struct SCHED_UL_CQI_INFO_REQ
 };
 
 /**
- * \brief See section 4.2.13 SCHED_UL_CONFIG_IND
+ * @brief See section 4.2.13 SCHED_UL_CONFIG_IND
  */
 struct SCHED_UL_CONFIG_IND
 {
