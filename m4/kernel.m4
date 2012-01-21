@@ -1,7 +1,7 @@
 # =============================================================================
 # BEGINNING OF SEPARATE COPYRIGHT MATERIAL vim: ft=config sw=4 noet nocindent
 # =============================================================================
-# 
+#
 # @(#) kernel.m4,v streams-0_7a_4(0.9.2.117) 2005/12/29 10:42:14
 #
 # -----------------------------------------------------------------------------
@@ -166,7 +166,7 @@ AC_DEFUN([_LINUX_KERNEL_SETUP], [dnl
     _LINUX_CHECK_KERNEL_TOOLS
     _LINUX_CHECK_KERNEL_MODULES
     _LINUX_CHECK_KERNEL_MARCH
-    _LINUX_CHECK_KERNEL_BOOT
+dnl    _LINUX_CHECK_KERNEL_BOOT
     _LINUX_CHECK_KERNEL_BUILDDIR
     _LINUX_CHECK_KERNEL_SRCDIR
     _LINUX_CHECK_KERNEL_SYSMAP
@@ -228,7 +228,7 @@ AC_DEFUN([_LINUX_CHECK_KERNEL_RELEASE], [dnl
     if test :"${linux_cv_k_release:-no}" = :no
     then
 	AC_MSG_ERROR([
-*** 
+***
 *** You have not specified --with-k-releease indicating that the build is for
 *** the running kernel, however, you are cross-compiling.  When cross-compiling,
 *** you must specify the kernel release that you are targetting using the
@@ -243,7 +243,7 @@ dnl pull out versions from release number
     if test ${linux_cv_k_major:-0} -ne 2
     then
 	AC_MSG_ERROR([
-*** 
+***
 *** Kernel major release number is "$linux_cv_k_major".  That cannot be correct, unless
 *** this is really old software now and Linux has already made it to release
 *** 3.  In which case, give up.  More likely, "$linux_cv_k_release" is not the
@@ -257,7 +257,7 @@ dnl pull out versions from release number
     if test ${linux_cv_k_minor:-0} -ne 4 -a ${linux_cv_k_minor:-0} -ne 6
     then
 	AC_MSG_ERROR([
-*** 
+***
 *** Kernel minor release number "$linux_cv_k_minor" is either too old or too new, or
 *** the UTS_RELEASE name "$linux_cv_k_release" is mangled.  Try specifiying a
 *** 2.4 or 2.6 kernel with the --with-k-release option to configure.  If you are
@@ -270,7 +270,7 @@ dnl pull out versions from release number
     if test ${linux_cv_k_minor:-0} -eq 4 -a ${linux_cv_k_patch:-0} -le 10
     then
 	AC_MSG_ERROR([
-*** 
+***
 *** Kernel patch release number "$linux_cv_k_patch" is too old.  Try
 *** configuring for a kernel later than 2.4.10.
 *** ])
@@ -415,7 +415,7 @@ AC_DEFUN([_LINUX_CHECK_KERNEL_MODULES], [dnl
 	(no)		COMPRESS_KERNEL_MODULES= ; kzip= ;;
 	(unknown|*)	COMPRESS_KERNEL_MODULES= ; kzip=
 		AC_MSG_WARN([
-**** 
+****
 **** Strange, the modules directory is $linux_cv_k_modules_eval
 **** but the file $linux_cv_k_modules_eval/modules.dep does
 **** not exist.  This could cause some problems later.
@@ -535,30 +535,30 @@ dnl 	    then
 dnl 		if test -n "$kboot"
 dnl 		then
 dnl 		    AC_MSG_ERROR([
-dnl *** 
+dnl ***
 dnl *** It appears as though you have a Redhat/Mandrake boot (production) kernel,
 dnl *** however, the kernel configuration file
 dnl ***	"$kconfig"
 dnl *** does not exist on your system.  This can happen in a couple of situations:
-dnl *** 
+dnl ***
 dnl ***   (1) you have specified a boot kernel version ($kversion),
 dnl ***       however, the kernel architecture ($karch) is wrong for the kernel.
 dnl ***       (This can happen sometimes in an automated build.)
-dnl *** 
+dnl ***
 dnl ***   (2) you have specified a kernel version ($kversion)
 dnl ***       that ends in a suffix ($kboot) normally used by boot kernels,
 dnl ***       but it is not a boot kernel.
-dnl *** 
+dnl ***
 dnl *** Configure cannot proceed reliably under these conditions.
 dnl *** ])
 dnl 		else
 dnl 		    AC_MSG_WARN([
-dnl *** 
+dnl ***
 dnl *** It appears as though you have a Redhat/Mandrake boot (production) kernel
 dnl *** based system, however, kernel configuration file
-dnl *** 
+dnl ***
 dnl ***	"$linux_tmp"
-dnl *** 
+dnl ***
 dnl *** does not exist on your system.  This can happen if you are running a
 dnl *** kernel.org kernel on an RedHat or Mandrake based system.  Configure is
 dnl *** proceeding under the assumption that this is NOT a boot kernel.  This may
@@ -585,12 +585,12 @@ dnl 		then
 dnl 		    AC_MSG_ERROR([*** configure error])
 dnl 		else
 dnl 		    AC_MSG_ERROR([
-dnl *** 
+dnl ***
 dnl *** Configure has detected a problem with your system.  Building for a
 dnl *** "$dist_cv_host_distrib" "${kboot:-UP}" boot kernel, but the directory:
-dnl *** 
+dnl ***
 dnl ***	"$linux_tmp"
-dnl *** 
+dnl ***
 dnl *** does not exist.  Please install kernel${kboot:+-$kboot}-${kbase}.${karch}.rpm
 dnl *** and kernel-source-${kbase}.${kmarch}.rpm correctly.
 dnl *** ])
@@ -604,12 +604,12 @@ dnl 		then
 dnl 		    AC_MSG_ERROR([*** configure error])
 dnl 		else
 dnl 		    AC_MSG_ERROR([
-dnl *** 
+dnl ***
 dnl *** Configure has detected a problem with your system.  Building for a
 dnl *** "$dist_cv_host_distrib" "${kboot:-UP}" boot kernel, but the file:
-dnl *** 
+dnl ***
 dnl ***	"$linux_tmp"
-dnl *** 
+dnl ***
 dnl *** does not exist.  Please install kernel${kboot:+-$kboot}-${kbase}.${karch}.rpm
 dnl *** correctly.
 dnl *** ])
@@ -627,14 +627,14 @@ dnl 			linux_arch=`rpm -q --whatprovides $linux_tmp --qf "%{ARCH}\n" 2>/dev/null
 dnl 			if test "$linux_arch" != "$karch"
 dnl 			then
 dnl 			    AC_MSG_ERROR([
-dnl *** 
+dnl ***
 dnl *** The system map file for "$dist_cv_host_distrib" "${kboot:-UP}" is
-dnl *** 
+dnl ***
 dnl ***	"$linux_tmp"
-dnl *** 
+dnl ***
 dnl *** but the architecture of that file is "$linux_arch" instead of "$karch".
 dnl *** Reconfigure with "--target=${linux_arch}-${target_vendor}-${target_os}".
-dnl *** 
+dnl ***
 dnl *** ])
 dnl 			fi
 dnl 			;;
@@ -758,37 +758,37 @@ AC_DEFUN([_LINUX_CHECK_KERNEL_BUILDDIR], [dnl
 		AC_MSG_RESULT([no])
 	    done
 	fi
-	if test :"${linux_cv_k_build:-no}" = :no -o ! -d "$linux_cv_k_build" 
+	if test :"${linux_cv_k_build:-no}" = :no -o ! -d "$linux_cv_k_build"
 	then
-	    if test :"${linux_cv_k_build:-no}" = :no 
+	    if test :"${linux_cv_k_build:-no}" = :no
 	    then
 		AC_MSG_ERROR([
 ***
 *** This package does not support headless kernel build.  Install the
 *** appropriate built kernel-source or kernel-headers package for the
 *** target kernel "${kversion}" and then configure again.
-*** 
+***
 *** The following directories do no exist in the build environment:
 ***	"$with_k_build"
 ***	"$k_build_search_path"
-*** 
+***
 *** Check the settings of the following options before repeating:
 ***     --with-k-release ${kversion:-no}
 ***     --with-k-modules ${kmoduledir:-no}
 ***     --with-k-build   ${kversion:-no}
 *** ])
 	    else
-		if ! -d "$linux_cv_k_build" 
+		if ! -d "$linux_cv_k_build"
 		then
 		    AC_MSG_ERROR([
 ***
 *** This package does not support headless kernel build.  Install the
 *** appropriate built kernel-source or kernel-headers package for the
 *** target kernel "${kversion}" and then configure again.
-*** 
+***
 *** The following directories do not exist in the build environment:
 ***     ${linux_cv_k_build}
-*** 
+***
 *** Check the settings of the following options before repeating:
 ***     --with-k-release ${kversion:-no}
 ***     --with-k-modules ${kmoduledir:-no}
@@ -920,12 +920,12 @@ AC_DEFUN([_LINUX_CHECK_KERNEL_MODVER], [dnl
 		if test ":${linux_cv_k_versions}" != :no -a ":${linux_cv_k_modversions}" != :no
 		then
 		    AC_MSG_WARN([
-*** 
+***
 *** Configure could not find the module versions file for kernel version
 *** "$kversion".  The locations searched were:
 ***	    "$with_k_modver"
 ***	    "$k_modver_search_path"
-*** 
+***
 *** This can cause problems later.  Please specify the absolute location of
 *** your kernel's module versions file with option --with-k-modver before
 *** repeating.
@@ -944,11 +944,11 @@ AC_DEFUN([_LINUX_CHECK_KERNEL_MODVER], [dnl
 				;;
 			    (redhat|centos|whitebox|debian|suse|*)
 				AC_MSG_WARN([
-*** 
+***
 *** Configuration information is being read from an unreliable source:
-*** 
+***
 ***	"$linux_cv_k_modver"
-*** 
+***
 *** This may cause problems later if you have mismatches between the target
 *** kernel and the kernel symbols contained in that file.
 *** ])
@@ -1011,7 +1011,7 @@ dnl
 	    linux_cv_k_sysmap=
 	    for linux_file in $k_sysmap_search_path ; do
 		AC_MSG_CHECKING([for kernel system map... $linux_file])
-		if test -r $linux_file 
+		if test -r $linux_file
 		then
 		    linux_cv_k_sysmap="$linux_file"
 		    AC_MSG_RESULT([yes])
@@ -1023,12 +1023,12 @@ dnl
 	if test :${linux_cv_k_sysmap:-no} = :no
 	then
 	    AC_MSG_ERROR([
-*** 
+***
 *** Configure could not find the system map file for kernel version
 *** "$kversion".  The locations searched were:
 ***	    "$with_k_sysmap"
 ***	    "$k_sysmap_search_path"
-*** 
+***
 *** Please specify the absolute location of your kernel's system map file with
 *** option --with-k-sysmap before repeating.
 *** ])
@@ -1061,11 +1061,11 @@ dnl				I don't really know how SuSE or others fair in this situation yet,
 dnl				but I assume it is like the rest.
 dnl
 				AC_MSG_WARN([
-*** 
+***
 *** Configuration information is being read from an unreliable source:
-*** 
+***
 ***	"$linux_cv_k_sysmap"
-*** 
+***
 *** This may cause problems later if you have mismatches between the target
 *** kernel and the kernel symbols contained in that file.
 *** ])
@@ -1151,7 +1151,7 @@ dnl
     if test :"$linux_cv_minorbits" = :
     then
 	AC_MSG_WARN([
-*** 
+***
 *** Configure could not determine the number of minor bits in a minor device
 *** number for your kernel.  Configure is assuming that the kernel only has
 *** 8-bits per minor device number.  This could cause problems later.
@@ -1247,24 +1247,24 @@ dnl
 	    case :"$linux_cv_k_compiler_vmatch" in
 		:no)
 	    AC_MSG_ERROR([
-*** 
+***
 *** The kernel compiler was:
 ***   \`$linux_cv_k_compiler',
 *** and the current compiler is:
 ***   \`$linux_cv_compiler'.
-*** 
+***
 *** These compilers do not match, not even in version.
 *** This will cause real problems later.  Cannot proceed.
 *** ])
 		    ;;
 		:yes)
 	    AC_MSG_WARN([
-*** 
+***
 *** The kernel compiler was:
 ***   \`$linux_cv_k_compiler',
 *** and the current compiler is:
 ***   \`$linux_cv_compiler'.
-*** 
+***
 *** These compilers do not match.
 *** This will cause problems later.
 *** ])
@@ -1273,12 +1273,12 @@ dnl
 	    ;;
 	:unknown)
 	    AC_MSG_WARN([
-*** 
+***
 *** The kernel compiler was:
 ***   \`$linux_cv_k_compiler',
 *** and the current compiler is:
 ***   \`$linux_cv_compiler'.
-*** 
+***
 *** Configure cannot determine whether the compilers match or do not match.
 *** This will cause problems later.
 *** ])
@@ -1463,12 +1463,12 @@ dnl
 	if test :${linux_cv_k_config:-no} = :no
 	then
 	    AC_MSG_ERROR([
-*** 
+***
 *** Configure cannot find the kernel configuration file.  The directories
 *** searched were:
 ***	"$with_k_config"
 ***	"$k_config_search_path"
-*** 
+***
 *** Specify the absolute location of the kernel configuration files with the
 *** --with-k-config option to configure before attempting again.
 *** ])
@@ -1478,11 +1478,11 @@ dnl
 		    ;;
 		(*/boot/*|*/usr/src/*|*/lib/modules/*)
 		    AC_MSG_WARN([
-*** 
+***
 *** Configuration information is being read from an unreliable source:
-*** 
+***
 ***	"$linux_cv_k_config"
-*** 
+***
 *** This may cause problems later if you have mismatches between the target
 *** kernel and the configuration information contained in that file.
 *** ])
@@ -1644,7 +1644,7 @@ dnl	    linux_cflags="${linux_cflags}${linux_cflags:+ }-Wdisabled-optimization"
 		[enable kernel inline functions.  @<:@default=no@:>@]),
 	    [enable_k_inline="$enableval"],
 	    [enable_k_inline='no'])
-	if test :"${enable_k_inline:-no}" != :no 
+	if test :"${enable_k_inline:-no}" != :no
 	then
 	    if test :"${USE_MAINTAINER_MODE:-no}" != :no
 	    then
@@ -1786,7 +1786,7 @@ AC_DEFUN([_LINUX_SETUP_KERNEL_DEBUG], [dnl
 	    @<:@default=yes@:>@]),
 	[enable_k_safe="$enableval"],
 	[enable_k_safe='no'])
-    if test :"${enable_k_safe:-no}" != :no 
+    if test :"${enable_k_safe:-no}" != :no
     then
 	linux_cv_debug='_SAFE'
     fi
@@ -1795,7 +1795,7 @@ AC_DEFUN([_LINUX_SETUP_KERNEL_DEBUG], [dnl
 	    [enable kernel module run-time testing.  @<:@default=no@:>@]),
 	[enable_k_test="$enableval"],
 	[enable_k_test='no'])
-    if test :"${enable_k_test:-no}" != :no 
+    if test :"${enable_k_test:-no}" != :no
     then
 	linux_cv_debug='_TEST'
     fi
@@ -1804,7 +1804,7 @@ AC_DEFUN([_LINUX_SETUP_KERNEL_DEBUG], [dnl
 	    [enable kernel module run-time debugging.  @<:@default=no@:>@]),
 	[enable_k_debug="$enableval"],
 	[enable_k_debug='no'])
-    if test :"${enable_k_debug:-no}" != :no 
+    if test :"${enable_k_debug:-no}" != :no
     then
 	linux_cv_debug='_DEBUG'
     fi
@@ -2271,14 +2271,14 @@ AC_DEFUN([_LINUX_KERNEL_SYMBOL_ADDR], [dnl
 	then
 	    linux_tmp="`($EGREP '\<$1\>' $kallsyms | head -1 | sed -e 's| .*||;s|^0[xX]||') 2>/dev/null`"
 	fi
-	if test -z "$linux_tmp" -a -n "$ksysmap" -a -r "$ksysmap" 
+	if test -z "$linux_tmp" -a -n "$ksysmap" -a -r "$ksysmap"
 	then
 	    linux_tmp="`($EGREP '\<$1\>' $ksysmap | sed -e 's| .*||;s|^0[xX]||') 2>/dev/null`"
 	fi
 	linux_tmp="${linux_tmp:+0x}$linux_tmp"
 	AS_VAR_SET([linux_symbol_addr], ["${linux_tmp:-no}"]) ])
     linux_tmp=AS_VAR_GET([linux_symbol_addr])
-    if test :"${linux_tmp:-no}" != :no 
+    if test :"${linux_tmp:-no}" != :no
     then :; AC_DEFINE_UNQUOTED(AS_TR_CPP(HAVE_$1[]_ADDR), AS_VAR_GET([linux_symbol_addr]),
 	    [The symbol $1 is not exported by some kernels.  Define this to
 	    the address of $1 in the kernel system map so that kernel modules
@@ -2319,7 +2319,7 @@ AC_DEFUN([_LINUX_KERNEL_EXPORT_ONLY], [dnl
 		linux_tmp="yes ($kallsyms)"
 	    fi
 	fi
-	if test -z "$linux_tmp" -a -n "$ksysmap" -a -r "$ksysmap" 
+	if test -z "$linux_tmp" -a -n "$ksysmap" -a -r "$ksysmap"
 	then
 	    if ( $EGREP -q '\<__ksymtab_$1\>' $ksysmap 2>/dev/null )
 	    then
@@ -2340,7 +2340,7 @@ AC_DEFUN([_LINUX_KERNEL_EXPORT_ONLY], [dnl
 	fi
 	AS_VAR_SET([linux_symbol_export], ["${linux_tmp:-no}"]) ])
     linux_tmp=AS_VAR_GET([linux_symbol_export])
-    if test :"${linux_tmp:-no}" != :no 
+    if test :"${linux_tmp:-no}" != :no
     then :; AC_DEFINE_UNQUOTED(AS_TR_CPP(HAVE_$1[]_EXPORT), [1], [The symbol $1
 	    is not exported by some kernels.  Define this if the symbol $1
 	    is exported by your kernel so that kernel modules can be supported
@@ -2412,10 +2412,10 @@ AC_DEFUN([_LINUX_KERNEL_], [dnl
 # =============================================================================
 
 # =============================================================================
-# 
+#
 # Copyright (c) 2001-2005  OpenSS7 Corporation <http://www.openss7.com>
 # Copyright (c) 1997-2000  Brian F. G. Bidulock <bidulock@openss7.org>
-# 
+#
 # =============================================================================
 # ENDING OF SEPARATE COPYRIGHT MATERIAL vim: ft=config sw=4 noet nocindent
 # =============================================================================

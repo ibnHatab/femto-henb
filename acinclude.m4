@@ -28,6 +28,9 @@ AC_DEFUN([AC_MODEM], [dnl
 AC_DEFUN([_MODEM_SETUP], [dnl
     _LINUX_KERNEL
     _LINUX_DEVFS
+    # here we have our flags set and can perform preprocessor and compiler
+    # checks on the kernel
+    _LFS_CHECK_KERNEL
     _MODEM_SETUP_MODULE
     _MODEM_SETUP_MODULES
     _MODEM_SETUP_DRIVERS
@@ -59,17 +62,17 @@ AC_DEFUN([_MODEM_SETUP_MODULES], [dnl
 	    [enable module lte_sched for linkage with MODEM.
 	    @<:@default=module@:>@]),
 	    [enable_module_lte_sched="$enableval"],
-	    [if test :${lfs_big_compile:-yes} = :yes ; then enable_module_lte_sched='yes' ; else enable_module_lte_sched='module' ; fi])
-    AM_CONDITIONAL([CONFIG_MODEM_LTE_SCHED],		[test :${lfs_module_lte_sched:-module}	= :yes])
+	    [if test :${modem_big_compile:-yes} = :yes ; then enable_module_lte_sched='yes' ; else enable_module_lte_sched='module' ; fi])
+    AM_CONDITIONAL([CONFIG_MODEM_LTE_SCHED],		[test :${modem_module_lte_sched:-module}	= :yes])
 # -----------------------------------------------------------------------------
 
-    AC_CACHE_CHECK([for MODEM module lte_sched], [lfs_module_lte_sched], [dnl
-	lfs_module_lte_sched="${enable_module_lte_sched:-module}"
-	if test :$lfs_module_lte_sched = :module -a :${linux_cv_k_linkage:-loadable} = :linkable ; then
-	    lfs_module_lte_sched='yes'
+    AC_CACHE_CHECK([for MODEM module lte_sched], [modem_module_lte_sched], [dnl
+	modem_module_lte_sched="${enable_module_lte_sched:-module}"
+	if test :$modem_module_lte_sched = :module -a :${linux_cv_k_linkage:-loadable} = :linkable ; then
+	    modem_module_lte_sched='yes'
 	fi])
 # -----------------------------------------------------------------------------
-    case ${lfs_module_lte_sched:-module} in
+    case ${modem_module_lte_sched:-module} in
 	(yes)
 	    AC_DEFINE_UNQUOTED([CONFIG_MODEM_LTE_SCHED], [1], [When defined,] AC_PACKAGE_TITLE [
 	    will include the lte_sched module for linkage with MODEM.  When undefined,]
@@ -83,8 +86,8 @@ AC_DEFUN([_MODEM_SETUP_MODULES], [dnl
 	    ;;
     esac
 # -----------------------------------------------------------------------------
-    AM_CONDITIONAL([CONFIG_MODEM_LTE_SCHED],		[test :${lfs_module_lte_sched:-module}	= :yes])
-    AM_CONDITIONAL([CONFIG_MODEM_LTE_SCHED_MODULE],		[test :${lfs_module_lte_sched:-module}	= :module])
+    AM_CONDITIONAL([CONFIG_MODEM_LTE_SCHED],		[test :${modem_module_lte_sched:-module}	= :yes])
+    AM_CONDITIONAL([CONFIG_MODEM_LTE_SCHED_MODULE],		[test :${modem_module_lte_sched:-module}	= :module])
 ])# _MODEM_SETUP_MODULES
 
 # =============================================================================
@@ -96,16 +99,16 @@ AC_DEFUN([_MODEM_SETUP_DRIVERS], [dnl
 	    [enable sched_csap driver for linkage with MODEM.
 	    @<:@default=module@:>@]),
 	    [enable_driver_sched_csap="$enableval"],
-	    [if test :${lfs_big_compile:-yes} = :yes ; then enable_driver_sched_csap='yes' ; else enable_driver_sched_csap='module' ; fi])
+	    [if test :${modem_big_compile:-yes} = :yes ; then enable_driver_sched_csap='yes' ; else enable_driver_sched_csap='module' ; fi])
 # -----------------------------------------------------------------------------
-    AC_CACHE_CHECK([for MODEM driver sched_csap], [lfs_driver_sched_csap], [dnl
-	lfs_driver_sched_csap="${enable_driver_sched_csap:-module}"
-	if test :$lfs_driver_sched_csap = :module -a :${linux_cv_k_linkage:-loadable} = :linkable ; then
-	    lfs_driver_sched_csap='yes'
+    AC_CACHE_CHECK([for MODEM driver sched_csap], [modem_driver_sched_csap], [dnl
+	modem_driver_sched_csap="${enable_driver_sched_csap:-module}"
+	if test :$modem_driver_sched_csap = :module -a :${linux_cv_k_linkage:-loadable} = :linkable ; then
+	    modem_driver_sched_csap='yes'
 	fi])
 
 # -----------------------------------------------------------------------------
-    case ${lfs_driver_sched_csap:-module} in
+    case ${modem_driver_sched_csap:-module} in
 	(yes)
 	    AC_DEFINE_UNQUOTED([CONFIG_MODEM_SCHED_CSAP], [1], [When defined,] AC_PACKAGE_TITLE [
 	    will include the sched_csap driver for linkage with MODEM.  When undefined,]
@@ -120,7 +123,7 @@ AC_DEFUN([_MODEM_SETUP_DRIVERS], [dnl
     esac
 # -----------------------------------------------------------------------------
 
-    AM_CONDITIONAL([CONFIG_MODEM_SCHED_CSAP],		[test :${lfs_driver_sched_csap:-module}	= :yes])
-    AM_CONDITIONAL([CONFIG_MODEM_SCHED_CSAP_MODULE],	[test :${lfs_driver_sched_csap:-module}	= :module])
+    AM_CONDITIONAL([CONFIG_MODEM_SCHED_CSAP],		[test :${modem_driver_sched_csap:-module}	= :yes])
+    AM_CONDITIONAL([CONFIG_MODEM_SCHED_CSAP_MODULE],	[test :${modem_driver_sched_csap:-module}	= :module])
 ])# _MODEM_SETUP_DRIVERS
 # =============================================================================

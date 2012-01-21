@@ -13,25 +13,25 @@ AC_CONFIG_MACRO_DIR([m4])
 
 AC_CANONICAL_TARGET
 
-AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
+dnl AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
 
 dnl
 dnl Checks for programs.
 dnl
-AM_PROG_AS
+dnl AM_PROG_AS
 AC_PROG_AWK
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_CPP
-AM_PROG_CC_C_O
+dnl AM_PROG_CC_C_O
 AC_PROG_INSTALL
-AM_PROG_INSTALL_STRIP
+dnl AM_PROG_INSTALL_STRIP
 AC_ARG_VAR([LD], [Linker loader command])
-AC_PROG_LD
+dnl AC_PROG_LD
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_YACC
-AC_PROG_LIBTOOL
+dnl AC_PROG_LIBTOOL
 AC_SUBST([LIBTOOL_DEPS])
 
 dnl
@@ -86,15 +86,15 @@ AC_FUNC_SELECT_ARGTYPES
 if test :${cross_compiling:-no} != :yes ; then :; AC_FUNC_SETPGRP fi
 AC_TYPE_SIGNAL
 AC_FUNC_STAT
-AC_FUNC_STRNLEN
+dnl AC_FUNC_STRNLEN
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS([alarm bzero gettimeofday inet_ntoa localtime_r mempcpy memset munmap nl_langinfo select setlocale stpcpy strcasecmp strchr strcspn strdup strerror strrchr strstr strtol strtoul])
 
 AC_MODEM
 
-AC_CONFIG_FILES([Makefile
 dnl		 doc/Makefile
 dnl                 cwmp/Makefile
+AC_CONFIG_FILES([Makefile
 		 src/modules/Config
 		 src/drivers/Config
                  src/libfapi/Makefile
