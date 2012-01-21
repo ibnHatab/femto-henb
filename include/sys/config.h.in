@@ -1,0 +1,48 @@
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
+/*
+ * All Rights Reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation;
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * Author: Ibn Hatab <lib.aca55a@gmail.com>
+ */
+
+#undef HAVE_KINC_LINUX_HARDIRQ_H
+
+#undef HAVE_KMEMB_STRUCT_TASK_STRUCT_PGRP
+
+#undef HAVE_KMEMB_STRUCT_TASK_STRUCT_SESSION
+
+#undef HAVE_KTYPE_IRQRETURN_T
+
+#undef HAVE_KFUNC_READ_TRYLOCK
+
+#undef HAVE_KMACRO_READ_TRYLOCK
+
+#if defined HAVE_KFUNC_READ_TRYLOCK || defined HAVE_KMACRO_READ_TRYLOCK
+#define HAVE_READ_TRYLOCK 1
+#endif
+
+#undef HAVE_TIMESPEC_DO_SETTIMEOFDAY
+
+#undef HAVE___WAKE_UP_SYNC_ADDR
+
+#undef HAVE___WAKE_UP_SYNC_EXPORT
+
+#undef HAVE_KFUNC_WRITE_TRYLOCK
+
+#undef HAVE_KMACRO_WRITE_TRYLOCK
+#if defined HAVE_KFUNC_WRITE_TRYLOCK || defined HAVE_KMACRO_WRITE_TRYLOCK
+#define HAVE_WRITE_TRYLOCK 1
+#endif

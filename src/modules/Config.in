@@ -1,0 +1,29 @@
+#
+# Configuration file for MODEM device drivers
+#
+# Pushable module specifications
+#
+#	name		prefix
+@CONFIG_LTE_SCHED_TRUE@	module	lte_sched		lte_sched
+
+#
+# Object name specifications
+#
+#	type	name		object name
+@CONFIG_LTE_SCHED_TRUE@	objname module	lte_sched		lte_sched
+
+#
+# Loadable specifications
+#
+#
+@CONFIG_LTE_SCHED_MODULE_TRUE@	loadable lte_sched
+
+#
+# Initialization specifications
+#
+#initialize clone-drvr
+
+#
+# Termination specifications
+#
+#terminate fifo

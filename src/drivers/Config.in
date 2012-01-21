@@ -1,0 +1,69 @@
+#
+# Configuration file for MODEM device drivers
+#
+# Driver specifications
+#
+# multiple major numbers for a driver may be allocated two ways:
+# . by explicitly requesting n-majors (see below)
+# . by requesting an n-minors value large enough to require more than
+#   one major number.
+#
+# strconf now supports allocating multiple major numbers, but
+# not all drivers do.  It is only known to work for 'sched_csap' at this time.
+#
+#	Name		prefix	major	n-minors  n-majors
+@CONFIG_MODEM_SCHED_CSAP_TRUE@	driver	sched_csap		sched_csap	*
+
+@CONFIG_MODEM_SCHED_CSAP_MODULE_TRUE@	driver	sched_csap		sched_csap	*
+
+
+#
+# Object name specifications
+#
+#	type	name		object name
+@CONFIG_MODEM_SCHED_CSAP_TRUE@	objname driver	sched_csap		sched_csap
+
+@CONFIG_MODEM_SCHED_CSAP_MODULE_TRUE@	objname driver	sched_csap		sched_csap
+
+#
+# Autopush specifications
+#
+# These are just stupid examples
+#
+#         driver		minor	lastminor	modules
+#autopush sched_csap		 1	0		relay
+#autopush sched_csap		 2	5		relay2
+
+#
+# Loadable specifications
+#
+@CONFIG_MODEM_SCHED_CSAP_MODULE_TRUE@	loadable sched_csap
+
+#
+# Initialization specifications
+#
+#initialize sched_csap
+
+#
+# Termination specifications
+#
+#terminate sched_csap
+
+#
+# Node specifications
+#
+# Loop driver now makes its own nodes in its init routine as an
+# example of how to use lis_mknod.
+#
+#	name	          type	perm	major		minor
+@CONFIG_MODEM_SCHED_CSAP_TRUE@	node	/dev/sched_csap	     c	*	sched_csap		0
+
+
+@CONFIG_MODEM_SCHED_CSAP_MODULE_TRUE@	node	/dev/sched_csap	     c	*	sched_csap		0
+
+
+#
+# Device specifications
+#
+#	drvr-name	unit  port nports share	IRQ     mem M-size DMA1 DMA2
+#device	msphy		   0 0x310     16     S  10 0xD0000 0x4000
