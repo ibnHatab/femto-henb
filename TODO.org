@@ -8,16 +8,16 @@
 
 * TODO Project integration
 ** TODO Setup autobuild
-  - [ ] Bootstrap autobuild on $OPEN_HENB_ROOT
+  - [X] Bootstrap autobuild on $OPEN_HENB_ROOT
        	Take as template LfS
-  - [ ] m4 macros for main design targets
-    - [ ] Linux kernel module
+  - [-] m4 macros for main design targets
+    - [X] Linux kernel module
 	  --with-linux=`make O=/somw/where/outof/source/build`
-      - [ ] drivers
-      - [ ] loadable modules
+      - [X] drivers
+      - [X] loadable modules
     - [ ] Erlang application
     - [ ] Erlang C module and interface generator
-    - [ ] C module
+    - [X] C module
     - [ ] LKM unit test
     - [ ] C unit test
     - [ ] ATS module
