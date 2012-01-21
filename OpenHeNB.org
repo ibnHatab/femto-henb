@@ -1,13 +1,17 @@
 #+STARTUP: showall
 #+TAGS: DOCS(d) CODING(c) TESTING(t) PLANING(p)
 #+STARTUP: hidestars
-#+TITLE: Open Source HeNB platform v1
+#+TITLE: Open HeNB Platform v1
 #+AUTHOR: Ibn Hatab <lib.aca55a@gmail.com>
 
-* Open Source HeNB platform
-** Overview							       :DOCS:
+* Introduction
+  A Home Node B, or HNB, is the 3GPP's term for a 3G femtocell.
 
-   [[http://femtoforum.org/femto/technical.php][Femto Forum]]
+  A Node B is an element of a 3G macro Radio Access Network, or RAN. A
+  femtocell performs many of the function of a Node B, but is
+  optimized for deployment in the home.
+
+** [[http://femtoforum.org/femto/technical.php][Femto Forum]] 							       :DOCS:
 
    The Femto Application Platform Interface (FAPI) is an initiative
    within the femto industry to encourage competition and innovation
@@ -35,4 +39,16 @@
    11.  3GPP Home eNodeB (HeNB)  Operations,  TS32.592  0.4.0 Administration, Maintenance and Provisioning (OAM&P);
         Information model for Type 1 interface HeNB to HeNB Management System (HeMS)
 
-** DONE [[file:fapi/fapi.org][FAPI Interface Specification v1]]
+* License
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License version 2 as
+  published by the Free Software Foundation;
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA

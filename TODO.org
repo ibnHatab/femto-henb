@@ -1,0 +1,34 @@
+#+STARTUP: showall
+#+TAGS: DOCS(d) CODING(c) TESTING(t) PLANING(p)
+#+STARTUP: hidestars
+#+TITLE: TODO - FIXME - XXX
+#+AUTHOR: Ibn Hatab <lib.aca55a@gmail.com>
+
+
+
+* TODO Project integration
+** TODO Setup autobuild
+  - [ ] Bootstrap autobuild on $OPEN_HENB_ROOT
+       	Take as template LfS
+  - [ ] m4 macros for main design targets
+    - [ ] Linux kernel module
+	  --with-linux=`make O=/somw/where/outof/source/build`
+      - [ ] drivers
+      - [ ] loadable modules
+    - [ ] Erlang application
+    - [ ] Erlang C module and interface generator
+    - [ ] C module
+    - [ ] LKM unit test
+    - [ ] C unit test
+    - [ ] ATS module
+    - [ ] OCaml script
+
+*** TODO Crosscompile
+    - [ ] Integrate build-root --with-build-root='path to arget inc/libs'
+    - [ ] Crosscheck kernel, build-root and progect target consistency
+
+* TODO Scripts and Testing
+   - [ ] embunit LKM add test/suite scripts
+
+
+
