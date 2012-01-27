@@ -1,6 +1,9 @@
 
-#include "l1_types.h"
-#include "l1_l2_iface.h"
+#include <sys/types.h>
+#include <stdint.h>
+
+#include <fapi/l1_types.h>
+#include <fapi/l1_l2_iface.h>
 
 /* 3.2  Configuration Messages Validaion */
 

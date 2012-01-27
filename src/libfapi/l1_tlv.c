@@ -1,9 +1,12 @@
 
-#include "l1_tlv.h"
+#include <sys/types.h>
+#include <stdint.h>
+
+#include <fapi/l1_tlv.h>
 
 struct L1_TLV_Size_t {
     uint8_t   tag;
-    uint8_t   length; //  (in bytes)
+    uint8_t   length; //  (in bytes)x
 } FAPI_L1_TLV_SizeTable [] = {
     /* 0 */  { 0                                                  , 0xFF },
     /* 1 */  { FAPI_L1_DuplexingMode                              , TT_UINT16_T },
@@ -36,8 +39,8 @@ struct L1_TLV_Size_t {
     /* 28 */ { FAPI_L1_N1Pucch_AN                                 , TT_UINT16_T },
     /* 29 */ { FAPI_L1_BandwidthConfiguration                     , TT_UINT16_T },
     /* 30 */ { FAPI_L1_MaxUpPTS                                   , TT_UINT16_T },
-    /* 31 */ { FAPI_L1_SRS_SubframeConfiguration                  , TT_UINT16 },
-    /* 32 */ { FAPI_L1_SRS_AckNack_SRS_SimultaneousTransmission   , TT_UINT8 },
+    /* 31 */ { FAPI_L1_SRS_SubframeConfiguration                  , TT_UINT16_T },
+    /* 32 */ { FAPI_L1_SRS_AckNack_SRS_SimultaneousTransmission   , TT_UINT8_T  },
     /* 33 */ { FAPI_L1_Uplink_RS_Hopping                          , TT_UINT16_T },
     /* 34 */ { FAPI_L1_GroupAssignmentDeltaSequence_ShiftPattern  , TT_UINT16_T },
     /* 35 */ { FAPI_L1_CyclicShift1For_DMRS                       , TT_UINT16_T },

@@ -97,6 +97,7 @@ enum FAPI_L1_ErrorCodes_e {
 };
 // 3.4.1  Sub Error Codes
 enum FAPI_L1_SubErrorCodes_e {
+  EMPTY
 };
 
 //// CONF //// CONF //// CONF //// CONF ////
@@ -273,7 +274,7 @@ struct fapi_l1_dl_config_request {
         // This length value includes the 2 bytes required for the PDU
         // type and PDU size parameters.
 
-        uint_8 DL_PDU [0];
+        uint8_t DL_PDU [0];
         // See Sections 3.3.1.2.1 to 3.3.1.2.4.
 
     } DL_PDU_Configuration [0];
@@ -623,7 +624,7 @@ struct fapi_l1_dlsch_pdu {
         // When antenna port = 1: NA
         // When antenna port = 2: 0..3
         // When antenna port = 4: 0..15
-    } NumberOfSubbandEntries [FAPI_L1_NUMBER_OF_SUBBANDS_MAX]; //FIXME: 13
+    } NumberOfSubbandEntries [FAPI_L1_NUMBER_OF_SUBBANDS_MAX];
 
     uint8_t UE_CategoryCapacity;
     // The UE capabilities category
@@ -1401,7 +1402,7 @@ struct fapi_l1_hi_dci0_request {
         // This length value includes the 2 bytes required for the PDU
         // type and PDU size parameters.
 
-        uint_8 DCI_HI_PDU [0];
+        uint8_t DCI_HI_PDU [0];
 
     } DCI_HI_PDU_Configuration [0];
     //  HI/DCI PDU  Struct  See Sections 3.3.1.4.1 to 3.3.1.4.2.

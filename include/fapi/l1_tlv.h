@@ -465,7 +465,7 @@ enum L1_TLV_TAG_TYPE_e {
  *
  * @return consumed buffer in bytes or -1 on error
  */
-ssize_t tlv_encode_tag(uint8_t tag, uint8_t *value, uint8_t *buffer, size_t offset);
+ssize_t tlv_encode_tag (uint8_t tag, uint8_t *value, uint8_t *buffer, size_t offset);
 
 /**
  * @brief tlv_decode_tag function decode TLV from memory pointer on given offset
@@ -477,7 +477,7 @@ ssize_t tlv_encode_tag(uint8_t tag, uint8_t *value, uint8_t *buffer, size_t offs
  *
  * @return addvances bytes or -1 on error
  */
-ssize_t tlv_decode_tag(uint8_t *tag, uint8_t *value, uint8_t *buffer, size_t offset);
+ssize_t tlv_decode_tag (uint8_t *tag, uint8_t *value, uint8_t *buffer, size_t offset);
 
 /**
  * Copy tag from one place to another

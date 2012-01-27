@@ -36,6 +36,7 @@
 #endif	/* bool */
 #endif	/* __KERNEL__ */
 
+#define FAPI_L1_NUMBER_OF_SUBBANDS_MAX 13
 
 enum FAPI_L1_DuplexingMode_e {
     FAPI_L1_DM_TDD = 0,
@@ -48,9 +49,9 @@ enum FAPI_L1_Direction_e {
   DIR_UL = 1
 };
 
-#defien MAKE_SFN_SF (SFN, SF) do { SFN << 3 | SF } while (0)
-#defien GET_SFN (SFN_SF)      do { SFN_SF >> 3 } while (0)
-#defien GET_SF (SFN_SF)       do { SFN_SF & 0x7 } while (0)
+#define MAKE_SFN_SF (SFN, SF) do { SFN << 3 | SF } while (0)
+#define GET_SFN (SFN_SF)      do { SFN_SF >> 3 } while (0)
+#define GET_SF (SFN_SF)       do { SFN_SF & 0x7 } while (0)
 
 enum FAPI_L1_DCI_Format_e {
   DCI_1  = 0,

@@ -48,6 +48,8 @@ modules.builtin
 cscope.*
 ncscope.*
 
+# automake
+Makefile.in
 *.orig
 *~
 \#*#
