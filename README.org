@@ -1,10 +1,10 @@
 #+STARTUP: showall
 #+TAGS: DOCS(d) CODING(c) TESTING(t) PLANING(p)
 #+STARTUP: hidestars
-#+TITLE: Open HeNB Platform v1
+#+TITLE: Femto HeNB Platform
 #+AUTHOR: Ibn Hatab <lib.aca55a@gmail.com>
 
-* Subject
+* About
 
   A Home Node B, or HNB, is the 3GPP's term for a 3G femtocell.
 
@@ -12,7 +12,7 @@
   femtocell performs many of the function of a Node B, but is
   optimized for deployment in the home.
 
-* Realizations
+* Subject
 
   The Femto Application Platform Interface (FAPI) is an initiative
   within the femto industry to encourage competition and innovation

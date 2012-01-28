@@ -49,7 +49,9 @@ cscope.*
 ncscope.*
 
 # automake
-Makefile.in
+autom4te.cache/
+
+# temp
 *.orig
 *~
 \#*#
