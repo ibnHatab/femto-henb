@@ -1,18 +1,8 @@
 
-SUBDIRS = libfapi
-#drivers
-#modules
+export ARCH=$(target_cpu) 
+export CROSS_COMPILE="$(target_alias)-" 
+export KERNEL_ROOT=$(kbuilddir)
 
+SUBDIRS = drivers
 
-##
-## Rules for building kernel objects
-##
-KERNEL_OBJECTS			= 
-KERNEL_MODULES			= 
-KERNEL_PRELOADS			=
-KERNEL_MODCONF			= $(STRCONF_CONFMOD)
-KERNEL_SUBDIR			= $(PACKAGE_LCNAME)
-KMODCONF_EXT			= $(PACKAGE_LCNAME)
-KERNEL_MODMAPS			=
-
-#FIXME:  include ${top_srcdir}/am/kernel.am
+#make modules_install INSTALL_MOD_PATH=$TARGETDIR

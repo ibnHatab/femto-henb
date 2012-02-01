@@ -1,8 +1,6 @@
 # =============================================================================
 
 m4_include([m4/kernel.m4])
-m4_include([m4/devfs.m4])
-
 
 # =============================================================================
 # AC_MODEM
@@ -27,10 +25,6 @@ AC_DEFUN([AC_MODEM], [dnl
 # -----------------------------------------------------------------------------
 AC_DEFUN([_MODEM_SETUP], [dnl
     _LINUX_KERNEL
-    _LINUX_DEVFS
-    # here we have our flags set and can perform preprocessor and compiler
-    # checks on the kernel
-    _LFS_CHECK_KERNEL
     _MODEM_SETUP_MODULE
     _MODEM_SETUP_MODULES
     _MODEM_SETUP_DRIVERS

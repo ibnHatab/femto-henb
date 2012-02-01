@@ -1,0 +1,14 @@
+1. Download embuinit from http://sourceforge.net/projects/embunit/files/
+2. Extract embunit source tarball into current directory
+3. Run make to create test kernel module
+4. Insmod resulting test.ko
+5. Type dmesg, you should see following strings in your kernel log:
+
+[26023.654544] ..............
+[26023.654597] OK (14 tests)
+
+6. Drop me an email with your suggestions of unit testing and TDD in
+   the linux kernel.
+
+Mikhail Gruzdev <michail.gruzdev@gmail.com>
+
