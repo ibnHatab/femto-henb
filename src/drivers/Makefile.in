@@ -1,9 +1,9 @@
 
-target_alias = arm-linux
-target_cpu = arm
-prefix = /usr/local
+target_alias = @target_alias@
+target_cpu = @target_cpu@
+prefix = @prefix@
 
-KERNEL_ROOT=/udir/vlad/repos/net/buildroot-2011.11/output/build/linux-3.1.4/
+KERNEL_ROOT=@kbuilddir@
 TARGETDIR=$(prefix)/firmware
 
 ifneq ($(KERNELRELEASE),)
@@ -14,7 +14,7 @@ endif
 EXTRA_CFLAGS += -I$(src)
 EXTRA_CFLAGS += 
 
- obj-m += sched_csap.o
+@CONFIG_MODEM_SCHED_CSAP_MODULE_TRUE@ obj-m += sched_csap.o
 
 #sched_csap-y := sched_csap.o
 

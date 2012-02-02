@@ -38,22 +38,27 @@ subdir = .
 DIST_COMMON = $(am__configure_deps) $(srcdir)/Makefile.am \
 	$(srcdir)/Makefile.in $(srcdir)/config.h.in \
 	$(top_srcdir)/configure $(top_srcdir)/include/sys/config.h.in \
-	COPYING INSTALL scripts/config.guess scripts/config.sub \
-	scripts/depcomp scripts/install-sh scripts/ltmain.sh \
-	scripts/missing
+	$(top_srcdir)/src/drivers/Config.in \
+	$(top_srcdir)/src/drivers/Makefile.in \
+	$(top_srcdir)/src/modules/Config.in \
+	$(top_srcdir)/src/modules/Makefile.in \
+	$(top_srcdir)/src/testing/Makefile.in COPYING INSTALL \
+	scripts/config.guess scripts/config.sub scripts/depcomp \
+	scripts/install-sh scripts/ltmain.sh scripts/missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
 	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
 	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
 	$(top_srcdir)/acinclude.m4 $(top_srcdir)/m4/kernel.m4 \
-	$(top_srcdir)/m4/devfs.m4 $(top_srcdir)/configure.in
+	$(top_srcdir)/configure.in
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = config.h $(top_builddir)/include/sys/config.h
-CONFIG_CLEAN_FILES =
+CONFIG_CLEAN_FILES = src/drivers/Makefile src/modules/Makefile \
+	src/testing/Makefile src/modules/Config src/drivers/Config
 CONFIG_CLEAN_VPATH_FILES =
 SOURCES =
 DIST_SOURCES =
@@ -119,6 +124,7 @@ AWK = @AWK@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
+CONFIG_ENABLE_TESTING = @CONFIG_ENABLE_TESTING@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CSCOPE = @CSCOPE@
@@ -140,6 +146,9 @@ INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+KERNEL_CFLAGS = @KERNEL_CFLAGS@
+KERNEL_CPPFLAGS = @KERNEL_CPPFLAGS@
+KERNEL_LDFLAGS = @KERNEL_LDFLAGS@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
@@ -164,6 +173,7 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
+PKG_INCLUDES = @PKG_INCLUDES@
 RANLIB = @RANLIB@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
@@ -192,6 +202,7 @@ datadir = @datadir@
 datarootdir = @datarootdir@
 docdir = @docdir@
 dvidir = @dvidir@
+embunit_dir = @embunit_dir@
 exec_prefix = @exec_prefix@
 host = @host@
 host_alias = @host_alias@
@@ -302,6 +313,16 @@ include/sys/stamp-h2: $(top_srcdir)/include/sys/config.h.in $(top_builddir)/conf
 
 distclean-hdr:
 	-rm -f config.h stamp-h1 include/sys/config.h include/sys/stamp-h2
+src/drivers/Makefile: $(top_builddir)/config.status $(top_srcdir)/src/drivers/Makefile.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+src/modules/Makefile: $(top_builddir)/config.status $(top_srcdir)/src/modules/Makefile.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+src/testing/Makefile: $(top_builddir)/config.status $(top_srcdir)/src/testing/Makefile.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+src/modules/Config: $(top_builddir)/config.status $(top_srcdir)/src/modules/Config.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
+src/drivers/Config: $(top_builddir)/config.status $(top_srcdir)/src/drivers/Config.in
+	cd $(top_builddir) && $(SHELL) ./config.status $@
 
 mostlyclean-libtool:
 	-rm -f *.lo

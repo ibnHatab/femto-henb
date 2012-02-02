@@ -50,6 +50,12 @@ ncscope.*
 
 # automake
 autom4te.cache/
+Makefile
+Config
+config.h
+config.log
+config.status
+stamp-h*
 
 # temp
 *.orig

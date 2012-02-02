@@ -1,12 +1,12 @@
 
-target_alias = arm-linux
-target_cpu = arm
-prefix = /usr/local
+target_alias = @target_alias@
+target_cpu = @target_cpu@
+prefix = @prefix@
 
-KERNEL_ROOT=/udir/vlad/repos/net/buildroot-2011.11/output/build/linux-3.1.4/
+KERNEL_ROOT=@kbuilddir@
 TARGETDIR=$(prefix)/firmware
 
-EMBUNIT_DIR := /udir/vlad/repos/net/embunit
+EMBUNIT_DIR := @embunit_dir@
 EMBUNIT_SRC := embunit/embUnit
 
 ifneq ($(KERNELRELEASE),)

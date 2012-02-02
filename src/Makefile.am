@@ -1,8 +1,4 @@
 
-export ARCH=$(target_cpu) 
-export CROSS_COMPILE="$(target_alias)-" 
-export KERNEL_ROOT=$(kbuilddir)
 
-SUBDIRS = drivers
+SUBDIRS = libfapi drivers modules testing
 
-#make modules_install INSTALL_MOD_PATH=$TARGETDIR

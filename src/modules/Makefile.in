@@ -1,9 +1,9 @@
 
-target_alias = arm-linux
-target_cpu = arm
-prefix = /usr/local
+target_alias = @target_alias@
+target_cpu = @target_cpu@
+prefix = @prefix@
 
-KERNEL_ROOT=/udir/vlad/repos/net/buildroot-2011.11/output/build/linux-3.1.4/
+KERNEL_ROOT=@kbuilddir@
 TARGETDIR=$(prefix)/firmware
 
 ifneq ($(KERNELRELEASE),)
@@ -14,15 +14,16 @@ endif
 EXTRA_CFLAGS += -I$(src)
 EXTRA_CFLAGS += 
 
- obj-m += sched_csap.o
+@CONFIG_LTE_SCHED_MODULE_TRUE@lte_sched.c: lte_sched.h
+@CONFIG_LTE_SCHED_MODULE_TRUE@obj-m += lte_sched.o
 
 #sched_csap-y := sched_csap.o
 
 else
 
-all: drivers
+all: modules
 
-drivers:
+modules:
 	echo "Making $@ in `pwd`"
 	ARCH=$(target_cpu) CROSS_COMPILE="$(target_alias)-" \
 	$(MAKE) V=1 -C $(KERNEL_ROOT) M=`pwd` modules
@@ -35,5 +36,5 @@ clean:
 install:
 	echo "Making $@ in `pwd`"
 	ARCH=$(target_cpu) CROSS_COMPILE="$(target_alias)-" \
-	$(MAKE) V=0 -C $(KERNEL_ROOT) M=`pwd` INSTALL_MOD_PATH=$(TARGETDIR) modules_install 
+	$(MAKE) V=1 -C $(KERNEL_ROOT) M=`pwd` INSTALL_MOD_PATH=$(TARGETDIR) modules_install 
 endif

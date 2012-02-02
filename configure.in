@@ -54,18 +54,18 @@ AC_TYPE_PID_T
 AC_TYPE_SIZE_T
 dnl AC_STRUCT_ST_BLOCKS
 dnl AC_CHECK_MEMBERS([struct stat.st_rdev])
-dnl AC_HEADER_TIME
-dnl AC_STRUCT_TM
-dnl AC_C_VOLATILE
-dnl AC_CHECK_TYPES([ptrdiff_t])
+AC_HEADER_TIME
+AC_STRUCT_TM
+AC_C_VOLATILE
+AC_CHECK_TYPES([ptrdiff_t])
 
 # Checks for library functions.
 AC_PROG_GCC_TRADITIONAL
-dnl AC_FUNC_VPRINTF
-dnl AC_CHECK_FUNCS([alarm bzero gettimeofday inet_ntoa localtime_r mempcpy memset munmap nl_langinfo select setlocale stpcpy strcasecmp strchr strcspn strdup strerror strrchr strstr strtol strtoul])
+AC_FUNC_VPRINTF
+AC_CHECK_FUNCS([alarm bzero gettimeofday inet_ntoa localtime_r mempcpy memset munmap nl_langinfo select setlocale stpcpy strcasecmp strchr strcspn strdup strerror strrchr strstr strtol strtoul])
+
 
 AC_MSG_NOTICE([Checking for MODEM and its requirements.])
-
 AC_MODEM
 
 LT_INIT
@@ -74,6 +74,10 @@ AM_INIT_AUTOMAKE
 AC_CONFIG_FILES([Makefile
                  src/Makefile
                  src/libfapi/Makefile
+                 src/drivers/Makefile
+                 src/modules/Makefile
+                 src/testing/Makefile
+		 src/modules/Config
+		 src/drivers/Config
 		 ])
-                 dnl cwmp/Makefile
 AC_OUTPUT
