@@ -1,0 +1,19 @@
+#!/bin/sh -x
+
+if [ ! -n "$REPOS" ]; then
+	echo "Please set net environment"
+	exit 1
+fi
+
+if [ `ifconfig tap1` ]; then
+    echo "Configure network:"
+    # sudo tunctl -u $USER -t tap1
+    # sudo /sbin/ifconfig tap1 192.168.0.1
+fi
+
+qemu-system-arm -M versatilepb \
+	   -kernel ${REPOS}/buildroot-2011.11/output/images/zImage \
+	   -append "root=0800 noswap ip=192.168.0.2::192.168.0.1:255.255.255.0::: console=ttyAMA0 console=ttyS0 loglevel=7" \
+	   -hdc ${REPOS}/buildroot-2011.11/output/images/rootfs.ext2 \
+	   -net nic -net tap,ifname=tap1,script=no -nographic \
+	   -no-reboot $@
