@@ -88,11 +88,11 @@ qemu-start:
 	screen -X -p qemu stuff "vision"
 
 MTEST=test.ko
-qemu-test:
+qemu-test: testing
 	screen -X -p qemu stuff "mount -o remount,rw /"
 	scp ${MTEST} root@192.168.0.2:/root
 	screen -X -p qemu stuff "rmmod ${MTEST}"
-	screen -X -p qemu stuff "insmod /root/${MTEST}"
+	screen -X -p qemu stuff "insmod /root/${MTEST} abc=\"10\""
 
 
 endif # ! KERNELRELEASE
