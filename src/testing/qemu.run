@@ -5,10 +5,12 @@ if [ ! -n "$REPOS" ]; then
 	exit 1
 fi
 
-if [ `ifconfig tap1` ]; then
+ifconfig tap1
+
+if [ $? != 0 ]; then
     echo "Configure network:"
-    # sudo tunctl -u $USER -t tap1
-    # sudo /sbin/ifconfig tap1 192.168.0.1
+    sudo tunctl -u $USER -t tap1
+    sudo /sbin/ifconfig tap1 192.168.0.1
 fi
 
 qemu-system-arm -M versatilepb \

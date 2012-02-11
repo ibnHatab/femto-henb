@@ -80,7 +80,7 @@ EGREP="/bin/grep -E"
 FGREP="/bin/grep -F"
 
 # A BSD- or MS-compatible name lister.
-NM="/udir/vlad/repos/net/buildroot-2011.11/output/host/usr/bin//arm-linux-nm -B"
+NM="/udir/vlad/repos/net//buildroot-2011.11/output/host/usr/bin/arm-linux-nm -B"
 
 # Whether we need soft or hard links.
 LN_S="ln -s"
@@ -129,7 +129,7 @@ old_postinstall_cmds="chmod 644 \$oldlib~\$RANLIB \$oldlib"
 old_postuninstall_cmds=""
 
 # A C compiler.
-LTCC="arm-linux-gcc"
+LTCC="/udir/vlad/repos/net//buildroot-2011.11/output/host/usr/bin/arm-unknown-linux-uclibcgnueabi-gcc"
 
 # LTCC compiler flags.
 LTCFLAGS=""
@@ -260,7 +260,7 @@ LD="/udir/vlad/repos/net/buildroot-2011.11/output/host/usr/arm-unknown-linux-ucl
 old_archive_cmds="\$AR \$AR_FLAGS \$oldlib\$oldobjs~\$RANLIB \$oldlib"
 
 # A language specific compiler.
-CC="arm-linux-gcc"
+CC="/udir/vlad/repos/net//buildroot-2011.11/output/host/usr/bin/arm-unknown-linux-uclibcgnueabi-gcc"
 
 # Is the compiler the GNU compiler?
 with_gcc=yes

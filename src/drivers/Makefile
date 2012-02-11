@@ -3,7 +3,7 @@ target_alias = arm-linux
 target_cpu = arm
 prefix = /usr/local
 
-KERNEL_ROOT=/udir/vlad/repos/net/buildroot-2011.11/output/build/linux-3.1.4/
+KERNEL_ROOT=/udir/vlad/repos/net/buildroot-2011.11/output/build/linux-3.1
 TARGETDIR=$(prefix)/firmware
 
 ifneq ($(KERNELRELEASE),)

@@ -14,6 +14,8 @@
 *.o.*
 *.a
 *.s
+*.la
+*.lo
 *.ko
 *.so
 *.so.dbg
@@ -21,6 +23,7 @@
 *.i
 *.lst
 *.symtypes
+*.symvers
 *.order
 modules.builtin
 *.elf
@@ -43,6 +46,7 @@ modules.builtin
 # git files that we don't want to ignore even it they are dot-files
 #
 !.gitignore
+!.dir-locals.el
 
 # cscope files
 cscope.*
@@ -56,8 +60,11 @@ config.h
 config.log
 config.status
 stamp-h*
+src/testing/embunit
 
 # temp
+core
+screenlog.*
 *.orig
 *~
 \#*#
