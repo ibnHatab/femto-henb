@@ -19,10 +19,14 @@ endif
 EXTRA_CFLAGS += -I$(src) -I$(EMBUNIT_DIR)
 EXTRA_CFLAGS += -DNO_STDIO_PRINTF
 
-obj-m += test.o
+
+obj-m += test.o timerunit.o
 
 #test runner
 test-y := test_runner.o
+
+#timer module
+test-y += timerTest.o
 
 #counter module
 test-y += counter.o
@@ -67,7 +71,6 @@ embunit:
 	@ln -sf $(EMBUNIT_DIR)
 	$(MAKE) -C $(EMBUNIT_DIR)/tools
 
-
 ################################################################################
 # Run QEMU testing using buildroot
 # FIXME: add --with-buildroot=DIR
@@ -87,12 +90,16 @@ qemu-start:
 	sleep 1
 	screen -X -p qemu stuff "vision"
 
-MTEST=test.ko
-qemu-test: ${MTEST}
+MTEST=test.ko timerunit.ko
+qemu-test: testing
 	screen -X -p qemu stuff "mount -o remount,rw /"
 	scp ${MTEST} root@192.168.0.2:/root
 	screen -X -p qemu stuff "rmmod ${MTEST}"
-	screen -X -p qemu stuff "insmod /root/${MTEST}"
-
+	screen -X -p qemu stuff "insmod /root/timerunit.ko"
+	grep -v add-symbol-file .gdbinit  > 1
+	echo -n "add-symbol-file timerunit.ko " >> 1
+	ssh root@192.168.0.2 cat /sys/module/timerunit/sections/.text >> 1
+	mv 1 .gdbinit
+	screen -X -p qemu stuff "insmod /root/test.ko abc=\"2\""
 
 endif # ! KERNELRELEASE

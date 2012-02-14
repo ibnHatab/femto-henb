@@ -8,11 +8,13 @@
 static char test_selector[ABC_SIZE];
 module_param_string(abc, test_selector, ABC_SIZE, S_IRUGO | S_IWUSR);
 
-static TestCaller test_caller;
+// static TestCaller test_caller;
 
 /*embunit:extern=+ */
-extern TestRef CounterTest_tests(TestCaller *test);
-extern TestRef PersonTest_tests(TestCaller *test);
+extern TestRef CounterTest_tests (void);
+extern TestRef PersonTest_tests (void);
+extern TestRef TimerTest_tests (void);
+
 /*embunit:extern=- */
 
 void test_runner_execute (char* selector)
@@ -21,11 +23,11 @@ void test_runner_execute (char* selector)
         switch (*selector) {
             /*embunit:run=+ */
         case '0':
-            TestRunner_runTest (CounterTest_tests (&test_caller));
-            TestRunner_runTest (PersonTest_tests (&test_caller));
+            TestRunner_runTest (CounterTest_tests ());
+            TestRunner_runTest (PersonTest_tests ());
             break;
         case '1':   break;
-        case '2': /* TestRunner_runTest (*_tests (&test_caller)); */  break;
+        case '2':  TestRunner_runTest (TimerTest_tests ()); break;
         case '3': /* TestRunner_runTest (*_tests (&test_caller)); */  break;
         case '4': /* TestRunner_runTest (*_tests (&test_caller)); */  break;
         case '5': /* TestRunner_runTest (*_tests (&test_caller)); */  break;

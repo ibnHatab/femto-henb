@@ -36,4 +36,17 @@ install:
 	echo "Making $@ in `pwd`"
 	ARCH=$(target_cpu) CROSS_COMPILE="$(target_alias)-" \
 	$(MAKE) V=0 -C $(KERNEL_ROOT) M=`pwd` INSTALL_MOD_PATH=$(TARGETDIR) modules_install 
+
+
+################################################################################
+# Run QEMU testing throughout screen 
+################################################################################
+
+MTEST=sched_csap.ko
+qemu-test: ${MTEST}
+	screen -X -p qemu stuff "mount -o remount,rw /"
+	scp ${MTEST} root@192.168.0.2:/root
+	screen -X -p qemu stuff "rmmod ${MTEST}"
+	screen -X -p qemu stuff "insmod /root/${MTEST}"
+
 endif
