@@ -87,11 +87,11 @@ qemu-debug:
 # screen -t qemu -L -d -m ./qemu.run
 qemu-start:
 	screen -X -p qemu stuff "root"
-	sleep 1
-	screen -X -p qemu stuff "vision"
+	ssh root@192.168.0.2 'mount -t debugfs none /sys/kernel/debug/'
 
 MTEST=test.ko timerunit.ko
 qemu-test: testing
+	screen -X -p qemu stuff "mount -t debugfs none /sys/kernel/debug"
 	screen -X -p qemu stuff "mount -o remount,rw /"
 	scp ${MTEST} root@192.168.0.2:/root
 	screen -X -p qemu stuff "rmmod ${MTEST}"
@@ -101,5 +101,7 @@ qemu-test: testing
 	ssh root@192.168.0.2 cat /sys/module/timerunit/sections/.text >> 1
 	mv 1 .gdbinit
 	screen -X -p qemu stuff "insmod /root/test.ko abc=\"2\""
+
+#	echo -n " -s .data " >> 1; ssh root@192.168.0.2 cat /sys/module/timerunit/sections/.bss >> 1
 
 endif # ! KERNELRELEASE

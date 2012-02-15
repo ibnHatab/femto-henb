@@ -1,4 +1,8 @@
 #include <linux/module.h>
+#include <linux/fs.h>
+#include <linux/debugfs.h>
+#include <linux/uaccess.h>
+
 #include <embUnit/embUnit.h>
 
 #define DRV_NAME	"embunit_runner"
@@ -19,6 +23,8 @@ extern TestRef TimerTest_tests (void);
 
 void test_runner_execute (char* selector)
 {
+	TestRunner_start();
+
     while (*selector) {
         switch (*selector) {
             /*embunit:run=+ */
@@ -86,11 +92,13 @@ void test_runner_execute (char* selector)
         case 'w': /* TestRunner_runTest (*_tests (&test_caller)); */  break;
         case 'x': /* TestRunner_runTest (*_tests (&test_caller)); */  break;
         case 'y': /* TestRunner_runTest (*_tests (&test_caller)); */  break;
-        case 'z': /* TestRunner_runTest (*_tests (&test_caller)); */  break;            
+        case 'z': /* TestRunner_runTest (*_tests (&test_caller)); */  break;
             /*embunit:run=- */
         }
         ++ selector;
     }
+    
+	TestRunner_end();
 }
 
 void stdimpl_print(const char *string)
@@ -98,18 +106,73 @@ void stdimpl_print(const char *string)
 	printk(string);
 }
 
+static ssize_t
+run_read(struct file *file, char __user * buf, size_t lbuf, loff_t * ppos)
+{
+	int nbytes;
+	nbytes = strlen(test_selector);
+	return simple_read_from_buffer(buf, lbuf, ppos, test_selector, nbytes);
+}
+
+static ssize_t
+run_write(struct file *file, const char __user * buf, size_t lbuf, loff_t * ppos)
+{
+	int rc;
+	int nbytes = lbuf;
+	rc = copy_from_user(&test_selector, buf, lbuf);
+
+    if (! rc) {
+        printk(KERN_INFO "\n Run: %s\n", test_selector);
+        test_runner_execute (test_selector);
+    } else {
+        printk(KERN_INFO "\n Pass\n");        
+    }
+    
+	return nbytes;
+}
+
+static int run_stat, fail_stat;
+static struct debugfs_blob_wrapper abc_stat = {
+    .data = test_selector,
+    .size = ABC_SIZE,
+};
+static const struct file_operations run_fops = {
+	.owner = THIS_MODULE,
+	.read = run_read,
+	.write = run_write,
+};
+
+static struct dentry *embunit_direntry, *run_direntry, *fail_direntry, *abc_direntry;
 
 static int __init test_runner_init(void)
 {
-	TestRunner_start();
-    test_runner_execute (test_selector);
-	TestRunner_end();
+    embunit_direntry = debugfs_create_dir ("embunit", NULL);
+    run_direntry  = debugfs_create_file ("run", S_IRUGO | S_IWUSR, embunit_direntry, NULL, &run_fops);
+    fail_direntry = debugfs_create_u32  ("fail", S_IRUGO | S_IWUSR, embunit_direntry, &fail_stat);
+    abc_direntry  = debugfs_create_blob ("abs", S_IRUGO | S_IWUSR, embunit_direntry, &abc_stat);
+
+    if (*test_selector) {
+        test_runner_execute (test_selector);
+    }
 
 	return 0;
 }
 
 static void __exit test_runner_exit(void)
 {
+
+    if (run_direntry)
+        debugfs_remove (run_direntry);
+
+    if (fail_direntry)
+        debugfs_remove (fail_direntry);
+
+    if (abc_direntry)
+        debugfs_remove (abc_direntry);
+
+    if (embunit_direntry)
+        debugfs_remove (embunit_direntry);
+    
 	return;
 }
 
