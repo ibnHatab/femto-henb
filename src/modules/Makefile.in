@@ -12,14 +12,26 @@ ifdef V
 endif
 
 EXTRA_CFLAGS += -I$(src)
-EXTRA_CFLAGS += 
+EXTRA_CFLAGS += -DLTE_DEBUG
 
-@CONFIG_LTE_SCHED_MODULE_TRUE@lte_sched.c: lte_sched.h
-@CONFIG_LTE_SCHED_MODULE_TRUE@obj-m += lte_sched.o
+%.c: %.h
+
+obj-m += lte_sched.o
 
 #sched_csap-y := sched_csap.o
 
-else
+obj-m += lte_enb.o
+
+# lte_enb-y += lte_enb_mac.o
+# lte_enb-y += lte_enb_rlc.o
+lte_enb-y += tti_timer.o
+
+
+#timer module
+obj-m += timerunit.o
+
+
+else # ! KERNELRELEASE
 
 all: modules
 
@@ -43,11 +55,7 @@ install:
 # Run QEMU testing throughout screen 
 ################################################################################
 
-MTEST=lte_sched.ko
-qemu-test: ${MTEST}
-	screen -X -p qemu stuff "mount -o remount,rw /"
-	scp ${MTEST} root@192.168.0.2:/root
-	screen -X -p qemu stuff "rmmod ${MTEST}"
-	screen -X -p qemu stuff "insmod /root/${MTEST}"
+qemu-test: modules
+	@make -C ../testing
 
 endif

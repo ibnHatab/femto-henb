@@ -16,25 +16,26 @@ ifdef V
 endif
 
 
-EXTRA_CFLAGS += -I$(src) -I$(EMBUNIT_DIR)
+EXTRA_CFLAGS += -I$(src)/../modules -I$(EMBUNIT_DIR)
 EXTRA_CFLAGS += -DNO_STDIO_PRINTF
 
 
-obj-m += test.o timerunit.o
+obj-m += test.o
 
 #test runner
 test-y := test_runner.o
 
 #timer module
-test-y += timerTest.o
+test-y += sys/timerTest.o
+test-y += mod/tti_timerTest.o
 
 #counter module
-test-y += counter.o
-test-y += counterTest.o
+test-y += zero/counter.o
+test-y += zero/counterTest.o
 
 #person module
-test-y += person.o
-test-y += personTest.o
+test-y += zero/person.o
+test-y += zero/personTest.o
 
 #embunit
 test-y += $(EMBUNIT_SRC)/AssertImpl.o
@@ -46,7 +47,7 @@ test-y += $(EMBUNIT_SRC)/TestResult.o
 test-y += $(EMBUNIT_SRC)/TestRunner.o
 test-y += $(EMBUNIT_SRC)/TestSuite.o
 
-else
+else # ! KERNELRELEASE
 
 all: testing
 
@@ -89,18 +90,29 @@ qemu-start:
 	screen -X -p qemu stuff "root"
 	ssh root@192.168.0.2 'mount -t debugfs none /sys/kernel/debug/'
 
-MTEST=test.ko timerunit.ko
+MODULES = lte_enb.ko 
+#lte_sched.ko timerunit.ko
+TEST='t'
 qemu-test: testing
-	screen -X -p qemu stuff "mount -t debugfs none /sys/kernel/debug"
-	screen -X -p qemu stuff "mount -o remount,rw /"
-	scp ${MTEST} root@192.168.0.2:/root
-	screen -X -p qemu stuff "rmmod ${MTEST}"
-	screen -X -p qemu stuff "insmod /root/timerunit.ko"
-	grep -v add-symbol-file .gdbinit  > 1
-	echo -n "add-symbol-file timerunit.ko " >> 1
-	ssh root@192.168.0.2 cat /sys/module/timerunit/sections/.text >> 1
-	mv 1 .gdbinit
-	screen -X -p qemu stuff "insmod /root/test.ko abc=\"2\""
+	-ssh root@192.168.0.2 "mount -t debugfs none /sys/kernel/debug"
+	-ssh root@192.168.0.2 "mount -o remount,rw /" 
+	-ssh root@192.168.0.2 "rmmod ${MODULES}"
+	grep -v add-symbol-file .gdbinit > .gdbinit.new
+	@list='$(MODULES)'; 								\
+	for m in $$list; do 								\
+		echo "copy $$m"; scp "../modules/$$m"  root@192.168.0.2:/root; 	\
+		echo "insmod /root/$$m"; ssh root@192.168.0.2 "insmod /root/$$m";		\
+		echo -n "add-symbol-file $$m " >> .gdbinit.new; \
+		mm="`echo $$m | cut -d'.' -f1`";					\
+		ssh root@192.168.0.2 "cat /sys/module/$${mm}/sections/.text" >> .gdbinit.new || true; \
+	done
+	@mv .gdbinit.new .gdbinit
+	-ssh root@192.168.0.2 "rmmod test.ko"
+	scp test.ko root@192.168.0.2:/root
+	ssh root@192.168.0.2 "insmod /root/test.ko"
+	screen -X -p qemu stuff "echo ${TEST} > /sys/kernel/debug/embunit/run"
+
+
 
 #	echo -n " -s .data " >> 1; ssh root@192.168.0.2 cat /sys/module/timerunit/sections/.bss >> 1
 

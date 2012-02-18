@@ -18,3 +18,6 @@ cctags: cscope
 cscope:
 	@CSCOPE_INDEXER@ -f cscope.out -i cscope.files -r -v
 
+# W/O in fake Makefile.in that build Linux Kernel Modules 
+lkm:
+	./config.status src/testing/Makefile src/modules/Makefile src/drivers/Makefile

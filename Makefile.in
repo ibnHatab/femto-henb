@@ -770,6 +770,9 @@ cctags: cscope
 cscope:
 	@CSCOPE_INDEXER@ -f cscope.out -i cscope.files -r -v
 
+lkm:
+	./config.status src/testing/Makefile src/modules/Makefile src/drivers/Makefile
+
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
