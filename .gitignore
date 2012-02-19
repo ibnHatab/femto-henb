@@ -36,6 +36,8 @@ modules.builtin
 *.patch
 *.gcno
 
+!.gdbinit
+
 #
 # Top-level generic files
 #

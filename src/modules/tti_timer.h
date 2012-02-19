@@ -18,8 +18,6 @@ struct tti_timer_list {
 	unsigned long data;
 };
 
-extern unsigned long current_tti;
-
 #define TTI 1
 
 #define TTI_TIMER_INITIALIZER(_function, _expires, _data) {		\

@@ -77,8 +77,6 @@ embunit:
 # FIXME: add --with-buildroot=DIR
 ################################################################################
 
-export REPOS="/udir/vlad/repos/net/"
-
 qemu-stop:
 	killall qemu-system-arm
 

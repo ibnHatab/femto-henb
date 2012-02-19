@@ -35,7 +35,7 @@ struct tti_tvec_base {
 
 struct tti_tvec_base *_tti_tvec_base;
 
-#define CONFIG_DEBUG_TTI_TIMERS 0
+#undef CONFIG_DEBUG_TTI_TIMERS
 
 #ifdef CONFIG_DEBUG_TTI_TIMERS
 static struct debug_obj_descr timer_debug_descr;
@@ -296,7 +296,7 @@ void tti_init_timer(struct tti_timer_list *timer)
     
     __init_timer(timer);
 }
-EXPORT_SYMBOL(tti_init_timer);
+EXPORT_SYMBOL_GPL(tti_init_timer);
 
 /**
  * tti_add_timer - start a timer
@@ -316,7 +316,7 @@ void tti_add_timer(struct tti_timer_list *timer)
 {
 	tti_mod_timer(timer, timer->expires);
 }
-EXPORT_SYMBOL(tti_add_timer);
+EXPORT_SYMBOL_GPL(tti_add_timer);
 
 /**
  * tti_mod_timer_pending - modify a pending timer's timeout
@@ -332,7 +332,7 @@ int tti_mod_timer_pending(struct tti_timer_list *timer, unsigned long expires)
 {
 	return __tti_mod_timer(timer, expires, true);
 }
-EXPORT_SYMBOL(tti_mod_timer_pending);
+EXPORT_SYMBOL_GPL(tti_mod_timer_pending);
 
 /**
  * tti_mod_timer - modify a timer's timeout
@@ -366,7 +366,7 @@ int tti_mod_timer(struct tti_timer_list *timer, unsigned long expires)
 
 	return __tti_mod_timer(timer, expires, false);
 }
-EXPORT_SYMBOL(tti_mod_timer);
+EXPORT_SYMBOL_GPL(tti_mod_timer);
 
 /**
  * tti_del_timer - deactive a timer.
@@ -393,7 +393,7 @@ int tti_del_timer(struct tti_timer_list *timer)
 
 	return ret;
 }
-EXPORT_SYMBOL(tti_del_timer);
+EXPORT_SYMBOL_GPL(tti_del_timer);
 
 static void call_timer_fn(struct tti_timer_list *timer, void (*fn)(unsigned long),
                           unsigned long data)
@@ -447,7 +447,7 @@ void run_timer_task(unsigned long current_tti)
     if (time_after_eq(current_tti, base->timer_jiffies))
 		__run_timers(base, current_tti);
 }
-EXPORT_SYMBOL(run_timer_task);
+EXPORT_SYMBOL_GPL(run_timer_task);
 
 MODULE_AUTHOR("ibnHatab");
 MODULE_DESCRIPTION("TTI Timer Array");

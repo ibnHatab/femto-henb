@@ -2,7 +2,7 @@
 
 # libtool - Provide generalized library-building support services.
 # Generated automatically by config.status (openhenb) 0.1a
-# Libtool was configured on host picon:
+# Libtool was configured on host henb:
 # NOTE: Changes made to this file will be lost: look at ltmain.sh.
 #
 #   Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2003, 2004, 2005,
@@ -80,7 +80,7 @@ EGREP="/bin/grep -E"
 FGREP="/bin/grep -F"
 
 # A BSD- or MS-compatible name lister.
-NM="/udir/vlad/repos/net//buildroot-2011.11/output/host/usr/bin/arm-linux-nm -B"
+NM="/repos/buildroot-2011.11/output/host/usr/bin//arm-linux-nm -B"
 
 # Whether we need soft or hard links.
 LN_S="ln -s"
@@ -129,7 +129,7 @@ old_postinstall_cmds="chmod 644 \$oldlib~\$RANLIB \$oldlib"
 old_postuninstall_cmds=""
 
 # A C compiler.
-LTCC="/udir/vlad/repos/net//buildroot-2011.11/output/host/usr/bin/arm-unknown-linux-uclibcgnueabi-gcc"
+LTCC="/repos/buildroot-2011.11/output/host/usr/bin/arm-unknown-linux-uclibcgnueabi-gcc"
 
 # LTCC compiler flags.
 LTCFLAGS=""
@@ -234,7 +234,7 @@ finish_eval=""
 hardcode_into_libs=yes
 
 # Compile-time system search path for libraries.
-sys_lib_search_path_spec="/udir/vlad/repos/net/buildroot-2011.11/output/host/usr/lib/gcc/arm-unknown-linux-uclibcgnueabi/4.3.6 /udir/vlad/repos/net/buildroot-2011.11/output/host/usr/arm-unknown-linux-uclibcgnueabi/lib /udir/vlad/repos/net/buildroot-2011.11/output/host/usr/arm-unknown-linux-uclibcgnueabi/sysroot/lib /udir/vlad/repos/net/buildroot-2011.11/output/host/usr/arm-unknown-linux-uclibcgnueabi/sysroot/usr/lib"
+sys_lib_search_path_spec="/repos/buildroot-2011.11/output/host/usr/lib/gcc/arm-unknown-linux-uclibcgnueabi/4.3.6 /repos/buildroot-2011.11/output/host/usr/arm-unknown-linux-uclibcgnueabi/lib /repos/buildroot-2011.11/output/host/usr/arm-unknown-linux-uclibcgnueabi/sysroot/lib /repos/buildroot-2011.11/output/host/usr/arm-unknown-linux-uclibcgnueabi/sysroot/usr/lib"
 
 # Run-time system search path for libraries.
 sys_lib_dlsearch_path_spec="/lib /usr/lib /lib/i486-linux-gnu /usr/lib/i486-linux-gnu /usr/local/lib "
@@ -254,13 +254,13 @@ striplib="arm-linux-strip --strip-unneeded"
 
 
 # The linker used to build libraries.
-LD="/udir/vlad/repos/net/buildroot-2011.11/output/host/usr/arm-unknown-linux-uclibcgnueabi/bin/ld"
+LD="/repos/buildroot-2011.11/output/host/usr/arm-unknown-linux-uclibcgnueabi/bin/ld"
 
 # Commands used to build an old-style archive.
 old_archive_cmds="\$AR \$AR_FLAGS \$oldlib\$oldobjs~\$RANLIB \$oldlib"
 
 # A language specific compiler.
-CC="/udir/vlad/repos/net//buildroot-2011.11/output/host/usr/bin/arm-unknown-linux-uclibcgnueabi-gcc"
+CC="/repos/buildroot-2011.11/output/host/usr/bin/arm-unknown-linux-uclibcgnueabi-gcc"
 
 # Is the compiler the GNU compiler?
 with_gcc=yes
