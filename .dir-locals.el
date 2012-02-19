@@ -6,5 +6,7 @@
   (c-basic-offset . 4)
   (c-set-style "linux")
   (compilation-read-command . nil)
-  (compile-command . (format "make -C %s %s" (get-closest-pathname ".") "qemu-test"))
+  (compile-command . (format "make -C %s %s"
+                             (file-name-directory (get-closest-pathname "Makefile"))
+                             "qemu-test"))
 ))
