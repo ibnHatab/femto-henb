@@ -25,11 +25,11 @@ obj-m += lte_enb.o
 # lte_enb-y += lte_enb_mac.o
 # lte_enb-y += lte_enb_rlc.o
 lte_enb-y += tti_timer.o
+CFLAGS_tti_timer.o = -O0
 
 
 #timer module
 obj-m += timerunit.o
-
 
 else # ! KERNELRELEASE
 

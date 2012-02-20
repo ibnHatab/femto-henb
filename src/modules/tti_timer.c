@@ -7,11 +7,12 @@
  *  : linux/kernel/timer.c
  */
 
-#include <linux/module.h>
 #include <linux/init.h>
 #include <linux/jiffies.h>
 #include <linux/cpu.h>
 #include <linux/slab.h>
+
+#include <lte_debug.h>
 
 #include <tti_timer.h>
 
@@ -33,7 +34,7 @@ struct tti_tvec_base {
 	struct tti_tvec_root tv;
 } ____cacheline_aligned;
 
-struct tti_tvec_base *_tti_tvec_base;
+struct tti_tvec_base *_tti_tvec_base = 0;
 
 #undef CONFIG_DEBUG_TTI_TIMERS
 
@@ -116,6 +117,7 @@ static int timer_fixup_free(void *addr, enum debug_obj_state state)
 	}
 }
 
+
 static struct debug_obj_descr timer_debug_descr = {
 	.name		= "tti_timer_list",
 	.debug_hint	= timer_debug_hint,
@@ -183,9 +185,10 @@ debug_deactivate(struct tti_timer_list *timer)
  */
 int init_tti_timers_array (unsigned long base_tti)
 {
+    int j;
     long cpu = (long)smp_processor_id();
     struct tti_tvec_base *base;
-    BUG_ON(_tti_tvec_base != NULL);
+    //BUG_ON(_tti_tvec_base != NULL);
     
     base = kmalloc_node(sizeof(*base),
                         GFP_KERNEL | __GFP_ZERO,
@@ -193,10 +196,14 @@ int init_tti_timers_array (unsigned long base_tti)
     if (!base)
         return -ENOMEM;
 
+    for (j = 0; j < TVR_SIZE; j++)
+		INIT_LIST_HEAD(base->tv.vec + j);
+
     base->timer_jiffies = base_tti;
     base->next_timer = base->timer_jiffies;
 
     _tti_tvec_base = base;
+    CDBG("_tti_tvec_base %x\n", _tti_tvec_base);
     
     return 0;
 }

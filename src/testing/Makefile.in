@@ -17,7 +17,7 @@ endif
 
 
 EXTRA_CFLAGS += -I$(src)/../modules -I$(EMBUNIT_DIR)
-EXTRA_CFLAGS += -DNO_STDIO_PRINTF
+EXTRA_CFLAGS += -DNO_STDIO_PRINTF -g -O0
 
 
 obj-m += test.o
@@ -90,28 +90,31 @@ qemu-start:
 
 MODULES = lte_enb.ko 
 #lte_sched.ko timerunit.ko
-TEST='t'
+TEST='0'
 qemu-test: testing
 	-ssh root@192.168.0.2 "mount -t debugfs none /sys/kernel/debug"
 	-ssh root@192.168.0.2 "mount -o remount,rw /" 
+	-ssh root@192.168.0.2 "echo ttyAMA0 > /sys/module/kgdboc/parameters/kgdboc"
+	-ssh root@192.168.0.2 "rmmod test.ko"
 	-ssh root@192.168.0.2 "rmmod ${MODULES}"
-	grep -v add-symbol-file .gdbinit > .gdbinit.new
+	-grep -v add-symbol-file .gdbinit > .gdbinit.new
 	@list='$(MODULES)'; 								\
 	for m in $$list; do 								\
 		echo "copy $$m"; scp "../modules/$$m"  root@192.168.0.2:/root; 	\
 		echo "insmod /root/$$m"; ssh root@192.168.0.2 "insmod /root/$$m";		\
-		echo -n "add-symbol-file $$m " >> .gdbinit.new; \
+		echo -n "add-symbol-file ../modules/$$m " >> .gdbinit.new; \
 		mm="`echo $$m | cut -d'.' -f1`";					\
 		ssh root@192.168.0.2 "cat /sys/module/$${mm}/sections/.text" >> .gdbinit.new || true; \
 	done
-	@mv .gdbinit.new .gdbinit
-	-ssh root@192.168.0.2 "rmmod test.ko"
 	scp test.ko root@192.168.0.2:/root
 	ssh root@192.168.0.2 "insmod /root/test.ko"
+	-echo -n "add-symbol-file test.ko " >> .gdbinit.new
+	-ssh root@192.168.0.2 "cat /sys/module/test/sections/.text" >> .gdbinit.new
+	@mv .gdbinit.new .gdbinit
 	screen -X -p qemu stuff "echo ${TEST} > /sys/kernel/debug/embunit/run"
 
 
-
+#echo g > /proc/sysrq-trigger
 #	echo -n " -s .data " >> 1; ssh root@192.168.0.2 cat /sys/module/timerunit/sections/.bss >> 1
 
 endif # ! KERNELRELEASE
