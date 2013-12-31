@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="11.3">
+  <zoom_level>7</zoom_level>
+  <element>
+    <type>com.umlet.element.SequenceDiagram</type>
+    <coordinates>
+      <x>63</x>
+      <y>700</y>
+      <w>434</w>
+      <h>161</h>
+    </coordinates>
+    <panel_attributes>title: FAPI Notification
+_cphy:TestMac~id1_|_cphy:CL~cphy_|_cl:CL~cl_|_phy:MSPD~phy_|
+
+
+phy-&gt;cl:notify
+cl-&gt;cphy:notify
+cphy-&gt;cl:IND
+cl-&gt;id1:IND
+
+
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.SequenceDiagram</type>
+    <coordinates>
+      <x>35</x>
+      <y>105</y>
+      <w>434</w>
+      <h>350</h>
+    </coordinates>
+    <panel_attributes>title: FAPI Config
+_cphy:TestMac~id1_|_cphy:CL~cphy_|_cl:CL~cl_|_phy:MSPD~phy_
+
+
+id1-&gt;cl:conf.rec
+cl-&gt;cphy:handle
+test-&gt;user
+user-&gt;cl:register
+user-&gt;cl:send data
+cphy-&gt;cphy:cphy:conv.error
+cphy-&gt;cl:cphy:conv.res.error
+cl-&gt;id1:err
+cl-&gt;user:cb  data
+cphy-&gt;cphy:cphy:conv.ok
+cphy-&gt;cl:handle_API.int
+cphy-&gt;cl:cphy:conv.res
+cl-&gt;id1:ok
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.SequenceDiagram</type>
+    <coordinates>
+      <x>56</x>
+      <y>511</y>
+      <w>336</w>
+      <h>161</h>
+    </coordinates>
+    <panel_attributes>title: FAPI MOK
+_cl:CL~cl_|_cl_user:cl_user~user_|_utest:utest~test_
+
+
+test-&gt;user
+user-&gt;cl:register
+user-&gt;cl:send data
+cl-&gt;user:cb  data
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.custom.InteractionFrame</type>
+    <coordinates>
+      <x>56</x>
+      <y>336</y>
+      <w>385</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>Positive case</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

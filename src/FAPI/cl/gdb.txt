@@ -1,0 +1,43 @@
+
+frame-begin 0 0x400a4790
+0x400a4790 in ?? ()
+
+stopped
+
+post-prompt
+No breakpoints or watchpoints.
+No breakpoints or watchpoints.
+Num     Type           Disp Enb Address    What
+1       breakpoint     keep y   0x0000992c <main>
+
+Breakpoint 1, 0x0000992c in main ()
+Num     Type           Disp Enb Address    What
+1       breakpoint     keep y   0x0000992c <main>
+	breakpoint already hit 1 time
+Num     Type           Disp Enb Address    What
+1       breakpoint     keep y   0x0000992c <main>
+	breakpoint already hit 1 time
+
+Program exited with code 01.
+Num     Type           Disp Enb Address    What
+1       breakpoint     keep y   0x0000992c <main>
+	breakpoint already hit 1 time
+
+error-begin
+/exports/vlad/.gdbinit:4: Error in sourced command file:
+135.243.22.31:1234: Connection timed out.
+
+error
+
+post-prompt
+94	{
+95	    return SUCCESS;
+96	}
+97	
+98	int main (int argc, char* argv[], char* envp[])
+99	{
+100	    struct sched_param sp;
+101	    unsigned char msgBuf[BUFSIZ];
+102	
+103	    parse_args(argc, argv);
+No breakpoints or watchpoints.

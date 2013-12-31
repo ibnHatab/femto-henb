@@ -1,0 +1,1973 @@
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
+/*
+ * Copyright (c) 2011 Femto Forum Ltd
+ *
+ * LTE eNB L1 API Definition v1.1
+ * Femto Forum Technical Document
+ *
+ * Document number:  FF_Tech_002_v1.11
+ * Date issued:      12-10-2010
+ * Document status:  Document for public distribution
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation;
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * Author: Ibn Hatab <lib.aca55a@gmail.com>
+ */
+
+#ifndef _L1_L2_IFACE_H_
+#define _L1_L2_IFACE_H_
+
+#include <l1_types.h>
+#include <l1_tlv.h>
+
+/// Table 3: General L1 API message format
+typedef enum  {
+    FAPI_L1_PARAM_REQ       = 0x00, // See Section 3.2.1.1
+    FAPI_L1_PARAM_RESP      = 0x01, // See Section 3.2.1.2
+    FAPI_L1_CONFIG_REQ      = 0x02, // See Section 3.2.2.1
+    FAPI_L1_CONFIG_RESP     = 0x03, // See Section 3.2.2.2
+    FAPI_L1_START_REQ       = 0x04, // See Section 3.2.4.1
+    FAPI_L1_STOP_REQ        = 0x05, // See Section 3.2.5.1
+    FAPI_L1_STOP_IND        = 0x06, // See Section 3.2.5.2
+    FAPI_L1_UE_CONFIG_REQ   = 0x07, // See Section 3.2.6.1
+    FAPI_L1_UE_CONFIG_RESP  = 0x08, // See Section 3.2.6.2
+    FAPI_L1_ERROR_IND       = 0x09, // See Section 3.2.8.1
+    FAPI_L1_UE_RELEASE_REQ  = 0x0a, // See Section 3.2.7.1
+    FAPI_L1_UE_RELEASE_RESP = 0x0b, // See Section 3.2.7.2
+    // RESERVED  0x0c-0x7f
+    FAPI_L1_DL_CONFIG_REQ   = 0x80, // See Section 3.3.1.2
+    FAPI_L1_UL_CONFIG_REQ   = 0x81, // See Section 3.3.1.3
+    FAPI_L1_SUBFRAME_IND    = 0x82, // See Section 3.3.1.1
+    FAPI_L1_HI_DCI0_REQ     = 0x83, // See Section 3.3.1.4
+    FAPI_L1_TX_REQ          = 0x84, // See Section 3.3.2.1
+    FAPI_L1_HARQ_IND        = 0x85, // See Section 3.3.3.2
+    FAPI_L1_CRC_IND         = 0x86, // See Section 3.3.3.3
+    FAPI_L1_RX_ULSCH_IND    = 0x87, // See Section 3.3.3.1
+    FAPI_L1_RACH_IND        = 0x88, // See Section 3.3.3.4
+    FAPI_L1_SRS_IND         = 0x89, // See Section 3.3.3.7
+    FAPI_L1_RX_SR_IND       = 0x8a, // See Section 3.3.3.4
+    FAPI_L1_RX_CQI_IND      = 0x8b, // See Section 3.3.3.5
+    // RESERVED  0x8c-0xff
+    FAPI_L1_MSG_INVALID     = 0xFF
+} FAPI_L1_MessageTypeID_e;
+
+typedef struct {
+    FAPI_L1_MessageTypeID_e  msgType : 8;
+    uint8_t                  lengthVendorSpecific;
+    uint16_t                 length;
+} __packed fapi_l1_msg_hdr_t;
+
+// 3.4  Error Codes
+typedef enum {
+    MSG_OK  = 0,
+    // Message is OK.
+    MSG_INVALID_STATE = 1,
+    // The received message is not valid in the PHY's current state.
+    MSG_INVALID_CONFIG = 2,
+    // The configuration provided in the CONFIG.request
+    // message  was invalid
+    SFN_OUT_OF_SYNC = 3,
+    // The DL_CONFIG.request was received with a different
+    // SFN than the PHY expected.
+    MSG_SUBFRAME_ERR = 4,
+    // An error was received in DL_CONFIG.request or
+    // UL_CONFIG.request. The sub-error code should be analyzed
+    MSG_BCH_MISSING = 5,
+    // A BCH PDU was expected in the DL_CONFIG.request
+    // message for this subframe. However, it was not present.
+    MSG_INVALID_SFN = 6,
+    // The received HI_DCI0.request or TX.request
+    // message included a SFN/SF value which was not expected.
+    // The message has been ignored.
+    MSG_HI_ERR = 7,
+    // An error was received in HI_DCI.request. The sub-
+    // error code should be analyzed
+    MSG_TX_ERR = 8
+    // An error was received in TX.request. The sub-error
+    // code should be analyzed
+} FAPI_L1_ErrorCodes_e;
+
+// 3.4.1  Sub Error Codes
+typedef enum {
+  EMPTY = 0
+} FAPI_L1_SubErrorCodes_e;
+
+//// CONF //// CONF //// CONF //// CONF ////
+// See Section 3.2.1.1
+struct fapi_l1_param_request {
+    fapi_l1_msg_hdr_t hdr;
+    // pass
+} __packed;
+
+// See Section 3.2.1.2
+struct fapi_l1_param_response {
+    fapi_l1_msg_hdr_t hdr;
+    FAPI_L1_ErrorCodes_e errorCode : 8;      // See Table 86.
+    
+    uint8_t numberOfTLVs;   // Number of TLVs contained in the message body.
+    l1_tlv_word_t tlvs[];    // Variable  See Table 6 to Table 9.
+} __packed;
+
+// See Section 3.2.2.1
+struct fapi_l1_config_request {
+    fapi_l1_msg_hdr_t hdr;
+    
+    uint8_t numberOfTLVs;   // Number of TLVs contained in the message body.
+    l1_tlv_word_t tlvs[];  // Variable  See Table 12 to Table 14.
+} __packed;
+
+// See Section 3.2.2.2
+struct fapi_l1_config_response {
+    fapi_l1_msg_hdr_t hdr;
+    FAPI_L1_ErrorCodes_e errorCode : 8;      // See Table 86.
+    
+    uint8_t numberOfInvalidOrUnsupportedTLVs;
+    uint8_t numberOfMissingTLVs;
+    l1_tlv_word_t tlvs[];
+    // A list of invalid or unsupported TLVs each TLV is presented in its entirety.
+    // A list of missing TLVs  each TLV is presented in its entirety.
+} __packed;
+
+// See Section 3.2.4.1
+struct fapi_l1_start_request {
+    fapi_l1_msg_hdr_t hdr;
+    // The message length in the generic header = 0.
+} __packed;
+
+// See Section 3.2.5.1
+struct fapi_l1_stop_request {
+    fapi_l1_msg_hdr_t hdr;
+    // The message length in the generic header = 0.
+} __packed;
+
+// See Section 3.2.5.2
+struct fapi_l1_stop_indication {
+    fapi_l1_msg_hdr_t hdr;
+    // The message length in the generic header = 0.
+} __packed;
+
+// See Section 3.2.6.1
+struct fapi_l1_ue_config_request {
+    fapi_l1_msg_hdr_t hdr;
+    
+    uint8_t numberOfTLVs;   // Number of TLVs contained in the message body.
+    l1_tlv_word_t tlvs[];   // Variable  See Table 22.
+} __packed;
+
+// See Section 3.2.6.2
+struct fapi_l1_ue_config_response {
+    fapi_l1_msg_hdr_t hdr;
+    FAPI_L1_ErrorCodes_e errorCode : 8;      // See Table 86.
+    
+    uint8_t numberOfInvalidOrUnsupportedTLVs;
+    uint8_t numberOfMissingTLVs;
+    l1_tlv_word_t tlvs[];
+    // A list of invalid or unsupported TLVs each TLV is presented in its entirety.
+    // A list of missing TLVs  each TLV is presented in its entirety.
+} __packed;
+
+// See Section 3.2.8.1
+struct fapi_l1_error_indication {
+    fapi_l1_msg_hdr_t hdr;
+    uint8_t messageID;
+    // Indicate which message received by the PHY has an error.
+    FAPI_L1_ErrorCodes_e errorCode : 8;                    // see 3.4 for value.
+    
+    union {
+        // Table 32: MSG_INVALID_STATE and MSG_BCH_MISSING
+        struct { uint16_t bch[1];/* pass */} __packed MsgBchMissing;
+        // Table 33: SFN_OUT_OF_SYNC and MSG_INVALID_SFN
+        struct {
+            uint16_t receivedSFN_SF;          // The SFN/SF value received in the message
+            uint16_t expectedSFN_SF;          // value the PHY was expecting to receive
+        } __packed SfnOutOfSync;
+        // Table 34: MSG_PDU_ERR
+        struct {
+            FAPI_L1_SubErrorCodes_e subErrorCode : 8; // see Section 3.4.1.
+            uint8_t  direction;               // 0 = DL, 1 = UL
+            uint16_t RNTI;                    // The RNTI in the received PDU.
+            // If the error occurred in a MCH, or BCH, PDU this value is set to 0
+            uint8_t PDU_Type;
+            // The PDU Type parameter specified in both DL/UL subframe
+        } __packed MsgPduErr;
+        // Table 35: MSG_HI_ERR
+        struct {
+            FAPI_L1_SubErrorCodes_e subErrorCode : 8; // see Section 3.4.1.
+            uint8_t PHICH_Lowest_UL_RB_Index; // The PHICH RB Index parameters in each HI PDU
+        } __packed MsgHiErr;
+        // Table 36: MSG_TX_ERR
+        struct {
+            FAPI_L1_SubErrorCodes_e subErrorCode : 8; // see Section 3.4.1.
+            uint16_t PDU_Index;               // The PDU index parameter specified for each PDU
+        } __packed MsgTxErr;
+    } __packed error;
+} __packed;
+
+// See Section 3.2.7.1
+struct fapi_l1_ue_release_request {
+    fapi_l1_msg_hdr_t hdr;
+    
+    uint8_t numberOfTLVs;   // Number of TLVs contained in the message body.
+    l1_tlv_word_t tlvs[];  // Variable  See Table 28.
+} __packed;
+
+// See Section 3.2.7.2
+struct fapi_l1_ue_release_response {
+    fapi_l1_msg_hdr_t hdr;
+    FAPI_L1_ErrorCodes_e errorCode : 8; // MSG_INVALID_CONFIG, MSG_INVALID_STATE, MSG_OK
+    
+    uint8_t numberOfInvalidOrUnsupportedTLVs;
+    uint8_t numberOfMissingTLVs;
+    l1_tlv_word_t tlvs[];
+    // A list of invalid or unsupported TLVs each TLV is presented in its entirety.
+    // A list of missing TLVs  each TLV is presented in its entirety.
+} __packed;
+
+/**
+ * The following combinations of PDUs are required:
+ *  A BCH PDU does not have an associated DCI PDU
+ *  A PCH PDU requires an associated DCI PDU
+ *  A MCH PDU requires an associated DCI PDU
+ *  A DLSCH allocated with Semi-Persistent Scheduling may not have an associated DCI PDU
+ *  A DLSCH for a unique RNTI requires an associated DCI PDU.
+ *    Therefore, 2 DLSCH for the same RNTI onlyrequire 1 DCI PDU
+ */
+// See Section 3.3.1.2
+struct fapi_l1_dl_config_request {
+    fapi_l1_msg_hdr_t hdr;
+
+    uint16_t SFN_SF;
+    // A 16-bit value where,
+    // [15:4] SFN, range 0  1023
+    // [3:0] SF, range 0  9
+
+    uint16_t Length;
+    // The length of the downlink subframe configuration.
+    // Range 0  65535.
+
+    uint8_t NumberOf_PDCCH_OFDM_Symbols;
+    // The number of OFDM symbols for the PDCCH.
+    // See [8] section 6.7.
+    // Value:0  4
+
+    uint8_t NumberOf_DCIs;
+    // The number of DCI PDUs included in this message.
+    // Range: 0  255
+
+    uint16_t NumberOf_PDUs;
+    // Number of PDUs that are included in this message.
+    // Range 0  514
+
+    uint8_t NumberOf_PDSCH_RNTIs;
+    // Number of unique RNTIs sent on the PDSCH.
+    // - a PCH PDU will have an unique RNTI and should be included in this value
+    // - a DLSCH PDU can be one transport block sent to a UE with
+    //   an unique RNTI. This RNTI should be included in this value
+    // - a DLSCH PDU can be one of two transport blocks sent to a
+    //   UE. In this case the two DLSCH PDUs will share the same
+    //   RNTI. Only one RNTI should be included in this value.
+
+    uint16_t TransmissionPowerFor_PCFICH;
+    // Offset to the reference signal power.
+    // Value: 0  10000, representing -6 dB to 4 dB in 0.001 dB
+    // steps.
+
+    // For Number of PDUs
+    struct DL_PDU_Configuration {
+        uint8_t PDU_Type;
+        // 0: DCI DL PDU, see Section 3.3.1.2.1.
+        // 1: BCH PDU, see Section 3.3.1.2.2.
+        // 2: MCH PDU, see Section 3.3.1.2.3.
+        // 3: DLSCH PDU, see Section 3.3.1.2.4.
+        // 4: PCH PDU, see Section 3.3.1.2.5.
+
+        uint8_t PDU_Size;
+        // Size of the PDU control information (in bytes).
+        // This length value includes the 2 bytes required for the PDU
+        // type and PDU size parameters.
+
+        uint8_t DL_PDU [1];
+        // See Sections 3.3.1.2.1 to 3.3.1.2.4.
+
+    } __packed DL_PDU_Configuration [];
+} __packed;
+
+// 0: DCI DL PDU, see Section 3.3.1.2.1.
+struct fapi_l1_dci_dl_pdu {
+
+    uint8_t DCI_Format;
+    // Format of the DCI
+    // 0 = 1
+    // 1 = 1A
+    // 2 = 1B
+    // 3 = 1C
+    // 4 = 1D
+    // 5 = 2
+    // 6 = 2A
+
+    uint8_t CCE_Index;
+    //CCE index used to send the DCI.
+    // Value: 0  88
+
+    uint8_t AggregationLevel;
+    // The aggregation level used
+    // Value: 1,2,4,8
+
+    uint16_t RNTI;
+    // The RNTI used for identifying the UE when receiving the PDU
+    // Valid for all DCI formats
+    // Value: 1  65535.
+
+    uint8_t ResourceAllocationType;
+    // Resource allocation type/header
+    // Valid for DCI formats: 1,2,2A
+    // 0 = type 0
+    // 1 = type 1
+
+    uint8_t VirtualResourceBlockAssignmentFlag;
+    // Type of virtual resource block used
+    // Valid for DCI formats: 1A,1B,1D
+    // 0 = localized
+    // 1 = distributed
+
+    uint32_t ResourceBlockCoding;
+    // The encoding for the resource blocks. It's coding is dependent
+    // on whether resource allocation type 0, 1, 2 is in use.
+    // Resource allocation type 0 is explicitly signalled for DCI
+    // formats 1, 2, 2A
+    // Resource allocation type 1 is explicitly signalled for DCI
+    // formats 1, 2, 2A
+    // Resource allocation type 2 is implicit for DCI
+    // formats 1A, 1B, 1C, 1D
+    // See [6] section 7.1.6 for the encoding used for each format.
+    // Valid for DCI formats: 1,1A,1B,1C,1D ,2,2A
+    // See [6] section 7.1.6 for the encoding used for each format
+    // and a variable-length bitstring generated.  Further
+    // information on the location of this bitstring within the
+    // resource block coding 32-bit parameter is implementation-
+    // specific
+
+    uint8_t MCS_1;
+    // The modulation and coding scheme for 1st transport block
+    // Valid for DCI formats: 1,1A,1B,1C,1D ,2,2A
+    // Value: 0  31
+
+    uint8_t RedundancyVersion_1;
+    //  The redundancy version for 1st transport block.
+    // Valid for DCI formats: 1,1A,1B,1C,1D ,2,2A
+    // Value: 0  3
+
+    uint8_t NewDataIndicator_1;
+    // The new data indicator for 1st transport block.
+    // Valid for DCI formats: 1,1A,1B,1C,1D ,2,2A
+
+    uint8_t TransportBlockToCodewordSwapFlag;
+    // Indicates the mapping of transport block to codewords
+    // Valid for DCI formats: 2,2A
+    // 0 = no swapping
+    // 1 = swapped
+
+    uint8_t MCS_2;
+    // The modulation and coding scheme for 2nd transport block.
+    // Valid for DCI formats: 2,2A
+    // Value: 0  31
+
+    uint8_t RedundancyVersion_2;
+    // The redundancy version for 2nd transport block.
+    // Valid for DCI formats: 2,2A
+    // Value: 0  3
+
+    uint8_t NewDataIndicator_2;
+    // The new data indicator for 2nd transport block.
+    // Valid for DCI formats: 2,2A
+
+    uint8_t HARQ_Process;
+    // HARQ process number
+    // Valid for DCI formats: 1,1A,1B,1D,2,2A
+    // Value: 0 15
+
+    uint8_t TPMI;
+    // The codebook index to be used for precoding
+    // Valid for DCI formats: 1B,1D
+    // 2 antenna_ports: 0  3
+    // 4 antenna_ports: 0  15
+
+    uint8_t PMI;
+    // Confirmation for precoding
+    // Valid for DCI formats: 1B
+    // 0 = use precoding indicated in TPMI field
+    // 1 = use precoding indicated in last PMI report on PUSCH
+
+    uint8_t PrecodingInformation;
+    // Precoding information
+    // Valid for DCI formats: 2,2A
+    // 2 antenna_ports: 0  7
+    // 4 antenna_ports: 0  63
+
+    uint8_t TPC;
+    // Tx power control command for PUCCH.
+    // Valid for DCI formats: 1,1A,1B,1D,2,2A
+    // Value:  0,1,2,3
+    // In case of DCI format 1A and RNTI=SI-RNTI,RA-RNTI or P-RNTI
+    // the TPC values are either 0,1 representing N_PRB=2 and
+    // N_PRB =3 respectively. In case of SPS-C-RNTI it represents the
+    // PUCCH resource index.
+
+    uint8_t DownlinkAssignmentIndex;
+    // The downlink assignment index. Only used in TDD mode,
+    // value ignored for FDD.
+    // Valid for DCI formats: 1,1A,1B,1D,2,2A
+    // Value: 1,2,3,4
+
+    uint8_t N_GAP;
+    // Used in virtual resource block distribution
+    // Valid for DCI formats: 1A,1B,1C,1D
+    // 0= N_GAP1
+    // 1= N_GAP2
+
+    uint8_t TransportBlockSizeIndex;
+    // The transport block size
+    // Valid for DCI formats: 1C
+    // Value: 0  31
+
+    uint8_t DownlinkPowerOffset;
+    // Indicates the DL power offset type for multi-user MIMO
+    // transmission
+    // Valid for DCI formats: 1D
+    // Value: 0  1
+
+    uint8_t Allocate_PRACH_Flag;
+    // Indicates that PRACH procedure is initiated
+    // Valid for DCI formats: 1A
+    // 0 = false
+    // 1 = true
+
+    uint8_t PreambleIndex ;
+    // The preamble index to be used on the PRACH
+    // Valid for DCI formats: 1A
+    // Value: 0  63
+
+    uint8_t PRACH_MaskIndex;
+    // The mask index to be used on the PRACH
+    // Valid for DCI formats: 1A
+    // Value: 0  15
+
+    uint8_t RNTI_type;
+    // RNTI type
+    // Valid for DCI format 1, 1A,2,2A
+    // 1 = C-RNTI
+    // 2 = RA-RNTI, P-RNTI, or SI-RNTI.
+    // 3 = SPS-CRNTI
+
+    uint16_t TransmissionPower;
+    // Offset to the reference signal power.
+    // Value: 0  10000, representing -6 dB to 4 dB in 0.001 dB
+    // steps.
+} __packed;
+
+// 1: BCH PDU, see Section 3.3.1.2.2.
+struct fapi_l1_bch_pdu {
+    uint16_t Length;
+    // The length (in bytes) of the associated MAC PDU, delivered in
+    // TX.request. This should be the actual length of the MAC
+    // PDU, which may not be a multiple of 32-bits.
+
+    uint16_t PDU_Index;
+    // This is a count value which is incremented every time a BCH,
+    // MCH, PCH or DLSCH PDU is included in the
+    // DL_CONFIG.request message.
+    // This value is repeated in TX.request and associates the
+    // control information to the data.
+    // It is reset to 0 for every subframe
+    // Range 0  65535
+
+    uint16_t TransmissionPower;
+    // Offset to the reference signal power.
+    // Value: 0  10000, representing -6 dB to 4 dB in 0.001 dB steps.
+} __packed;
+
+// 2: MCH PDU, see Section 3.3.1.2.3.
+struct fapi_l1_mch_pdu {
+    uint16_t Length;
+    // The length (in bytes) of the associated MAC PDU, delivered in
+    // TX.request.  This should be the actual length of the MAC
+    // PDU, which may not be a multiple of 32-bits
+
+    uint16_t PDU_Index;
+    // This is a count value which is incremented every time a BCH,
+    // MCH, PCH or DLSCH PDU is included in the
+    // DL_CONFIG.request message.
+    // This value is repeated in TX.request and associates the
+    // control information to the data.
+    // It is reset to 0 for every subframe
+    // Range 0  65535
+
+    uint16_t RNTI;
+    // The RNTI associated with the MCH
+    // See [3] section 5.1.4
+    // Value: 1  65535.
+
+    uint8_t ResourceAllocationType;
+    // Resource allocation type
+    // See [6] section 7.1.6
+    // 0 = type 0
+    // 1 = type 1
+    // 2 = type 2
+
+    uint32_t ResourceBlockCoding;
+    // The encoding for the resource blocks. It's coding is dependent
+    // on whether resource allocation type 0, 1, 2 is in use.
+    // See [6] section 7.1.6 for the encoding used for each format.
+
+    uint8_t Modulation;
+    // 2: QPSK
+    // 4: 16QAM
+    // 6: 64QAM
+
+    uint16_t TransmissionPower;
+    // Offset to the reference signal power.
+    // Value: 0  10000, representing -6 dB to 4 dB in 0.001 dB
+    // steps.
+} __packed;
+
+// Table 43: BfVectorType Structure
+struct fapi_l1_bf_vector_type {
+    uint8_t subbandIndex;
+    // Index of subband for which the following beam forming
+    // vector is applied
+
+    uint8_t numAntennas;
+    // Number of physical antennas
+    // For each physical antenna
+
+    uint16_t bfValue;
+    // Beam forming vector element for physical antenna #i real 8
+    // bits followed by imaginery 8 bits
+} __packed;
+
+// 3: DLSCH PDU, see Section 3.3.1.2.4.
+struct fapi_l1_dlsch_pdu {
+    uint16_t Length;
+    // The length (in bytes) of the associated MAC PDU, delivered in
+    // TX.request. This should be the actual length of the MAC
+    // PDU, which may not be a multiple of 32-bits.
+
+    uint16_t PDU_Index;
+    // This is a count value which is incremented every time a BCH,
+    // MCH, PCH or DLSCH PDU is included in the
+    // DL_CONFIG.request message.
+    // This value is repeated in TX.request and associates the
+    // control information to the data.
+    // It is reset to 0 for every subframe
+    // Range 0  65535
+
+    uint16_t RNTI;
+    // The RNTI associated with the UE
+    // See [3] section 5.1.4
+    // Value: 1  65535.
+
+    uint8_t ResourceAllocationType;
+    // Resource allocation type
+    // See [3] section 7.1.6
+    // 0 = type 0
+    // 1 = type 1
+    // 2 = type 2
+
+    uint8_t VirtualResourceBlockAssignmentFlag;
+    // Type of virtual resource block used. This should match the
+    // value sent in the DCI Format 1A, 1B, 1D PDU which allocated
+    // this grant.
+    // See [6] section 7.1.6.3
+    // 0 = localized
+    // 1 = distributed
+
+    uint32_t ResourceBlockCoding;
+    // The encoding for the resource blocks. It's coding is dependent
+    // on whether resource allocation type 0, 1, 2 is in use. This
+    // should match the value sent in the DCI Format PDU which
+    // allocated this grant.
+    // See [6] section 7.1.6 for the encoding used for each format.
+
+    uint8_t Modulation;
+    // 2: QPSK
+    // 4: 16QAM
+    // 6: 64QAM
+
+    uint8_t RedundancyVersion;
+    // HARQ redundancy version. This should match the value sent in
+    // the DCI Format PDU which allocated this grant.
+    // Value: 0  3.
+
+    uint8_t TransportBlocks;
+    // The transport block transmitted to this RNTI. A value of 2
+    // indicates this is the second transport block for either DCI
+    // format 2 or 2A. For other DCI values this field will always be 1.
+    // Value: 1  2
+
+    uint8_t TransportBlockToCodewordSwapFlag;
+    // Indicates the mapping of transport block to codewords. This
+    // should match the value sent in the DCI Format 2, 2A PDU
+    // which allocated this grant.
+    // 0 = no swapping
+    // 1 = swapped
+
+    uint8_t TransmissionScheme;
+    // The MIMO mode used in the PDU
+    // See [6] section 7.1.
+    // 0: SINGLE_ANTENNA_PORT_0,
+    // 1: TX_DIVERSITY,
+    // 2: LARGE_DELAY_CDD,
+    // 3: CLOSED_LOOP_SPATIAL_MULTIPLEXING,
+    // 4: MULTI_USER_MIMO,
+    // 5: CLOSED_LOOP_RANK_1_PRECODING,
+    // 6: SINGLE_ANTENNA_PORT_5.
+
+    uint8_t NumberOfLayers;
+    // The number of layers used in transmission
+    // See [8] section 6.3.3
+    // Value: 1  4
+
+    uint8_t NumberOfSubbands;
+    // Only valid when transmission scheme = 3, 4, 5.
+    // Defines the number of subbands and codebooks used for PMI.
+    // If value=1 then a single PMI value is supplied which should be
+    // used over all RB
+    // Value 0 -> 13
+
+    struct {
+        uint8_t CodebookIndex;
+        // Only valid when transmission scheme = 3, 4, 5.
+        // Defines the codebook used.
+        // When antenna port = 1: NA
+        // When antenna port = 2: 0..3
+        // When antenna port = 4: 0..15
+    } __packed CodebookEntries [FAPI_L1_NUMBER_OF_SUBBANDS_MAX];
+
+    uint8_t UE_CategoryCapacity;
+    // The UE capabilities category
+    // See [10] section 4.1.
+    // Value:1  5
+
+    uint8_t P_A;
+    // The ratio of PDSCH EPRE to cell-specific RS EPRE among PDSCH
+    // REs in all the OFDM symbols not containing cell-specific RS in dB.
+    // See [6], section 5.2.
+    // 0: -6dB
+    // 1: -4.77dB
+    // 2: -3dB
+    // 3: -1.77dB
+    // 4: 0dB
+    // 5: 1dB
+    // 6: 2dB
+    // 7: 3dB
+
+    uint8_t DeltaPowerOffsetIndex;
+    // Delta power offset, value: 0..1,
+    // Refer to:
+    // Table 7.1.5-1 in [6] for Multi-user MIMO mode. Takes value
+    // zero for all other modes.
+
+    uint8_t N_GAP;
+    // Used in virtual resource block distribution
+    // 0= NGAP1
+    // 1= NGAP2
+
+    uint8_t N_PRB;
+    // Used with DCI format 1A and RNTI=SI-RNTI or RA-RNTI. This
+    // should match the value sent in the TPC field of the DCI 1A PDU
+    // which allocated this grant.
+    // 0: NPRB = 2
+    // 1: NPRB = 3
+
+    uint8_t numBfPRBperSubban;
+    // Number of PRBs that are treated as one subband
+    // numBfVector  uint8_t  Number of beam forming vectors
+    // One beam forming vector is specified for each subband
+
+    struct fapi_l1_bf_vector_type bfVector[];
+    // BfVectorType[numBfVector];
+    // Beam forming vectors, see Table 43.
+} __packed;
+
+// 4: PCH PDU, see Section 3.3.1.2.5.
+struct fapi_l1_pch_pdu {
+
+    uint16_t Length;
+    // The length (in bytes) of the associated MAC PDU, delivered in
+    // TX.request. This should be the actual length of the MAC
+    // PDU, which may not be a multiple of 32-bits.
+
+    uint16_t PDU_Index;
+    // This is a count value which is incremented every time a BCH,
+    // MCH, PCH or DLSCH PDU is included in the
+    // DL_CONFIG.request message.
+    // This value is repeated in TX.request and associates the
+    // control information to the data.
+    // It is reset to 0 for every subframe
+    // Range 0  65535
+
+    uint16_t P_RNTI;
+    // The P-RNTI associated with the paging
+    // See [3] section 5.1.4
+    // Value: 0xFFFE
+
+    uint8_t ResourceAllocationType;
+    // Resource allocation type
+    // See [6] section 7.1.6
+    // 2 = type 2
+
+    uint8_t VirtualResourceBlockAssignment;
+    // Type of virtual resource block used. This should match the
+    // value sent in the DCI Format 1A, 1B, 1D PDU which allocated
+    // flag  this grant.
+    // See [6] section 7.1.6.3
+    // 0 = localized
+    // 1 = distributed
+
+    uint32_t ResourceBlockCoding;
+    // The encoding for the resource blocks. It's coding is dependent
+    // on whether resource allocation type 0, 1, 2 is in use. This
+    // should match the value sent in the DCI Format PDU which
+    // allocated this grant.
+    // See [6] section 7.1.6 for the encoding used for each format.
+
+    uint8_t MCS;
+    // For PCH PDU only QPSK modulation is allowed.
+    // 0: QPSK
+
+    uint8_t RedundancyVersion;
+    // For PCH PDU only redundancy version 0 is allowed
+    // Value: 0
+
+    uint8_t NumberOfTransportBlocks;
+    // The number of transport blocks transmitted to this RNTI. Only
+    // 1 transport block is sent on the PCH per subframe.
+    // Value: 1
+
+    uint8_t TransportBlockToCodewordSwapFlag;
+    // Reserved.  This parameter is not used on the PCH transport
+    // channel.
+
+    uint8_t TransmissionScheme;
+    // The MIMO mode used in the PDU
+    // See [6] section 7.1.
+    // 0: SINGLE_ANTENNA_PORT_0,
+    // 1: TX_DIVERSITY,
+    // 6: SINGLE_ANTENNA_PORT_5.
+
+    uint8_t NumberOfLayers;
+    // The number of layers used in transmission
+    // See [8] section 6.3.3
+    // Value: 1  4
+
+    uint8_t CodebookIndex;
+    // Reserved.  This parameter is not used on the PCH transport
+    // channel.
+
+    uint8_t UE_CategoryCapacity;
+    // Reserved.  This parameter is not used on the PCH transport
+    // channel.
+
+    uint8_t P_A;
+    // The ratio of PDSCH EPRE to cell-specific RS EPRE among
+    // PDSCH REs in all the OFDM symbols not containing cell-
+    // specific RS in dB.
+    // See [6], section 5.2.
+    // 0: -6dB
+    // 1: -4.77dB
+    // 2: -3dB
+    // 3: -1.77dB
+    // 4: 0dB
+    // 5: 1dB
+    // 6: 2dB
+    // 7: 3dB
+
+    uint16_t TransmissionPower;
+    // Offset to the reference signal power.
+    // Value: 0  10000, representing -6 dB to 4 dB in 0.001 dB steps.
+
+    uint8_t N_PRB;
+    // Used with DCI 1A format. This should match the value sent in
+    // the TPC field of the DCI 1A PDU which allocated this grant.
+    // 0: NPRB = 2
+    // 1: NPRB = 3
+
+} __packed;
+
+
+//// UL //// UL //// UL //// UL //// UL //// UL //// UL //// UL //// UL ////
+// See Section 3.3.1.3
+struct fapi_l1_ul_config_request {
+    fapi_l1_msg_hdr_t hdr;
+
+    uint16_t SFN_SF;
+    // A 16-bit value where,
+    // [15:4] SFN, range 0  1023
+    // [3:0] SF, range 0  9
+
+    uint16_t Length;
+    // The length of the uplink subframe configuration.
+    // Range 0  65535.
+
+    uint8_t NumberOf_PDUs;
+    // The number of UL SCHs PDUs included in this message.
+
+    uint8_t RACH_PRACH;
+    // If semi-static information is held in the MAC
+    // Frequency Resources
+    // For FDD:
+    // 0: No RACH in this subframe
+    // 1: RACH present in this subframe
+    // For TDD:
+    // Bits 0:5 indicate which RACH frequency resources are used in
+    // this subframe, see [8] section 5.7.1.
+    // 0: This RACH frequency index is not used
+    // 1: This RACH frequency index is used
+    // If semi-static information is held in the PHY this parameter is
+    // ignored.
+
+    uint8_t SRS_Present;
+    // If semi-static information is held in the MAC
+    // 0: No SRS in this subframe
+    // 1: SRS present in this subframe
+    // If semi-static information is held in the PHY this parameter is
+    // ignored.
+
+    // For NumberOf_PDUs
+    struct UL_PDU_Configuration {
+        uint8_t PDU_Type;
+        // 0: ULSCH, see Section 3.3.1.3.1.
+        // 1: ULSCH_CQI_RI, see Section 3.3.1.3.2.
+        // 2: ULSCH_HARQ, see Section 3.3.1.3.3.
+        // 3: ULSCH_CQI_HARQ_RI, see Section 3.3.1.3.4.
+        // 4: UCI_CQI, see Section 3.3.1.3.6.
+        // 5: UCI_SR, see Section 3.3.1.3.7.
+        // 6: UCI_HARQ, see Section 3.3.1.3.8.
+        // 7: UCI_SR_HARQ, see Section 3.3.1.3.9.
+        // 8: UCI_CQI_HARQ, see Section 3.3.1.3.10.
+        // 9: UCI_CQI_SR, see Section  3.3.1.3.11
+        // 10: UCI_CQI_SR_HARQ, see Section  3.3.1.3.11
+        // 11: SRS, see Section 3.3.1.3.16.
+        // 12: HARQ_BUFFER , see Section 3.3.1.3.17
+
+        uint8_t PDU_Size;
+        // Size of the PDU control information (in bytes).
+        // This length value includes the 2 bytes required for the PDU
+        // type and PDU size parameters.
+
+        uint8_t UL_PDU [1];
+        // See Sections  3.3.1.3.1to 3.3.1.3.16. Configuration
+
+    } __packed UL_PDU_Configuration [];
+} __packed;
+
+// 0: ULSCH, see Section 3.3.1.3.1.
+struct fapi_l1_ulsch_pdu {
+    uint32_t Handle;
+    // An opaque handling returned in the RX.indication
+
+    uint16_t Size;
+    // The size of the ULSCH PDU in bytes as defined by the relevant
+    // UL grant. The size can be 0 if UCI over ULSCH without data is
+    // configured. The size of CQI/RI/HARQ are not added to this
+    // element.
+
+    uint16_t RNTI;
+    // The RNTI used for identifying the UE when receiving the PDU
+    // See [3] section 5.1.4
+    // Value: 1  65535.
+
+    uint8_t ResourceBlockStart;
+    // The starting resource block for this ULSCH allocation. This
+    // should match the value sent in the DCI Format 0 PDU which
+    // allocated this grant.
+    // Value: 0  99
+
+    uint8_t NumberOfResourceBlocks;
+    // The number of resource blocks allocated to this ULSCH grant.
+    // This should match the value sent in the DCI Format 0 PDU
+    // which allocated this grant.
+    // Value: 1  100
+
+    uint8_t ModulationType;
+    // 2: QPSK
+    // 4: 16QAM
+    // 6: 64QAM
+
+    uint8_t CyclicShift2For_DMRS;
+    // The 2nd cyclic shift for DMRS assigned to the UE in the ULSCH
+    // grant. This should match the value sent in the DCI Format 0
+    // PDU which allocated this grant.
+    // Value: 0  7
+
+    uint8_t FrequencyHoppingEnabledFlag;
+    // Indicates if hopping is being used. This should match the
+    // enabled flag  value sent in the DCI Format 0 PDU which allocated this grant.
+    // See [6] Section 8.4.
+    // 0 = no hopping, 1= hopping enabled
+
+    uint8_t FrequencyHoppingBits;
+    // The frequency hopping bits. This should match the value sent
+    // in the DCI Format 0 PDU which allocated this grant.
+    // See [6] Section 8.4
+    // Value: 0  3
+
+    uint8_t NewDataIndication;
+    // Specify whether this received PUSCH is a new transmission
+    // from UE. This should match the value sent in the DCI Format
+    // 0 PDU which allocated this grant.
+
+    uint8_t RedundancyVersion;
+    // Redundancy version
+    // Value: 0  3
+
+    uint8_t HARQ_ProcessNumber;
+    // HARQ Process number.
+    // TDD 0  15
+    // FDD 0  7
+
+    uint8_t UL_TX_Mode;
+    // 0 = SISO/SIMO
+    // 1 = MIMO
+
+    uint8_t Current_TX_NB;
+    // The current HARQ transmission count of this transport block.
+    // Valid if frequency hopping enabled.
+
+    uint8_t N_Srs;
+    // Indicates  if  the  resource  blocks  allocated  for  this  grant
+    // overlap with the SRS configuration.
+    // 0 = no overlap
+    // 1 = overlap
+} __packed;
+
+// Table 48: CQI_RI Information
+struct fapi_l1_cqi_ri_information {
+    uint8_t DL_CQI_PMI_SizeRank_Eq_1;
+    // The size of the DL CQI/PMI in bits in case of rank 1 report.
+    // Value: 0  255
+
+    uint8_t DL_CQI_PMI_SizeRank_Gt_1;
+    // The size of the DL CQI/PMI in bits in case of rank>1 report.
+    // Value: 0  255
+    // In case of periodic report rank=1 and rank>1 size should be
+    // the same
+
+    uint8_t RI_Size;
+    // The size of RI in bits
+    // Value:1  2
+    // 0 in case of periodic report
+
+    uint8_t DeltaOffset_CQI;
+    // Delta offset for CQI. This value is fixed for a UE and allocated
+    // in RRC connection setup.
+    // See [6] section 8.6.3
+    // Value: 0  15
+
+    uint8_t DeltaOffset_RI;
+    // Delta offset for RI. This value is fixed for a UE and allocated in
+    // RRC connection setup.
+    // See [6] section 8.6.3
+    // Value: 0  15
+} __packed;
+
+// 3.3.1.3.5  Initial Transmission Parameters
+struct fapi_l1_initial_transmission_parameters {
+    uint8_t N_SrsInitial;
+    // 0 = last OFDM symbol is not punctured
+    // 1 = last OFDM symbol is punctured.
+    uint8_t InitialNumberOfResourceBlocks;
+    // The number of resource blocks used in the initial transmission
+    // of this transport block.
+    // Value: 1  100
+} __packed;
+
+// 1: ULSCH_CQI_RI, see Section 3.3.1.3.2.
+struct fapi_l1_ulsch_cqi_ri_pdu {
+    struct fapi_l1_ulsch_pdu ULSCH_PDU;
+    //  Description of contents given in  Table 46
+    struct fapi_l1_cqi_ri_information CQI_RI_Information;
+    // Description of contents given in Table 48
+    struct fapi_l1_initial_transmission_parameters InitialTransmissionParameters;
+    // Description of contents given in Table 52
+} __packed;
+
+// Table 50: HARQ Information
+struct fapi_l1_harq_information {
+    uint8_t HARQ_Size;
+    // The size of the ACK/NACK in bits.
+    // Value: 1  2
+
+    uint8_t DeltaOffset_HARQ;
+    // Delta offset for HARQ. This value is fixed for a UE and
+    // allocated in RRC connection setup.
+    // See [6] section 8.6.3
+    // Value: 0  15
+
+    uint8_t ACK_NACK_Mode;
+    // The format of the ACK/NACK response expected. For TDD
+    // only.
+    // 0 = BUNDLING
+    // 1 = MULTIPLEXING
+} __packed;
+
+// 2: ULSCH_HARQ, see Section 3.3.1.3.3.
+struct fapi_l1_ulsch_harq_pdu {
+    struct fapi_l1_ulsch_pdu ULSCH_PDU;
+    // Description of contents given in Table 46
+    struct fapi_l1_harq_information HARQ_Information;
+    // Description of contents given in Table 50
+    struct fapi_l1_initial_transmission_parameters InitialTransmissionParameters;
+    // Description of contents given in Table 52
+} __packed;
+
+// 3: ULSCH_CQI_HARQ_RI, see Section 3.3.1.3.4.
+struct fapi_l1_ulsch_cqi_harq_ri_pdu {
+    struct fapi_l1_ulsch_pdu ULSCH_PDU;
+    // Description of contents given in  Table 46
+    struct fapi_l1_cqi_ri_information CQI_RI_Information;
+    // Description of contents given in Table 48
+    struct fapi_l1_harq_information HARQ_Information;
+    // Description of contents given in  Table 50
+    struct fapi_l1_initial_transmission_parameters InitialTransmissionParameters;
+    // Description of contents given in  Table 52
+} __packed;
+
+// 3.3.1.3.13  CQI Information Table 60
+struct fapi_l1_cqi_information {
+    uint16_t PUCCH_Index;
+    // The PUCCH Index value  nP(2U)CCH
+    // Value: 0  1185
+
+    uint8_t DL_CQI_PMI_Size;
+    // The size of the DL CQI/PMI in bits.
+    // Value: 0  255
+} __packed;
+
+// 4: UCI_CQI, see Section 3.3.1.3.6.
+struct fapi_l1_uci_cqi_pdu {
+    uint32_t Handle;
+    // An opaque handling returned in the RX_CQI.indication
+
+    uint16_t RNTI;
+    // The RNTI used for identifying the UE when receiving the PDU
+    // See [3] section 5.1.4
+    // Value: 1  65535.
+
+    struct fapi_l1_cqi_information CQI_Information;
+    // Description of contents given in Table 60
+} __packed;
+
+// 3.3.1.3.14  SR Information Table 61
+struct fapi_l1_sr_information {
+    uint16_t  PUCCH_Index;
+    // The PUCCH Index value  n-(1)_PUCCH
+    // Value: 0  2047
+} __packed;
+
+// 5: UCI_SR, see Section 3.3.1.3.7.
+struct fapi_l1_uci_sr_pdu {
+    uint32_t Handle;
+    // An opaque handling returned in the RX_SR.indication
+
+    uint16_t RNTI;
+    // The RNTI used for identifying the UE when receiving the PDU
+    // See [3] section 5.1.4
+    // Value: 1  65535.
+
+    struct fapi_l1_sr_information SR_Information;
+    //  Description of contents given in Table 61
+} __packed;
+
+// 3.3.1.3.15  HARQ Information
+// Table 62: HARQ information for TDD
+struct fapi_l1_harq_information_tdd {
+    uint8_t HARQ_Size ;
+    // For ACK_NACK Mode 0 (Bundling) and 1 (Multiplexing), this is
+    // the size of the ACK/NACK in bits.
+    // Value: 1  4
+    // For Special Bundling this is the expected number of
+    // ACK/NACK responses (UDAI + NSPS) (see table 7.3-1 in [6]).
+    // Value: 0  9
+
+    uint8_t ACK_NACK_Mode;
+    // The format of the ACK/NACK response expected. For TDD only.
+    // 0 = BUNDLING
+    // 1 = MULTIPLEXING
+
+    uint8_t NumberOf_PUCCH;
+    // The number of ACK/NACK responses received in this
+    // Resources  subframe. For TDD only.
+    // See [6] section 10.1
+    // Value: 0  4
+    // (Value 0 is only valid for Special Bundling.)
+
+    uint16_t n_PUCCH_1_0; // HARQ resource 0, value: 0  2047
+    uint16_t n_PUCCH_1_1; // HARQ resource 1, value: 0  2047
+    uint16_t n_PUCCH_1_2; // HARQ resource 2, value: 0  2047
+    uint16_t n_PUCCH_1_3; // HARQ resource 3, value: 0  2047
+} __packed;
+
+// Table 63: HARQ information for FDD
+struct fapi_l1_harq_information_fdd {
+    uint16_t PUCCH_Index;
+    // The PUCCH Index value for ACK/NACK
+    // Value: 0  2047
+
+    uint8_t HARQ_Size ;
+    // The size of the ACK/NACK in bits.
+    // Value: 1  2
+} __packed;
+
+// 6: UCI_HARQ, see Section 3.3.1.3.8.
+struct fapi_l1_uci_harq_pdu {
+    uint32_t Handle;
+    // An opaque handling returned in the HARQ.indication
+
+    uint16_t RNTI;
+    // The RNTI used for identifying the UE when receiving the PDU
+    // See [3] section 5.1.4
+    // Value: 1  65535.
+
+    union {
+        struct fapi_l1_harq_information_tdd tdd;
+        struct fapi_l1_harq_information_fdd fdd;
+    } __packed HARQ_Information;
+    // Description of contents given in Table 62 for TDD and Table 63 for FDD.
+} __packed;
+
+// 7: UCI_SR_HARQ, see Section 3.3.1.3.9.
+struct fapi_l1_uci_sr_harq_pdu {
+    uint32_t Handle;
+    // An opaque handling returned in the RX_SR.indication and
+    // HARQ.indication
+
+    uint16_t RNTI;
+    // The RNTI used for identifying the UE when receiving the PDU
+    // See [3] section 5.1.4
+    // Value: 1  65535.
+
+    struct fapi_l1_sr_information SR_Information;
+    // Description of contents given in Table 61
+
+    union {
+        struct fapi_l1_harq_information_tdd tdd;
+        struct fapi_l1_harq_information_fdd fdd;
+    } __packed HARQ_Information;
+    // Description of contents given in Table 62 for TDD and Table 63 for FDD.
+} __packed;
+
+// 8: UCI_CQI_HARQ, see Section 3.3.1.3.10.
+struct fapi_l1_uci_cqi_harq_pdu {
+    uint32_t Handle;
+    // An opaque handling returned in the RX_CQI.indication and
+    // HARQ.indication
+
+    uint16_t RNTI;
+    // The RNTI used for identifying the UE when receiving
+    // See [3] section 5.1.4
+    // Value: 1  65535.
+
+    struct fapi_l1_cqi_information CQI_Information;
+    //Description of contents given in Table 60
+
+    union {
+        struct fapi_l1_harq_information_tdd tdd;
+        struct fapi_l1_harq_information_fdd fdd;
+    } __packed HARQ_Information;
+    // Description of contents given in Table 62 for TDD and Table 63 for FDD.
+} __packed;
+
+// 9 : UCI_CQI_SR, see Section  3.3.1.3.11
+struct fapi_l1_uci_cqi_sr_pdu {
+    uint32_t Handle;
+    // An opaque handling returned in the RX_CQI.indication and
+    // HARQ.indication
+
+    uint16_t RNTI;
+    // The RNTI used for identifying the UE when receiving
+    // See [3] section 5.1.4
+    // Value: 1  65535.
+
+    struct fapi_l1_cqi_information CQI_Information;
+    //Description of contents given in Table 60
+
+    struct fapi_l1_sr_information SR_Information;
+    // Description of contents given in Table 61
+} __packed;
+
+// 10 : UCI_CQI_SR_HARQ, see Section  3.3.1.3.11
+struct fapi_l1_uci_cqi_sr_harq_pdu {
+    uint32_t Handle;
+    // An opaque handling returned in the RX_CQI.indication and
+    // HARQ.indication
+
+    uint16_t RNTI;
+    // The RNTI used for identifying the UE when receiving
+    // See [3] section 5.1.4
+    // Value: 1  65535.
+
+    struct fapi_l1_cqi_information CQI_Information;
+    //Description of contents given in Table 60
+
+    struct fapi_l1_sr_information SR_Information;
+    // Description of contents given in Table 61
+
+    union {
+        struct fapi_l1_harq_information_tdd tdd;
+        struct fapi_l1_harq_information_fdd fdd;
+    } __packed HARQ_Information;
+    // Description of contents given in Table 62 for TDD and Table 63 for FDD.
+} __packed;
+
+// 11: SRS, see Section 3.3.1.3.16.
+struct fapi_l1_srs_pdu {
+    uint32_t Handle;
+    // An opaque handling returned in the SRS.indication
+
+    uint16_t Size;
+    // The size of the PDU in bytes.
+
+    uint16_t RNTI;
+    // The RNTI used for identifying the UE when receiving the PDU
+    // See [3] section 5.1.4
+    // Value: 1  65535.
+
+    uint8_t SRS_Bandwidth ;
+    // SRS Bandwidth. This value is fixed for a UE and allocated in
+    // RRC connection setup.
+    // See [8] section 5.5.3.2
+    // Value: 0  3
+
+    uint8_t FrequencyDomainPosition;
+    // Frequency-domain position, NRRC This value is fixed for a UE
+    // and allocated in RRC connection setup.
+    // See [8] section 5.5.3.2
+    // Value: 0  23
+
+    uint8_t SRS_HoppingBandwidth;
+    // Configures the frequency hopping on the SRS. This value is
+    // fixed for a UE and allocated in RRC connection setup.
+    // See [8] section 5.5.3.2.
+    // Value 0  3
+
+    uint8_t TransmissionComb;
+    // Configures the frequency location of the SRS. This value is
+    // fixed for a UE and allocated in RRC connection setup.
+    // Value: 0   1
+
+    uint16_t ISRS_SRS_ConfigIndex;
+    // Defines the periodicity and subframe location of the SRS.
+    // SRS Configuration Index. This value is fixed for a UE and
+    // allocated in RRC connection setup.
+    // See [6] section 8.2.
+    // Value: 0  1023.
+
+    uint8_t SoundingReferenceCyclicShift;
+    // Configures the SRS sequence generation. This value is fixed
+    // for a UE and allocated in RRC connection setup.
+    // See [8] section 5.5.3.1.
+    // Value: 0  7
+} __packed;
+
+// 12 : HARQ_BUFFER , see Section 3.3.1.3.17
+struct fapi_l1_harq_buffer_pdu {
+    uint32_t Handle;
+    // An opaque handling
+
+    uint16_t RNTI;
+    // The RNTI used for identifying the UE for which the HARQ
+    // buffer should be released.
+    // Value: 1  65535.
+} __packed;
+
+// See Section 3.3.1.1
+struct fapi_l1_subframe_indication {
+    fapi_l1_msg_hdr_t hdr;
+
+    uint16_t SFN_SF;
+    // A 16-bit value where, [15:4] SFN, range 0  1023; [3:0] SF, range 0  9
+} __packed;
+
+// 3.3.1.4.1  HI PDU
+struct fapi_l1_hi_pdu {
+    uint8_t ResourceBlockStart;
+    // This value is the starting resource block assigned to the
+    // ULSCH grant associated with this HI response. It should match
+    // the value sent in the DCI format 0 which allocated the ULSCH
+    // grant
+    // See [6] section 9.1.2
+    // Value: 0  100
+
+    uint8_t CyclicShift2For_DMRS;
+    // This value is the 2nd cyclic shift for DMRS assigned to the
+    // ULSCH grant associated with this HI response. It should match
+    // the value sent in the DCI format 0 which allocated the ULSCH
+    // grant
+    // See [6] section 9.1.2
+    // Value: 0  7
+
+    uint8_t HI_Value;
+    // The PHICH value which is sent on the resource.
+    // 0: HI_NACK
+    // 1: HI_ACK
+
+    uint8_t I_PHICH;
+    // Is used in the calculation of the PHICH location. For TDD only.
+    // See [6] section 9.1.2
+    // 1 = TDD subframe configuration 0 is used and the ULSCH
+    // grant associated with this HI was received in subframe 4 or 9
+    // 0 = in all other cases
+
+    uint16_t TransmissionPower;
+    // Offset to the reference signal power.
+    // Value: 0  10000, representing -6 dB to 4 dB in 0.001 dB steps.
+} __packed;
+
+// 3.3.1.4.2  DCI UL PDU
+struct fapi_l1_dci_ul_pdu {
+    uint8_t DCI_Format;
+    // Format of the DCI
+    // 0 = 0
+    // 1 = 3
+    // 2 = 3A
+
+    uint8_t CCE_Index;
+    // CCE index used to send the DCI.
+    // Value: 0  88
+
+    uint8_t AggregationLevel;
+    // The aggregation level used
+    // Value: 1,2,4,8
+
+    uint16_t RNTI;
+    // The RNTI used for identifying the UE when receiving the PDU
+    // Valid for all DCI formats
+    // Value: 1  65535.
+
+    uint8_t ResourceBlockStart;
+    // The starting resource block for this ULSCH allocation.
+    // Valid for DCI format 0
+    // Value: 0  100
+
+    uint8_t NumberOfResourceBlocks;
+    // The number of resource blocks allocated to this ULSCH grant.
+    // Valid for DCI format 0
+    // Value: 0  100
+
+    uint8_t MCS;
+    // The modulation and redundancy version.
+    // See [6] section 8.6.
+    // Valid for DCI format 0
+    // Value: 0  31
+
+    uint8_t CyclicShift2For_DMRS;
+    // The 2nd cyclic shift for DMRS assigned to the UE in the ULSCH grant.
+    // Valid for DCI format 0
+    // Value: 0  7
+
+    uint8_t FrequencyEnabledFlag;
+    // Indicates if hopping is being used.
+    // See [6] Section 8.4.
+    // Valid for DCI format 0
+    // 0 = no hopping, 1= hopping enabled
+
+    uint8_t FrequencyHoppingBits;
+    // The frequency hopping bits
+    // See [6] Section 8.4
+    // Valid for DCI format 0
+    // Value: 0  3
+
+    uint8_t NewDataIndication;
+    // The new data indicator for the transport block.
+    // Valid for DCI format 0
+
+    uint8_t UE_TX_AntennaSelection;
+    // Indicates how the CRC is calculated on the PDCCH.
+    // See [9] section 5.3.2.2
+    // Valid for DCI format 0
+    // 0 = Not configured;
+    // 1 = Configured and using UE port 0;
+    // 2 = Configured and using UE port 1.
+
+    uint8_t TPC;
+    // Tx power control command for PUSCH.
+    // Valid for DCI format 0
+    // Value:  0,1,2,3
+
+    uint8_t CQI_Request;
+    // Aperiodic CQI request flag
+    // Valid for DCI format 0
+    // 0 = Aperiodic CQI not requested
+    // 1 = Aperiodic CQI requested
+
+    uint8_t UL_Index;
+    // UL index. Valid for TDD mode only.
+    // Valid for DCI format 0
+    // Value: 0,1,2,3
+
+    uint8_t DL_AssignmentIndex;
+    // DL assignment index. Valid for TDD mode only.
+    // Valid for DCI format 0
+    // Value: 1,2,3,4
+
+    uint32_t TPC_Bitmap;
+    // TPC commands for PUCCH and PUSCH
+    // Valid for DCI formats: 3,3A
+    // The encoding follows [9] section 5.3.3.1.6
+} __packed;
+
+//  See Section 3.3.1.4
+struct fapi_l1_hi_dci0_request {
+    fapi_l1_msg_hdr_t hdr;
+
+    uint16_t SFN_SF;
+    // The SFN/SF in this message should be the same as the
+    // corresponding DL_CONFIG.request message. A 2-byte
+    // value where,
+    // [15:4] SFN, range 0  1023
+    // [3:0] SF, range 0  9
+
+    uint8_t NumberOf_DCI;
+    // Number of DCI PDUs included in this message
+
+    uint8_t NumberOf_HI;
+    // Number of HI PDUs included in this message
+
+    // For Number of DCI + HI PDUs
+    struct DCI_HI_PDU_Configuration {
+        uint8_t PDU_Type;
+        // 0: HI PDU, see Section 3.3.1.4.1.
+        // 1: DCI UL PDU, see Section 3.3.1.4.2.
+
+        uint8_t PDU_Size;
+        // Size of the PDU control information (in bytes).
+        // This length value includes the 2 bytes required for the PDU
+        // type and PDU size parameters.
+
+        uint8_t DCI_HI_PDU [1];
+
+    } __packed DCI_HI_PDU_Configuration [];
+    //  HI/DCI PDU  Struct  See Sections 3.3.1.4.1 to 3.3.1.4.2.
+} __packed;
+
+
+//// Downlink Data ////  Downlink Data ////  Downlink Data ////
+struct fapi_l1_dl_pdu_tlv {
+    uint16_t tag;
+    //  0: Payload is carried directly in the value field
+    //  1: Pointer to payload is in the value field
+    uint16_t length;
+    // Length of the actual payload in bytes, without the padding bytes Always a multiple of 32-bits.
+    uint32_t value;
+    // Variable or uint32_t
+} __packed;
+
+struct fapi_l1_dl_pdu_config {
+    uint16_t PDU_Length;
+    // The total length (in bytes) of the PDU description and PDU
+    // data, without the padding bytes.
+
+    uint16_t PDU_Index;
+    // This is a count value which starts from 0. It is incremented for
+    // each BCH, MCH, PCH or DLSCH PDU.
+    // This value was included in TX.request and associates the
+    // data to the control information.
+    // It is reset to 0 for every subframe
+    // Range 0  65535
+
+    uint32_t numTLV;
+    // The number of TLVs describing the data of the transport block.
+
+    struct fapi_l1_dl_pdu_tlv tlvs[1];
+    // Always a multiple of 32-bits. See Table 73
+} __packed;
+
+// See Section 3.3.2.1
+struct fapi_l1_tx_request {
+    fapi_l1_msg_hdr_t hdr;
+
+    uint16_t SFN_SF;
+    // The SFN/SF in this message should be the same as the
+    // corresponding DL_CONFIG.request message.
+    // A 2-byte value where,
+    // [15:4] SFN, range 0  1023
+    // [3:0] SF, range 0  9
+
+    uint16_t NumberOf_PDUs;
+    // Number of PDUs included in this message.
+
+    struct fapi_l1_dl_pdu_config TX_Config[];
+    // For each PDU of NumberOf_PDUs
+} __packed;
+
+struct fapi_l1_ulsch_pdu_config {
+    uint32_t Handle;
+    // The handle received in the ULSCH PDU.
+
+    uint16_t RNTI;
+    // The RNTI passed to the PHY in a DL_CONFIG.request ULSCH PDU.
+    // See [3] section 5.1.4
+    // Value: 1  65535.
+
+    uint16_t Length;
+    // Length of PDU in bytes.
+
+    uint16_t DataOffset;
+    // Gives the PDU#i data address offset from the beginning of the
+    // 'Number of PDUs' field.
+    // An offset of 0 indicates a CRC or decoding error.
+
+    uint8_t UL_CQI;
+    // SNR
+    // Value: 0-255, representing -64dB to 63.5dB, with 0.5dB step size.
+
+    uint16_t TimingAdvance;
+    // The timing advance measured for this PDU and UE.
+    // Value: T_A from 0 to 1282 as defined in [6] section 4.2.3.
+} __packed;
+
+// See Section 3.3.3.1
+struct fapi_l1_rx_ulsch_indication {
+    fapi_l1_msg_hdr_t hdr;
+
+    uint16_t SFN_SF;
+    // The SFN/SF of the SUBFRAME this information was received in.
+    // A 16-bit value where,
+    // [15:4] SFN, range 0  1023
+    // [3:0] SF, range 0  9
+
+    uint16_t NumberOf_PDUs;
+    // Number of PDUs included in this message.
+
+    struct fapi_l1_ulsch_pdu_config RX_Config[];
+    // For (Number of PDUs) { }
+
+    // PDU#1  Variable  Contents of PDU#1. This will be a MAC PDU.
+    // ..  ...  ...
+    // PDU#n  Variable  Contents of PDU#n. This will be a MAC PDU
+} __packed;
+
+// Table 77: TDD HARQ data format for mode = BUNDLING
+struct fapi_l1_tdd_harq_data_mode_bundling {
+    uint8_t Value0;
+    // Indicates HARQ results.
+    // Range 1  7
+    // 1 = ACK
+    // 2 = NACK
+    // 3 = ACK or NACK
+    // 4 = DTX
+    // 5 = ACK or DTX
+    // 6 = NACK or DTX
+    // 7 = ACK or NACK or DTX
+
+    uint8_t Value1;
+    // Indicates HARQ results. Range 1  7, see above.
+} __packed;
+
+// Table 78: TDD HARQ data format for mode = MULTIPLEXING
+struct fapi_l1_tdd_harq_data_mode_multiplexing {
+    uint8_t Value0;
+    // Indicates HARQ results.
+    // Range 1  7
+    // 1 = ACK
+    // 2 = NACK
+    // 3 = ACK or NACK
+    // 4 = DTX
+    // 5 = ACK or DTX
+    // 6 = NACK or DTX
+    // 7 = ACK or NACK or DTX
+
+    uint8_t Value1;
+    // Indicates HARQ results. Range 1  7, see above.
+
+    uint8_t Value2;
+    // Indicates HARQ results. Range 1  7, see above.
+
+    uint8_t Value3;
+    // Indicates HARQ results. Range 1  7, see above.
+} __packed;
+
+// Table 79: TDD HARQ data format for mode = SPECIAL BUNDLING
+struct fapi_l1_tdd_harq_data_mode_special_bundling {
+    uint8_t Value0;
+    // Number of ACK among multiple ACK/NACK responses, see [6]
+    // table 7.3.-1
+    // 0 = 0 or None (UE detect at least one DL assignment is missed)
+    // 1 = 1 or 4 or 7 ACKs reported
+    // 2 = 2 or 5 or 8 ACKs reported
+    // 3 = 3 or 6 or 9 ACKs reported
+    // 4 = DTX (UE did not transmit anything)
+} __packed;
+
+
+struct fapi_l1_TDD_harq_config {
+    uint32_t Handle;
+    // The handle received in the ULSCH PDU or UCI PDU.
+
+    uint16_t RNTI;
+    // The RNTI passed to the PHY in an uplink subframe
+    // configuration PDU.
+    // See [3] section 5.1.4
+    // Value: 1  65535.
+
+    uint8_t Mode;
+    // The format of the ACK/NACK response expected. The bundling
+    // and multiplexing options are passed to the PHY in an uplink
+    // subframe configuration PDU. If the ACK/NACK is combined
+    // with either CQI or SR information then a special ACK/NACK
+    // encoding is used which reports the number of ACKs, rather
+    // than providing specific ACK/NACK values. This is identified
+    // separately and called SPECIAL_BUNDLING in this API. (see [6]
+    // section 7.3 and section 3.3.1.3.15 of this document for more
+    // information)
+    // 0 = BUNDLING
+    // 1 = MULTIPLEXING
+
+    uint8_t NumberOf_ACK_NACK;
+    // The number of ACK/NACK results reported for this UE.
+    // See [6] section 10.
+    // Value: 1  4
+    // For Special Bundling this is the expected number of ACK/NACK
+    // responses (UDAI + NSPS) (see table 7.3-1 in [6]).
+    // Value: 0  9
+
+    union {
+        struct fapi_l1_tdd_harq_data_mode_bundling bundling;
+        struct fapi_l1_tdd_harq_data_mode_multiplexing multiplexing;
+        struct fapi_l1_tdd_harq_data_mode_special_bundling special_bundling;
+    } __packed HARQ_Data;
+    // The format of the data is dependent on the HARQ mode;
+    // BUNDLING, MULTIPLEXING, or SPECIAL BUNDLING. See Table 77 to Table 79.
+} __packed;
+
+// 3.3.3.2  HARQ.indication
+// The format of  the uplink HARQ  control  from  the UE  is dependent on whether a TDD or FDD PHY is used.
+// 3.3.3.2.1  TDD Format
+struct fapi_l1_TDD_harq_indication {
+    fapi_l1_msg_hdr_t hdr;
+
+    l1_sfn_sf_t SFN_SF;
+    // The SFN/SF of the SUBFRAME this information was received in.
+    // A 16-bit  value where,
+    // [15:4] SFN, range 0  1023
+    // [3:0] SF, range 0  9
+
+    uint16_t NumberOf_HARQs;
+    // Number of HARQs included in this message.
+
+    // For (Number of HARQs)
+    struct fapi_l1_TDD_harq_config HARQs [];
+} __packed;
+
+
+struct fapi_l1_FDD_harq_config {
+    uint32_t Handle;
+    // The handle received in the ULSCH PDU or UCI PDU.
+
+    uint16_t RNTI;
+    // The RNTI passed to the PHY in an uplink subframe
+    // configuration PDU.
+    // See [3] section 5.1.4
+    // Value: 1  65535.
+
+    uint8_t HARQ_TB1;
+    // HARQ feedback of 1st TB.
+    // Range 1  7
+    // 1 = ACK
+    // 2 = NACK
+    // 3 = ACK or NACK
+    // 4 = DTX
+    // 5 = ACK or DTX
+    // 6 = NACK or DTX
+    // 7 = ACK or NACK or DTX
+
+    uint8_t HARQ_TB2;
+    // HARQ feedback of 2nd TB.
+    // Range 1  7
+    // 1 = ACK
+    // 2 = NACK
+    // 3 = ACK or NACK
+    // 4 = DTX
+    // 5 = ACK or DTX
+    // 6 = NACK or DTX
+    // 7 = ACK or NACK or DTX
+} __packed;
+
+// 3.3.3.2.2  FDD Format
+struct fapi_l1_FDD_harq_indication {
+    fapi_l1_msg_hdr_t hdr;
+    l1_sfn_sf_t SFN_SF;
+    // The SFN/SF of the SUBFRAME this information was received in.
+    // A 16-bit  value where,
+    // [15:4] SFN, range 0  1023
+    // [3:0] SF, range 0  9
+
+    uint16_t NumberOf_HARQs;
+    // Number of HARQs included in this message.
+
+    struct fapi_l1_FDD_harq_config HARQs [];
+} __packed;
+
+
+struct fapi_l1_crc_config {
+    uint32_t Handle;
+    // The handle received in the ULSCH PDU.
+
+    uint16_t RNTI;
+    // The RNTI passed to the PHY in an uplink subframe
+    // configuration PDU.
+    // See [3] section 5.1.4
+    // Value: 1  65535.
+
+    uint8_t CRC_Flag;
+    // A flag indicating if a CRC error was detected.
+    // 0: CRC_CORRECT
+    // 1: CRC_ERROR
+} __packed;
+
+// See Section 3.3.3.3
+struct fapi_l1_crc_indication {
+    fapi_l1_msg_hdr_t hdr;
+
+    l1_sfn_sf_t SFN_SF;
+    // The SFN/SF of the SUBFRAME this information was received in.
+    // A 16-bit value where,
+    // [15:4] SFN, range 0  1023
+    // [3:0] SF, range 0  9
+
+    uint16_t NumberOf_CRCs;
+    // Number of CRCs included in this message.
+
+    // For (Number of CRCs)
+    struct fapi_l1_crc_config CRCs [];
+} __packed;
+
+
+struct fapi_l1_rach_preamble {
+    uint16_t RNTI;
+    // The RA-RNTI value
+    // See [3] section 5.1.4
+    // Value: 1  65535.
+
+    uint8_t Preamble;
+    // The detected preamble
+    // Value: 0  63
+
+    uint16_t TimingAdvance;
+    // The measured timing advance for the preamble.
+    // Value: 0  1282
+} __packed;
+
+// See Section 3.3.3.4
+struct fapi_l1_rach_indication {
+    fapi_l1_msg_hdr_t hdr;
+
+    l1_sfn_sf_t SFN_SF;
+    // The SFN/SF of the SUBFRAME this information was received in.
+    // A 16-bit value where,
+    // [15:4] SFN, range 0  1023
+    // [3:0] SF, range 0  9
+
+    uint8_t NumberOfPreambles;
+    // Number of RACH preambles
+
+    // For (Number of Preambles) {
+    struct fapi_l1_rach_preamble preambles[];
+    // }
+} __packed;
+
+
+struct fapi_l1_rb_snr_config {
+    uint8_t SNR;
+    // Field size dependent on configured bandwidth
+    // SNR for RBs, each RBs report one SNR.
+    // Value: 0-255, representing -64dB to 63.5dB, with 0.5dB
+    // step size.
+} __packed;
+
+
+struct fapi_l1_ue_srs_config {
+
+    uint32_t Handle;
+    // The handle received in the SRS PDU.
+
+    uint16_t RNTI;
+    // The RNTI passed to the PHY in an uplink subframe
+    // configuration PDU
+
+    uint16_t DopplerEstimation ;
+    // FFS.
+    // Values: 0  255,
+
+    uint16_t TimingAdvance;
+    // The timing advance measured for the UE.
+    // Value: T_A from 0 to 1282 as defined in [6] section 4.2.3.
+
+    uint8_t NumberOfResourceBlocks;
+    // Number of resource blocks to be reported for this UE
+
+    uint8_t RB_Start;
+    // The starting point of the RBs to be reported.
+
+    // For (Number of RBs) {
+    /* To be used as offset: +sizeof(fapi_l1_ue_srs_config) */
+    struct fapi_l1_rb_snr_config RBs[1];
+} __packed;
+
+// See Section 3.3.3.7
+struct fapi_l1_srs_indication {
+    fapi_l1_msg_hdr_t hdr;
+
+    l1_sfn_sf_t SFN_SF;
+    // The SFN/SF of the SUBFRAME this information was received in.
+    // A 16-bit value where,
+    // [15:4] SFN, range 0  1023
+    // [3:0] SF, range 0  9
+
+    uint8_t NumberOf_UEs;
+    // Number of UEs contributing to the uplink SRS
+
+    // For (Number of UEs){
+    struct fapi_l1_ue_srs_config UEs[];
+    // }
+} __packed;
+
+
+struct fapi_l1_SR_config {
+    uint32_t Handle;
+    // The handle received in the UCI PDU.
+
+    uint16_t RNTI;
+    // The RNTI identifying the UE. For semi-static information held
+    // in the MAC this will be the value passed to the PHY in a
+    // UL_CONFIG.request SR PDU.
+    // See [3] section 5.1.4
+    // Value: 0  65535.
+} __packed;
+
+// See Section 3.3.3.4
+struct fapi_l1_rx_sr_indication {
+    fapi_l1_msg_hdr_t hdr;
+
+    l1_sfn_sf_t SFN_SF;
+    // The SFN/SF of the SUBFRAME this information was received in.
+    // A 2-byte value where,
+    // [15:4] SFN, range 0  1023
+    // [3:0] SF, range 0  9
+
+    uint16_t NumberOf_SRs;
+    // Number of SRs included in this message.
+
+    //For (Number of SRs)
+    struct fapi_l1_SR_config SRs [];
+} __packed;
+
+
+struct fapi_l1_rx_cqi_pdu {
+    uint32_t Handle;
+    // The handle received in the ULSCH PDU or UCI PDU.
+
+    uint16_t RNTI;
+    // The RNTI identifying the UE. For semi-static information held
+    // in the MAC this will be the value passed to the PHY in a
+    // UL_CONFIG.request CQI PDU.
+    // See [3] section 5.1.4
+    // Value: 1  65535.
+
+    uint16_t Length;
+    // Length of PDU in bytes.
+
+    uint16_t DataOffset;
+    // Gives the PDU#i data address offset from the beginning of the
+    // 'Number of PDUs' field.
+    // An offset of 0 indicates a CRC or decoding error, or only RI
+    // received on PUSCH.
+
+    uint8_t UL_CQI;
+    // SNR
+    // Value: 0-255, representing -64dB to 63.5dB, with 0.5dB step
+    // size.
+
+    uint8_t RI;
+    // The rank indication reported by the UE on PUSCH
+    // Value: 0..4
+    // 0 = RI not received
+    // 1..4 = RI value
+
+    uint16_t TimingAdvance;
+    // The timing advance measured for this PDU and UE.
+    // Value: T_A from 0 to 1282 as defined in [6] section 4.2.3.
+} __packed;
+
+// See Section 3.3.3.5
+struct fapi_l1_rx_cqi_indication {
+    fapi_l1_msg_hdr_t hdr;
+
+    l1_sfn_sf_t SFN_SF;
+    // The SFN/SF of the SUBFRAME this information was received in.
+    // A 16-bit value where,
+    // [15:4] SFN, range 0  1023
+    // [3:0] SF, range 0  9
+
+    uint16_t NumberOf_PDUs;
+    // Number of  PDUs included in this message.
+
+    // For (Number of PDUs) {
+    struct fapi_l1_rx_cqi_pdu PDUs[];
+
+    // PDU#1  Variable  Contents of PDU#1. Raw format CQI report as defined in [9].
+    // The first bit of the CQI report is bit [0] of byte 0.
+    // ..  ...  ...
+    // PDU#n  Variable  Contents of PDU#n. Raw format CQI report as defined in [9].
+    // The first bit of the CQI report is bit [0] of byte 0.
+} __packed;
+
+
+#endif /* _L1_L2_IFACE_H_ */
+
+#ifdef REFERENCES_ORG
+------------------------------------------------------------------------------------------
+| Ref. | Title                                               | Number   | Version & Date |
+------------------------------------------------------------------------------------------
+| [1]  | 3GPP Evolved Universal Terrestrial Radio Access (E- | TS36.331 |          8.5.0 |
+|      | UTRA); Radio Resource Control                       |          |                |
+| [2]  | 3GPP Evolved Universal Terrestrial Radio Access (E- | TS36.321 |          8.5.0 |
+|      | UTRA); Medium Access Control(MAC) protocol          |          |                |
+|      | specification                                       |          |                |
+| [3]  | 3GPP Evolved Universal Terrestrial Radio Access (E- | TS36.300 |          8.8.0 |
+|      | UTRA) and Evolved Universal Terrestrial Radio       |          |                |
+|      | Access Network (E-UTRAN) Overall Description;       |          |                |
+|      | Stage 2                                             |          |                |
+| [4]  | 3GPP Evolved Universal Terrestrial Radio Access     | TS36.401 |          8.5.0 |
+|      | Network (E-UTRAN); Architecture description         |          |                |
+| [5]  | 3GPP Evolved Universal Terrestrial Radio Access (E- | TS36.304 |          8.5.0 |
+|      | UTRA); User Equipment (UE) procedures in idle       |          |                |
+|      | mode                                                |          |                |
+| [6]  | 3GPP Evolved Universal Terrestrial Radio Access (E- | TS36.213 |          8.6.0 |
+|      | UTRA); Physical Layer procedures                    |          |                |
+| [7]  | 3GPP Base Station(BS) Radio Transmission and        | TS36.104 |          8.5.0 |
+|      | Reception                                           |          |                |
+| [8]  | 3GPP Evolved Universal Terrestrial Radio Access (E- | TS36.211 |          8.6.0 |
+|      | UTRA); Physical Channel and Modulation              |          |                |
+| [9]  | 3GPP Evolved Universal Terrestrial Radio Access (E- | TS36.212 |          8.6.0 |
+|      | UTRA); Multiplexing and channel coding              |          |                |
+| [10] | 3GPP Evolved Universal Terrestrial Radio Access (E- | TS36.306 |          8.3.0 |
+|      | UTRA); User Equipment(UE) radio access capabilities |          |                |
+| [11] | 3GPP Home eNodeB (HeNB) Operations,                 | TS32.592 |          0.4.0 |
+|      | Administration, Maintenance and Provisioning        |          |                |
+|      | (OAM&P); Information model for Type 1 interface     |          |                |
+|      | HeNB to HeNB Management System (HeMS)               |          |                |
+------------------------------------------------------------------------------------------
+#endif

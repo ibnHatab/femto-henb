@@ -1,0 +1,82 @@
+#
+# Makefile to build FAPI APP library
+#
+
+include $(ROOTDIR)/T4KDev/LTERT/buildcfg
+
+#VPATH = $(LTEFAPICLLIBRARYDIR)
+
+INC = -I"$(LTEFAPICLLIBRARYDIR)" \
+      -I"$(OS4GMXINCDIR)" \
+      -I"$(OS4GMXARMINCDIR)" \
+      -I"$(SYSCOREFECDIR)" \
+      -I"$(SYSCOREDIR)" \
+      -I"$(SYSCOREDRIVERSDIR)" \
+      -I"$(SYSCORESERVICESDIR)" \
+      -I"$(LTEPHYCCODEDIR)" \
+      -I"$(ROOTDIR)/PHY"     \
+      -I"$(LTEPHYRTDIR)" \
+      -I"$(LTEPHYRTDIR)" \
+      -I"$(COMMONDIR)" \
+      -I"$(ROOTDIR)/FAPI/inc"
+
+CFLAGS = $(FAPIBUILDCFG) $(INC)
+
+SRC = \
+	fapi_cl_cphy_sap.c	\
+	fapi_cl_nmm_sap.c	\
+	fapi_cl_phy_iface.c	\
+	fapi_cl_mac_iface.c	\
+	fapi_cl_ue_db.c		\
+	fapi_cl_entry.c         \
+	fapi_cl_conv.c		\
+        fapi_cl.c
+
+
+# lte_cphy_sap.c 		\
+# fapi_cl_conv.c		\
+# fapi_cl_dispatch.c 	\
+
+
+OBJ := $(patsubst %.c, $(BUILDDIR)/%.o,$(notdir $(SRC)))
+
+.PHONY: $(MAIN_TARGET) echo_stuff
+$(MAIN_TARGET) : $(PCF) $(LTEFAPICLLIBRARY)
+
+ifeq ($(GENDEP),1)
+DEPFILE = $(BUILDDIR)/fapi_app.dep
+CLEANDEP = clean_dep
+else
+-include $(BUILDDIR)/fapi_app.dep
+endif
+
+$(LTEFAPICLLIBRARY): $(BUILDDIR) $(CLEANDEP) $(OBJ)
+	@echo Creating $(LTEFAPICLLIBRARY)
+	@$(AR) $(AR_FLAGS) $(LTEFAPICLLIBRARY) $(OBJ)
+
+.PHONY : $(PCF)
+$(PCF) :
+	@echo $(CFLAGS)
+	@echo $(DELIMETER)
+
+$(BUILDDIR):
+	@$(MKDIR) $(BUILDDIR)
+
+$(BUILDDIR)/%.o : %.c
+	@echo $(subst $(ROOTDIR)/,,$<)
+	$(CC) $(CFLAGS) $< -o $@
+ifeq ($(GENDEP),1)
+	@$(CC) -M --no_depend_system_headers $(CFLAGS) -o"$@" "$<" >>$(DEPFILE)
+endif
+
+.PHONY : clean_dep
+clean_dep :
+	@$(RM) $(DEPFILE)
+
+.PHONY : clean
+clean:
+	@$(RM) $(OBJ)
+
+.PHONY : xclean
+xclean:	clean
+	@$(RM) $(LTEFAPICLLIBRARY)

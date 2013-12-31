@@ -1,0 +1,82 @@
+
+1521441322:UH:sc_phy_init:111                   fapi_l1_config_request                  : test -> cl
+1720216061:CL:FapiPHYMsgHandler:074          	msg(type=PHY_[0xd])                     : phy -> cl
+1721406474:CL:fapi_cl_handle_phy_command:634 	cl handle PHY_RXSTATUS_IND   
+1722728121:CL:fapi_cl_handle_phy_command:639 	cl change state PHY_STATE_CONFIGURED
+
+1971470661:UH:fapi_receive_mesg:129          	msg (paramID='0x3', length='7')         : cl -> test
+1971487234:UH:sc_phy_init:117                	fapi_l1_config_response                 : cl -> test
+1971494435:UH:sc_phy_init:138                	PHY Config RSP MSG OK
+
+1971506800:UH:send_phy_start_request:182     	fapi_l1_start_request                   : test -> cl
+1971509426:CL:FapiCPHYApiHandler:163         	cl handle FAPI_L1_[4]
+1971517646:UH:sc0_sent_empty_vectors:079     	data(PHY=[0/0], UL=[1023/9], DL=[0/1])  : test -> cl
+1972289491:CL:lte_cphy_request:293           	cl takes action FAPI_L1_[4], PHY_STATE_[2]
+
+1973326578:CL:FapiSendMsgToPhy:026           	msg(type=0x11, size=12)                 : cl -> phy
+1974272552:CL:lte_cphy_request:452           	PHY_START_REQ                           : cl -> phy
+1975092440:CL:FapiPHYMsgHandler:074          	msg(type=PHY_[0x12])                    : phy -> cl
+1976630828:CL:fapi_cl_handle_phy_command:634 	cl handle PHY_STOP_REQ       
+1977991574:CL:fapi_cl_handle_phy_command:646 	cl change state PHY_STATE_RUNNING
+1980068890:CL:fapi_cl_parse_fapi_tx_data:562 	cl takes action 'align SFN/SF 0/0 -> 0/1'
+1981220316:CL:fapi_cl_parse_fapi_tx_data:562 	cl takes action 'align SFN/SF 0/1 -> 1023/9'
+1982412416:CL:fapi_cl_parse_fapi_tx_data:562 	cl takes action 'align SFN/SF 1023/9 -> 0/1'
+
+1983603800:CL:fapi_cl_parse_fapi_tx_data:612 	list ()                                 : cl -> PHY
+2133745625:CL:FapiPHYMsgHandler:074          	msg(type=PHY_[0x3])                     : phy -> cl
+2134642412:CL:fapi_cl_handle_phy_command:634 	cl handle PHY_TXSDU_REQ      
+
+2135639892:CL:FapiSendMsgToMac:058           	msg(id=0x5105, param=0x82)              : cl -> mac
+2136631155:UH:scenarion_reactor:228          	Data is available now.
+
+2136649774:UH:scenarion_reactor:241          	msg(msgIs=0x5105, len=12)               : cl -> test
+2136656204:UH:scenarion_reactor:248          	handle paramID=0x82, len=6
+2136663074:UH:scenarion_reactor:263          	Subframe indication: 0/0
+
+2136671980:UH:sc0_sent_empty_vectors:079     	data(PHY=[0/0], UL=[0/0], DL=[0/2])     : test -> cl
+2136686196:CL:fapi_cl_parse_fapi_tx_data:562 	cl takes action 'align SFN/SF 0/1 -> 0/2'
+2137830645:CL:fapi_cl_parse_fapi_tx_data:562 	cl takes action 'align SFN/SF 0/2 -> 0/0'
+2138983972:CL:fapi_cl_parse_fapi_tx_data:562 	cl takes action 'align SFN/SF 0/0 -> 0/2'
+
+2140136579:CL:fapi_cl_parse_fapi_tx_data:612 	list ()                                 : cl -> PHY
+2287498223:CL:FapiPHYMsgHandler:074          	msg(type=PHY_[0x3])                     : phy -> cl
+2288395589:CL:fapi_cl_handle_phy_command:634 	cl handle PHY_TXSDU_REQ      
+
+2289393148:CL:FapiSendMsgToMac:058           	msg(id=0x5105, param=0x82)              : cl -> mac
+2290383007:UH:scenarion_reactor:228          	Data is available now.
+
+2290400050:UH:scenarion_reactor:241          	msg(msgIs=0x5105, len=12)               : cl -> test
+2290406462:UH:scenarion_reactor:248          	handle paramID=0x82, len=6
+2290413298:UH:scenarion_reactor:263          	Subframe indication: 0/0
+
+2290422030:UH:sc0_sent_empty_vectors:079     	data(PHY=[0/0], UL=[0/1], DL=[0/3])     : test -> cl
+2290435920:CL:fapi_cl_parse_fapi_tx_data:562 	cl takes action 'align SFN/SF 0/2 -> 0/3'
+2291580340:CL:fapi_cl_parse_fapi_tx_data:562 	cl takes action 'align SFN/SF 0/3 -> 0/1'
+2292733651:CL:fapi_cl_parse_fapi_tx_data:562 	cl takes action 'align SFN/SF 0/1 -> 0/3'
+
+2293886297:CL:fapi_cl_parse_fapi_tx_data:612 	list ()                                 : cl -> PHY
+2441248117:CL:FapiPHYMsgHandler:074          	msg(type=PHY_[0x3])                     : phy -> cl
+2442145350:CL:fapi_cl_handle_phy_command:634 	cl handle PHY_TXSDU_REQ      
+
+2443142947:CL:FapiSendMsgToMac:058           	msg(id=0x5105, param=0x82)              : cl -> mac
+2444132626:UH:scenarion_reactor:228          	Data is available now.
+
+2444147595:UH:scenarion_reactor:241          	msg(msgIs=0x5105, len=12)               : cl -> test
+2444153868:UH:scenarion_reactor:248          	handle paramID=0x82, len=6
+2444160673:UH:scenarion_reactor:263          	Subframe indication: 0/1
+
+2444169501:UH:sc0_sent_empty_vectors:079     	data(PHY=[0/1], UL=[0/2], DL=[0/4])     : test -> cl
+2444183095:CL:fapi_cl_parse_fapi_tx_data:562 	cl takes action 'align SFN/SF 0/3 -> 0/4'
+2445327444:CL:fapi_cl_parse_fapi_tx_data:562 	cl takes action 'align SFN/SF 0/4 -> 0/2'
+2446480788:CL:fapi_cl_parse_fapi_tx_data:562 	cl takes action 'align SFN/SF 0/2 -> 0/4'
+
+2447633394:CL:fapi_cl_parse_fapi_tx_data:612 	list ()                                 : cl -> PHY
+2598164114:CL:FapiPHYMsgHandler:074          	msg(type=PHY_[0x15])                    : phy -> cl
+2599342397:CL:fapi_cl_handle_phy_command:634 	cl handle PHY_TXHIADCIUL_REQ 
+2601143772:CL:fapi_cl_handle_phy_command:651 	cl change state PHY_STATE_RUNNING
+
+2602375049:CL:FapiSendMsgToMac:058           	msg(id=0x5105, param=0x6)               : cl -> mac
+2604401509:UH:scenarion_reactor:228          	Data is available now.
+
+2604418135:UH:scenarion_reactor:241          	msg(msgIs=0x5105, len=8)                : cl -> test
+2604424321:UH:scenarion_reactor:248          	handle paramID=0x6, len=4

@@ -1,0 +1,16 @@
+module : Modem
+processor : MAC in Modem, PHY in Modem
+
+eternal : TestMac:test in MAC
+eternal : phy in PHY, cl in PHY
+
+feature "call"
+  [*"Param message exchange":*]
+  
+  UH.fapi_receive_mesg  FAPI CLI: msg (0x3)[7] from lower
+
+   PHY_init:cl->phy
+
+  PHY_init:cl->phy
+
+endfeature

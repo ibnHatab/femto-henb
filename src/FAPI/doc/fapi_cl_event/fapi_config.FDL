@@ -1,0 +1,92 @@
+module : Modem
+processor : MAC:mac in Modem, FAPI_CL in Modem, PHY in Modem
+
+/* Tasks involved */
+
+/* DTMF Manager, V5.2 Interface Manager */
+eternal : test_mac:test in MAC
+eternal : cphy_sap in FAPI_CL, cl:phy_sap in FAPI_CL, nmm_sap in FAPI_CL
+eternal : phy in PHY
+
+feature "Convergency Layer 4gmx v.1.0"
+  [*"Param message exchange":*]
+    		  PARAM_request: test_mac->phy
+    		  test_mac starts timer_guard (* Start guard timer (>5ms) *)
+    		  
+    		  case 
+      		    leg "Param_Succes":
+      		    PARAM_response(MSG_OK): phy -> test_mac
+      		    test_mac stops timer_guard  (* Start guard timer *)
+      		    (*The PHY returns its current state and configuration*)
+      		    leg "Param_Invalid state":
+      		    PARAM_response(INVALID_STATE): phy -> test_mac
+      		    test_mac stops timer_guard  (* Start guard timer *)
+      		    (*The PHY cannot return it current configuration when in the RUNNING state.
+      		     Move the PHY to the CONFIGURE state first*)
+      		    leg "Param_No response":
+      		    test_mac stops timer_guard  (* Guard timer expires *) 
+        	endcase
+        	
+	[*"Config message exchange":*]
+        	CONFIG_request: test_mac->cl
+        	PHY_init: cl->phy 
+        	case 
+      		    leg "Config_Succes":
+      		    CONFIG_response(MSG_OK): cl -> test_mac
+      		    (* The PHY has successfully moved to the CONFIGURED state *)
+      		    leg "Config_Icomplete":
+      		    CONFIG_response(MSG_INVALID_CONFIG): cl -> test_mac
+      		    (*PHY in IDLE state:
+                The CONFIG.request message did not contain all the
+                mandatory TLVs. It should be resent with the correct
+                information. The PHY remains in the IDLE state and all
+                received TLVs have been ignored by the PHY.
+                PHY in CONFIGURED state:
+                The CONFIG.request message included invalid, or
+                unsupported, TLVs. It should be resent with the correct
+                information. The PHY remains in the CONFIGURED state,
+                but all received TLVs have been ignored by the PHY.
+                PHY in RUNNING state:
+                The CONFIG.request message included invalid TLVs, or
+                TLVs which can not be modified when the PHY is running.
+                It should be resent with the correct information. The PHY
+                remains in the RUNNING state, but all received TLVs have
+                been ignored by the PHY.*)
+        	endcase
+          
+          
+  [*"Start Request":*]
+        	START_request: test_mac->cl
+        	START_request: cl->phy
+        	TX_indication: phy->cl  
+        	cphy_sap state="Running"
+        	case 
+      		    leg "Start_Succes":
+      		    (* If START.request is successful no response is
+                 returned by the PHY. When the PHY has started it
+                 will send a SUBFRAME indication to the L2/L3
+                 software.*)
+      		    leg "Start_failure":
+      		    ERROR_indication: cl->test_mac
+      		    (*The PHY was in a state where is cannot accept
+                the START.request message. Move the PHY to a
+                state where START.request is valid.*)
+        	endcase
+        	
+  [* "Termination Request":*]
+          	STOP_request: test_mac->cl
+          	case 
+        		    leg "Termination_Succes":
+        		    STOP_indication: cl->test_mac
+        		    (* The PHY has stopped and moved to the
+                   CONFIGURED state. When STOP.indication is
+                   sent the PHY is ready to receive a CONFIG.request
+                   or START.request message.*)
+        		    leg "Termination_Failure":
+        		    ERROR_indication: cl->test_mac
+        		    (*The PHY was in a state where it cannot accept
+                  the STOP.request message.This means the
+                  PHY was already stopped.*)
+          	endcase	
+    	
+endfeature

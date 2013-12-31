@@ -1,0 +1,107 @@
+﻿00227699993:CL:cl_init:113                                           | START
+01327944009:UH:sc_phy_init:111                                       | fapi_l1_config_request : test -> cl
+01327947031:CL:FapiCPHYApiHandler:127                                | rcv ICPU msg 0x5107
+01328727384:CL:FapiCPHYApiHandler:163                                | handle FAPI_L1_[2]
+01329504752:CL:lte_cphy_request:293                                  | cl takes action FAPI_L1_[2], PHY_STATE_[1]
+01330567516:CL:lte_cphy_request:343                                  | CPHY CONFIG_REQ in 1, 36 tlv's
+01331478532:CL:conv_apiInit_from_CONFIG_request:157                  | conf SFN/SF MAC 0/0
+01332446787:CL:lte_cphy_request:375                                  | PHY_INIT_REQ : cl -> phy
+01333276168:CL:FapiSendMsgToPhy:026                                  | msg(type=PHY_INIT_REQ       , size=56) : cl -> phy
+01334445836:CL:FapiCPHYApiHandler:175                                | reply(type=3, rc=0, cpu=0) : cl -> mac
+01528307708:CL:FapiPHYMsgHandler:074                                 | PHY_INIT_IND        : phy -> cl
+01529524126:CL:fapi_cl_handle_phy_command:642                        | PGENMSGDESC pMsgHdr 0x2931a1c0
+01530884646:CL:fapi_cl_handle_phy_command:647                        | cl handle PHY_INIT_IND       
+01532426888:CL:fapi_cl_handle_phy_command:652                        | cl change state PHY_STATE_CONFIGURED
+01777978875:UH:fapi_receive_mesg:129                                 | msg (paramID='0x3', length='7'): cl -> test
+01777988937:UH:sc_phy_init:117                                       | fapi_l1_config_response : cl -> test
+01777997838:UH:sc_phy_init:138                                       | PHY Config RSP MSG OK
+01778009571:UH:send_phy_start_request:182                            | fapi_l1_start_request: test -> cl
+01778011989:CL:FapiCPHYApiHandler:127                                | rcv ICPU msg 0x5107
+01778019737:UH:sc0_sent_empty_vectors:079                            | data(PHY=[0/0], UL=[1023/9], DL=[0/1]) : test -> cl
+01778792363:CL:FapiCPHYApiHandler:163                                | handle FAPI_L1_[4]
+01779569585:CL:lte_cphy_request:293                                  | cl takes action FAPI_L1_[4], PHY_STATE_[2]
+01780632720:CL:FapiSendMsgToPhy:026                                  | msg(type=PHY_START_REQ      , size=12) : cl -> phy
+01781799036:CL:lte_cphy_request:452                                  | PHY_START_REQ : cl -> phy
+01782644700:CL:FapiPHYMsgHandler:074                                 | PHY_START_CONF      : phy -> cl
+01784196225:CL:fapi_cl_handle_phy_command:642                        | PGENMSGDESC pMsgHdr 0x2931a1c0
+01785595845:CL:fapi_cl_handle_phy_command:647                        | cl handle PHY_START_CONF     
+01787176976:CL:fapi_cl_handle_phy_command:659                        | cl change state PHY_STATE_RUNNING
+01787646754:CL:FapiClApiHandler:095                                  | cl handle MAC msg(id=0d, type=5107, len=6)
+01789782207:CL:fapi_cl_parse_fapi_tx_data:541                        | ApiHeader *pApi 0x3f504000
+01790767353:CL:fapi_cl_parse_fapi_tx_data:574                        | align SFN/SF 0/0 -> 0/1
+01791713185:CL:handle_DL_CONFIG_REQ:335                              | ApiParam * pParam 0x3f504010
+01792646564:CL:conv_dlSubframeDescriptor_from_DL_CONFIG_request:536  | SFN/SF TX.v 0/1
+01793774952:CL:fapi_cl_parse_fapi_tx_data:574                        | align SFN/SF 0/1 -> 1023/9
+01794758707:CL:handle_UL_CONFIG_REQ:370                              | ApiParam * pParam 0x3f50402c
+01795692081:CL:conv_ulSubframeDescriptor_from_UL_CONFIG_request:1053 | SFN/SF RX.v 1023/9
+01796872254:CL:fapi_cl_parse_fapi_tx_data:574                        | align SFN/SF 1023/9 -> 0/1
+01797856187:CL:handle_TX_REQ:404                                     | ApiParam * pParam 0x3f50403c
+01798698936:CL:fapi_cl_parse_fapi_tx_data:623                        | list () : cl -> PHY
+01947903742:CL:FapiPHYMsgHandler:074                                 | PHY_TXSTART_IND     : phy -> cl
+01948826509:CL:fapi_cl_handle_phy_command:642                        | PGENMSGDESC pMsgHdr 0x2931a1c0
+01949862704:CL:fapi_cl_handle_phy_command:647                        | cl handle PHY_TXSTART_IND    
+01950886627:CL:FapiSendMsgToMac:058                                  | msg(id=0x5105, param=0x82) : cl -> mac
+01951907619:UH:scenarion_reactor:228                                 | Data is available now.
+01951921445:UH:scenarion_reactor:241                                 | msg(msgIs=0x5105, len=12) : cl -> test
+01951926846:UH:scenarion_reactor:248                                 | handle paramID=0x82, len=6
+01951932617:UH:scenarion_reactor:263                                 | Subframe indication: 0/0
+01951940610:UH:sc0_sent_empty_vectors:079                            | data(PHY=[0/0], UL=[0/0], DL=[0/2]) : test -> cl
+01951949706:CL:FapiClApiHandler:095                                  | cl handle MAC msg(id=0d, type=5107, len=6)
+01953002085:CL:fapi_cl_parse_fapi_tx_data:541                        | ApiHeader *pApi 0x3f504000
+01953987211:CL:fapi_cl_parse_fapi_tx_data:574                        | align SFN/SF 0/1 -> 0/2
+01954933070:CL:handle_DL_CONFIG_REQ:335                              | ApiParam * pParam 0x3f504010
+01955866430:CL:conv_dlSubframeDescriptor_from_DL_CONFIG_request:536  | SFN/SF TX.v 0/2
+01956994656:CL:fapi_cl_parse_fapi_tx_data:574                        | align SFN/SF 0/2 -> 0/0
+01957939809:CL:handle_UL_CONFIG_REQ:370                              | ApiParam * pParam 0x3f50402c
+01958873103:CL:conv_ulSubframeDescriptor_from_UL_CONFIG_request:1053 | SFN/SF RX.v 0/0
+01960014315:CL:fapi_cl_parse_fapi_tx_data:574                        | align SFN/SF 0/0 -> 0/2
+01960959454:CL:handle_TX_REQ:404                                     | ApiParam * pParam 0x3f50403c
+01961802159:CL:fapi_cl_parse_fapi_tx_data:623                        | list () : cl -> PHY
+02107056444:CL:FapiPHYMsgHandler:074                                 | PHY_TXSTART_IND     : phy -> cl
+02107979597:CL:fapi_cl_handle_phy_command:642                        | PGENMSGDESC pMsgHdr 0x2931a1c0
+02109015967:CL:fapi_cl_handle_phy_command:647                        | cl handle PHY_TXSTART_IND    
+02110039843:CL:FapiSendMsgToMac:058                                  | msg(id=0x5105, param=0x82) : cl -> mac
+02111059534:UH:scenarion_reactor:228                                 | Data is available now.
+02111072192:UH:scenarion_reactor:241                                 | msg(msgIs=0x5105, len=12) : cl -> test
+02111077397:UH:scenarion_reactor:248                                 | handle paramID=0x82, len=6
+02111083204:UH:scenarion_reactor:263                                 | Subframe indication: 0/0
+02111090973:UH:sc0_sent_empty_vectors:079                            | data(PHY=[0/0], UL=[0/1], DL=[0/3]) : test -> cl
+02111099940:CL:FapiClApiHandler:095                                  | cl handle MAC msg(id=0d, type=5107, len=6)
+02112152279:CL:fapi_cl_parse_fapi_tx_data:541                        | ApiHeader *pApi 0x3f504000
+02113137408:CL:fapi_cl_parse_fapi_tx_data:574                        | align SFN/SF 0/2 -> 0/3
+02114083276:CL:handle_DL_CONFIG_REQ:335                              | ApiParam * pParam 0x3f504010
+02115016555:CL:conv_dlSubframeDescriptor_from_DL_CONFIG_request:536  | SFN/SF TX.v 0/3
+02116144801:CL:fapi_cl_parse_fapi_tx_data:574                        | align SFN/SF 0/3 -> 0/1
+02117089950:CL:handle_UL_CONFIG_REQ:370                              | ApiParam * pParam 0x3f50402c
+02118023315:CL:conv_ulSubframeDescriptor_from_UL_CONFIG_request:1053 | SFN/SF RX.v 0/1
+02119164474:CL:fapi_cl_parse_fapi_tx_data:574                        | align SFN/SF 0/1 -> 0/3
+02120109631:CL:handle_TX_REQ:404                                     | ApiParam * pParam 0x3f50403c
+02120952352:CL:fapi_cl_parse_fapi_tx_data:623                        | list () : cl -> PHY
+02266056439:CL:FapiPHYMsgHandler:074                                 | PHY_TXSTART_IND     : phy -> cl
+02266979553:CL:fapi_cl_handle_phy_command:642                        | PGENMSGDESC pMsgHdr 0x2931a1c0
+02268015971:CL:fapi_cl_handle_phy_command:647                        | cl handle PHY_TXSTART_IND    
+02269039846:CL:FapiSendMsgToMac:058                                  | msg(id=0x5105, param=0x82) : cl -> mac
+02270059592:UH:scenarion_reactor:228                                 | Data is available now.
+02270072422:UH:scenarion_reactor:241                                 | msg(msgIs=0x5105, len=12) : cl -> test
+02270077676:UH:scenarion_reactor:248                                 | handle paramID=0x82, len=6
+02270083506:UH:scenarion_reactor:263                                 | Subframe indication: 0/1
+02270091350:UH:sc0_sent_empty_vectors:079                            | data(PHY=[0/1], UL=[0/2], DL=[0/4]) : test -> cl
+02270100212:CL:FapiClApiHandler:095                                  | cl handle MAC msg(id=0d, type=5107, len=6)
+02271152511:CL:fapi_cl_parse_fapi_tx_data:541                        | ApiHeader *pApi 0x3f504000
+02272137637:CL:fapi_cl_parse_fapi_tx_data:574                        | align SFN/SF 0/3 -> 0/4
+02273083514:CL:handle_DL_CONFIG_REQ:335                              | ApiParam * pParam 0x3f504010
+02274016804:CL:conv_dlSubframeDescriptor_from_DL_CONFIG_request:536  | SFN/SF TX.v 0/4
+02275145099:CL:fapi_cl_parse_fapi_tx_data:574                        | align SFN/SF 0/4 -> 0/2
+02276090195:CL:handle_UL_CONFIG_REQ:370                              | ApiParam * pParam 0x3f50402c
+02277023526:CL:conv_ulSubframeDescriptor_from_UL_CONFIG_request:1053 | SFN/SF RX.v 0/2
+02278164707:CL:fapi_cl_parse_fapi_tx_data:574                        | align SFN/SF 0/2 -> 0/4
+02279109885:CL:handle_TX_REQ:404                                     | ApiParam * pParam 0x3f50403c
+02279952621:CL:fapi_cl_parse_fapi_tx_data:623                        | list () : cl -> PHY
+02428222378:CL:FapiPHYMsgHandler:074                                 | PHY_STOP_IND        : phy -> cl
+02429413649:CL:fapi_cl_handle_phy_command:642                        | PGENMSGDESC pMsgHdr 0x2931a1c0
+02431253891:CL:fapi_cl_handle_phy_command:647                        | cl handle PHY_STOP_IND       
+02432459187:CL:fapi_cl_handle_phy_command:664                        | cl change state PHY_STATE_RUNNING
+02434584687:CL:FapiSendMsgToMac:058                                  | msg(id=0x5105, param=0x6) : cl -> mac
+02435889211:UH:scenarion_reactor:228                                 | Data is available now.
+02435901970:UH:scenarion_reactor:241                                 | msg(msgIs=0x5105, len=8) : cl -> test
+02435906950:UH:scenarion_reactor:248                                 | handle paramID=0x6, len=4

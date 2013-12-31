@@ -1,0 +1,70 @@
+#
+# Makefile to build MAC library
+#
+
+include $(ROOTDIR)/T4KDev/LTERT/buildcfg
+
+VPATH = $(LTEFAPILIBRARYDIR)
+
+INC = -I"$(ROOTDIR)/PHY" 		\
+      -I"$(COMMONDIR)"		\
+      -I"$(OS4GMXINCDIR)" \
+      -I"$(OS4GMXARMINCDIR)" \
+      -I"$(SYSCOREFECDIR)" \
+      -I"$(SYSCOREDIR)" \
+      -I"$(SYSCOREDRIVERSDIR)" \
+      -I"$(SYSCORESERVICESDIR)" \
+      -I"$(LTEPHYCCODEDIR)" 	\
+      -I"$(LTEPHYRTDIR)" 	\
+      -I"$(ROOTDIR)/FAPI/inc"
+
+
+CFLAGS = $(MACBUILDCFG) $(INC)
+
+SRC = \
+        l1_sdu_combinator.c     \
+	l1_tlv.c                \
+	l1_msg_alloc.c
+
+OBJ := $(patsubst %.c, $(BUILDDIR)/%.o,$(notdir $(SRC)))
+
+.PHONY: $(MAIN_TARGET) echo_stuff
+$(MAIN_TARGET) : $(PCF) $(LTEFAPILIBRARY)
+
+ifeq ($(GENDEP),1)
+DEPFILE = $(BUILDDIR)/fapi.dep
+CLEANDEP = clean_dep
+else
+-include $(BUILDDIR)/fapi.dep
+endif
+
+$(LTEFAPILIBRARY): $(BUILDDIR) $(CLEANDEP) $(OBJ)
+	@echo Creating $(LTEFAPILIBRARY)
+	@$(AR) $(AR_FLAGS) $(LTEFAPILIBRARY) $(OBJ)
+
+.PHONY : $(PCF)
+$(PCF) :
+	@echo $(CFLAGS)
+	@echo $(DELIMETER)
+
+e $(BUILDDIR):
+	@$(MKDIR) $(BUILDDIR)
+
+$(BUILDDIR)/%.o : %.c
+	@echo $(subst $(ROOTDIR)/,,$<)
+	$(CC) $(CFLAGS) $< -o $@
+ifeq ($(GENDEP),1)
+	@$(CC) -M --no_depend_system_headers $(CFLAGS) -o"$@" "$<" >>$(DEPFILE)
+endif
+
+.PHONY : clean_dep
+clean_dep :
+	@$(RM) $(DEPFILE)
+
+.PHONY : clean
+clean:
+	@$(RM) $(OBJ)
+
+.PHONY : xclean
+xclean:	clean
+	@$(RM) $(LTEFAPICONVLIBRARY)

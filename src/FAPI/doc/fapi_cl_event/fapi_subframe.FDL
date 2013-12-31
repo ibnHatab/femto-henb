@@ -1,0 +1,47 @@
+module : Modem
+processor : MAC:mac in Modem, FAPI_CL in Modem, PHY in Modem
+
+eternal : test_mac:test in MAC
+eternal : cphy_sap in FAPI_CL, cl:phy_sap in FAPI_CL, nmm_sap in FAPI_CL
+eternal : phy in PHY
+
+feature "Convergency Layer 4gmx v.1.0"
+
+[*DL messages*]
+
+   SUBFRAME_indication: cl->test_mac
+   CONFIG_request:test_mac->cl
+   PHY_init:cl->phy
+   UE_CONFIG_request:test_mac->cl 
+   DL_CONFIG_request:test_mac->cl (*Tx*)
+   UL_CONFIG_request:test_mac->cl (*Rx*)
+   TX_request: test_mac->cl
+   TX_request: cl->phy
+   HI_DCI0_request: test_mac->cl
+   
+[*DL messages*]  
+
+   RX_STATUS:          phy->cl
+   HARQ_indication:    cl->test_mac
+   CRC_indication:     cl->test_mac
+   RX_ULSCH_indication:cl->test_mac
+   RX_SR_indication:   cl->test_mac
+   RX_CQI_indication:  cl->test_mac
+   RACH_indication:    cl->test_mac
+   SRS_indication:     cl->test_mac
+   
+[*UE Configuration*]   
+
+   UE_CONFIG_request:  test_mac->cl
+   case
+     leg "Succes":
+       UE_CONFIG_response(MSG_OK):cl->test_mac
+       [*The semi-static parameters for the UE
+       have been successfully configured*]
+     leg "Configuration Incomplete":
+       UE_CONFIG_response(MSG_INVALID_CONFIG):cl->test_mac
+       [*The UE_CONFIG.request message did not
+         contain all the mandatory TLVs. It should be
+         resent with the correct information*]
+   	endcase
+endfeature
